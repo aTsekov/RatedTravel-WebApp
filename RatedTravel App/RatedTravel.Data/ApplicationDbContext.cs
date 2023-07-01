@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace RatedTravel.Web.Data
+namespace RatedTravel.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

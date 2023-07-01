@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using RatedTravel.Web.Models;
+using RatedTravel.Web.ViewModels.Home;
 
 namespace RatedTravel.App.Web.Controllers
 {

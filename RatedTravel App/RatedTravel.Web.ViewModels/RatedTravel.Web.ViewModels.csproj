@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RatedTravel.Data\RatedTravel.Data.csproj" />
-    <ProjectReference Include="..\RatedTravel.Web.ViewModels\RatedTravel.Web.ViewModels.csproj" />
     <ProjectReference Include="..\RaterTravel.Common\RaterTravel.Common.csproj" />
   </ItemGroup>
 

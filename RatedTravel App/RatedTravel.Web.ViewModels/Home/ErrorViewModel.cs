@@ -1,4 +1,4 @@
-namespace RatedTravel.Web.Models
+namespace RatedTravel.Web.ViewModels.Home
 {
     public class ErrorViewModel
     {
