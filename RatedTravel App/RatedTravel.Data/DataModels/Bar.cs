@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static RaterTravel.Common.EntityValidationConstants.Bar;
+
+namespace RatedTravel.Data.DataModels
+{
+    public class Bar
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(BarNameMaxLength)]
+        public string Name { get; set; } = null!;
+
+        [Required]
+        [MaxLength(BarAddressMaxLength)]
+        public string Address { get; set; } = null!;
+
+        [Required]
+        [MaxLength(ImageUrlMaxLength)]
+        public string ImageUrl { get; set; } = null!;
+
+        [Required]
+        [MaxLength(BarDescriptionMaxLength)]
+        public string Description { get; set; } = null!;
+
+        public int OverallScore { get; set; }
+        [MaxLength(WebSiteMaxLength)]
+        public string Website { get; set; } = null!;
+
+        public bool IsActive { get; set; }
+
+        [Required]
+        [ForeignKey("City")]
+        public int CityId { get; set; }
+
+        // Navigation property
+        public virtual City City { get; set; } = null!;
+        public virtual ICollection<BarReviewAndRate> Reviews { get; set; } = new List<BarReviewAndRate>();
+    }
+}
