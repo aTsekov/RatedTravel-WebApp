@@ -37,18 +37,20 @@ namespace RaterTravel.Common
             public const int AttractionNameMaxLength = 50;
             public const int AttractionAddressMaxLength = 100;
             public const int AttractionDescriptionMaxLength = 1000;
-            public const int ImageUrlMaxLength = 2048;
-            
+            public const int ImageUrlMaxLength = 2048;            
         }
         public static class BarReviewAndRate
         {
             public const int ReviewTextMaxLength = 1000;
-
         }
         public static class RestaurantReviewAndRate
         {
             public const int ReviewTextMaxLength = 1000;
-
+        }
+        public static class Employee
+        {
+            public const int EmployeeNameMaxLength = 100;
+            public const int EmployeePhoneMaxLength = 15;
         }
     }
 }

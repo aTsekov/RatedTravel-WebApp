@@ -35,7 +35,6 @@ namespace RatedTravel.Data.DataModels
         [ForeignKey("Bar")]
         public int BarId { get; set; }
 
-        // Navigation property
         public virtual Bar Bar { get; set; } = null!;
     }
 }

@@ -28,10 +28,10 @@ namespace RatedTravel.Data.DataModels
 
         public bool IsActive { get; set; }
 
+
         [ForeignKey("Restaurant")]
         public int RestaurantId { get; set; }
 
-        // Navigation property
         public virtual Restaurant Restaurant { get; set; } = null!;
     }
 }

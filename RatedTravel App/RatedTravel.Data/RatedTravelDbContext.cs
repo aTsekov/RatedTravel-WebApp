@@ -21,6 +21,10 @@ namespace RatedTravel.Data
         public DbSet<BarReviewAndRate> BarReviewsAndRates { get; set; } = null!;
         public DbSet<RestaurantReviewAndRate> RestaurantReviewsAndRates { get; set; } = null!;
 
+        public DbSet<Employee> Employees { get; set; } = null!;
+
+        public DbSet<AppUser> AppUsers { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CityEntityConfiguration());

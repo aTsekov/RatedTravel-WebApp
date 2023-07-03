@@ -34,11 +34,17 @@ namespace RatedTravel.Data.DataModels
 
         public bool IsActive { get; set; }
 
+        public int? EmployeeId { get; set; }
+
+        public virtual Employee Employee { get; set; } = null!;
+
+        public int AppUserId { get; set; }
+        public virtual AppUser AppUser { get; set; } = null!;
+
         [Required]
         [ForeignKey("City")]
         public int CityId { get; set; }
 
-        // Navigation property
         public virtual City City { get; set; } = null!;
         public virtual ICollection<RestaurantReviewAndRate> Reviews { get; set; } = new List<RestaurantReviewAndRate>();
     }

@@ -36,7 +36,12 @@ namespace RatedTravel.Data.DataModels
 
         public bool IsActive { get; set; }
 
-        // Navigation properties
+        public int EmployeeId { get; set; }
+
+        public virtual Employee Employee { get; set; } = null!;
+
+        public int? AppUserId { get; set; }
+        public virtual AppUser AppUser { get; set; } = null!;
         public virtual ICollection<Bar> Bars { get; set; } = new List<Bar>();
         public virtual ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
         public virtual ICollection<Attraction> Attractions { get; set; } = new List<Attraction>();
