@@ -5,6 +5,9 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+	<li class="nav-item">
+		<a  class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="JoinUs" >Become one of us!</a>
+	</li>
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
