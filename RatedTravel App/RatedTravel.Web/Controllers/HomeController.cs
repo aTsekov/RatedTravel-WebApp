@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using RatedTravel.Core.Interfaces;
 using RatedTravel.Web.ViewModels.Home;
 
 namespace RatedTravel.App.Web.Controllers
@@ -7,15 +8,16 @@ namespace RatedTravel.App.Web.Controllers
     public class HomeController : Controller
     {
        
-
-        public HomeController()
+        private readonly ICityService cityService;
+        public HomeController(ICityService cityService)
         {
-            
+            this.cityService = cityService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<IndexViewModel> viewModel = await this.cityService.OurCitiesAsync();
+            return View(viewModel);
         }
 
         

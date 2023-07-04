@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RatedTravel.Core.Interfaces;
+using RatedTravel.Core.Services;
 using RatedTravel.Data;
 using RaterTravel.Common;
 
@@ -28,6 +30,7 @@ namespace RatedTravel.Web
                 }).AddEntityFrameworkStores<RatedTravelDbContext>();
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ICityService, CityService>();
 
             var app = builder.Build();
 
