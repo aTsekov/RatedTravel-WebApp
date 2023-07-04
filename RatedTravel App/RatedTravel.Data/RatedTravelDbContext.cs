@@ -27,6 +27,7 @@ namespace RatedTravel.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new EmployeeEntityConfiguration());
             modelBuilder.ApplyConfiguration(new CityEntityConfiguration());
             modelBuilder.ApplyConfiguration(new BarEntityConfiguration());
             modelBuilder.ApplyConfiguration(new RestaurantEntityConfiguration());

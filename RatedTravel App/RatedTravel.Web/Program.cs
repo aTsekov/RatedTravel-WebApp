@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RatedTravel.Data;
+using RaterTravel.Common;
 
 
 namespace RatedTravel.Web
@@ -20,6 +21,10 @@ namespace RatedTravel.Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredLength = GeneralApplicationConstants.MinPasswordLength;
                 }).AddEntityFrameworkStores<RatedTravelDbContext>();
 
             builder.Services.AddControllersWithViews();
