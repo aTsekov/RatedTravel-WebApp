@@ -25,7 +25,7 @@
 
 <div class="mb-5"></div>
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+@*<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 	<div class="carousel-inner">
 		@for (int i = 0; i < cities.Count(); i++)
 		{
@@ -48,30 +48,35 @@
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Next</span>
 	</button>
+</div>*@
+
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-6">
+			<div class="card darkblue text-white border-4">
+				<div class="card-header bg-secondary text-white">
+					<h3 class="mb-0">Select a City</h3>
+				</div>
+				<div class="card-body">
+					<form asp-controller="City" asp-action="SelectCity">
+						<div class="form-group">
+							<label for="cities" class="text-black">Select a city:</label>
+							<select class="form-control bg-lightblue text-black" id="cities" name="cities">
+								@foreach (var city in cities)
+								{
+									<option value="@city.Id">@city.Name</option>
+								}
+							</select>
+						</div>
+
+						<button class="btn card-header bg-secondary text-white border">GO!</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Select a City</h3>
-                </div>
-                <div class="card-body">
-                    <form asp-controller="City" asp-action="SelectCity">
-                        <div class="form-group">
-                            <label for="cities">Select a city:</label>
-                            <select class="form-control" id="cities" name="cities">
-                                @foreach (var city in cities)
-                                {
-                                    <option value="@city.Id">@city.Name</option>
-                                }
-                            </select>
-                        </div>
-                        <button class="btn btn-primary btn-lg btn-block">Select City</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
