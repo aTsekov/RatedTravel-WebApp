@@ -22,33 +22,32 @@ namespace RatedTravel.Data.DbConfigurations
                 .HasForeignKey(rr => rr.RestaurantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //builder.HasData(
-            //    new Restaurant
-            //    {
-            //        Id = 1,
-            //        Name = "The Bistro",
-            //        ImageUrl = "BistroLondon.jpg",
-            //        Address = "789 Oak Street",
-            //        Description = "A charming bistro offering delicious cuisine.",
-            //        OverallScore = 4,
-            //        IsActive = true,
-            //        EmployeeId = 1,
-            //        AppUserId = 1,
-            //        CityId = 1
-            //    },
-            //    new Restaurant
-            //    {
-            //        Id = 2,
-            //        Name = "La Trattoria",
-            //        ImageUrl = "LaTrattoria.jpg",
-            //        Address = "321 Pine Street",
-            //        Description = "An Italian restaurant known for its authentic dishes.",
-            //        OverallScore = 4,
-            //        IsActive = true,
-            //        AppUserId = 1,
-            //        CityId = 2
-            //    }
-            //);
+           builder.HasData(
+              new Restaurant
+              {
+                  Id = 1,
+                  Name = "The Bistro",
+                  ImageUrl = "BistroLondon.jpg",
+                  Address = "789 Oak Street",
+                  Description = "A charming bistro offering delicious cuisine.",
+                  OverallScore = 4,
+                  IsActive = true,
+                  
+                  UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
+                  CityId = Guid.Parse("7E980128-41F1-4351-B11F-2E9AC6D0CADE")
+              },
+              new Restaurant
+              {
+                  Id = 2,
+                  Name = "La Trattoria",
+                  ImageUrl = "LaTrattoria.jpg",
+                  Address = "321 Pine Street",
+                  Description = "An Italian restaurant known for its authentic dishes.",
+                  OverallScore = 4,
+                  IsActive = true,
+                  UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
+                  CityId = Guid.Parse("CA551B7B-D085-45E5-B26D-F62B7D6965EE")
+              });
         }
     }
 }
