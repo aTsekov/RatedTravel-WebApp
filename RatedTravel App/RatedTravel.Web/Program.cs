@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Core.Services;
 using RatedTravel.Data;
+using RatedTravel.Data.DataModels;
 using RaterTravel.Common;
 
 
@@ -20,7 +21,7 @@ namespace RatedTravel.Web
             builder.Services.AddDbContext<RatedTravelDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireLowercase = false;

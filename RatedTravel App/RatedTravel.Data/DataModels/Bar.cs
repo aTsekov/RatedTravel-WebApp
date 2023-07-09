@@ -11,6 +11,10 @@ namespace RatedTravel.Data.DataModels
 {
     public class Bar
     {
+        public Bar()
+        {
+            
+        }
         [Key]
         public int Id { get; set; }
 
@@ -36,16 +40,15 @@ namespace RatedTravel.Data.DataModels
 
         public bool IsActive { get; set; }
 
-        public int? EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
 
         public virtual Employee Employee { get; set; } = null!;
 
-        public int AppUserId { get; set; }
-        public virtual AppUser AppUser { get; set; } = null!;
+        public Guid UserId { get; set; }
+        public virtual ApplicationUser User { get; set; } = null!;
 
-        [Required]
         [ForeignKey("City")]
-        public int CityId { get; set; }
+        public Guid CityId { get; set; }
 
         public virtual City City { get; set; } = null!;
         public virtual ICollection<BarReviewAndRate> Reviews { get; set; } = new List<BarReviewAndRate>();

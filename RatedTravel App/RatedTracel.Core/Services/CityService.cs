@@ -20,14 +20,14 @@ namespace RatedTravel.Core.Services
         }
         public async Task<IEnumerable<IndexViewModel>> OurCitiesAsync()
         {
-            IEnumerable<IndexViewModel> ourCities = await this.dbContext.Cities.OrderBy( c => c.Id)
-                .Select( c => new IndexViewModel()
+            IEnumerable<IndexViewModel> ourCities = await this.dbContext.Cities.OrderBy(c => c.Id)
+                .Select(c => new IndexViewModel()
                 {
-                    Id = c.Id,
+                    Id = c.Id.ToString(),
                     Name = c.Name,
                     ImageUrl = c.ImageUrl
                 }).ToListAsync();
-
+           
             return ourCities;
         }
     }

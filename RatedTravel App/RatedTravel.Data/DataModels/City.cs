@@ -11,8 +11,13 @@ namespace RatedTravel.Data.DataModels
     
     public class City
     {
+        public City()
+        {
+            this.Id = new Guid();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(CityNameMaxLength)]
@@ -36,12 +41,12 @@ namespace RatedTravel.Data.DataModels
 
         public bool IsActive { get; set; }
 
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
 
         public virtual Employee Employee { get; set; } = null!;
 
-        public int? AppUserId { get; set; }
-        public virtual AppUser AppUser { get; set; } = null!;
+        public Guid? UserId { get; set; }
+        public virtual ApplicationUser? User { get; set; }
         public virtual ICollection<Bar> Bars { get; set; } = new List<Bar>();
         public virtual ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
         public virtual ICollection<Attraction> Attractions { get; set; } = new List<Attraction>();

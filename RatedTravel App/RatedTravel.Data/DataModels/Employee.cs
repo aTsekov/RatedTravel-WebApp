@@ -12,12 +12,12 @@ namespace RatedTravel.Data.DataModels
     {
         public Employee()
         {
-            
+            this.Id = Guid.NewGuid();
             this.OwnedCities = new HashSet<City>();
         }
 
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(EmployeeNameMaxLength)]
@@ -27,9 +27,9 @@ namespace RatedTravel.Data.DataModels
         [MaxLength(EmployeePhoneMaxLength)]
         public string PhoneNumber { get; set; } = null!;
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        public virtual AppUser AppUser { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
 
         public virtual ICollection<City> OwnedCities { get; set; }
     }

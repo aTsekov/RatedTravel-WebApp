@@ -12,8 +12,8 @@ using RatedTravel.Data;
 namespace RatedTravel.Data.Migrations
 {
     [DbContext(typeof(RatedTravelDbContext))]
-    [Migration("20230704143639_seeding")]
-    partial class seeding
+    [Migration("20230709140243_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,10 +24,11 @@ namespace RatedTravel.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -51,7 +52,7 @@ namespace RatedTravel.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,9 +66,8 @@ namespace RatedTravel.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -76,20 +76,100 @@ namespace RatedTravel.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("RatedTravel.Data.DataModels.ApplicationUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -143,93 +223,6 @@ namespace RatedTravel.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Attraction", b =>
@@ -240,22 +233,16 @@ namespace RatedTravel.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AppUserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -272,42 +259,21 @@ namespace RatedTravel.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("WorthVisitingScore")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId1");
-
                     b.HasIndex("CityId");
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Attractions");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AppUserId = 1,
-                            CityId = 1,
-                            Description = "Explore the rich history of our city at the Historical Museum.",
-                            ImageUrl = "HistoricalMuseumLondon.jpg",
-                            IsActive = true,
-                            Name = "Historical Museum",
-                            WorthVisitingScore = 5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AppUserId = 1,
-                            CityId = 2,
-                            Description = "Immerse yourself in the beauty of nature at our Botanical Garden.",
-                            ImageUrl = "BotanicalGardenParis.jpg",
-                            IsActive = true,
-                            Name = "Botanical Garden",
-                            WorthVisitingScore = 4
-                        });
+                    b.ToTable("Attractions");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Bar", b =>
@@ -323,22 +289,16 @@ namespace RatedTravel.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AppUserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -358,6 +318,9 @@ namespace RatedTravel.Data.Migrations
                     b.Property<int>("OverallScore")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Website")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -365,42 +328,13 @@ namespace RatedTravel.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId1");
-
                     b.HasIndex("CityId");
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Bars");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "123 Main Street",
-                            AppUserId = 1,
-                            CityId = 1,
-                            Description = "A cozy pub with a wide selection of beers.",
-                            EmployeeId = 1,
-                            ImageUrl = "ThePubLondon.jpg",
-                            IsActive = true,
-                            Name = "The Pub",
-                            OverallScore = 4,
-                            Website = "https://www.londonpub.imperialhotels.co.uk"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "456 Elm Street",
-                            AppUserId = 1,
-                            CityId = 2,
-                            Description = "A popular bar known for its friendly atmosphere.",
-                            ImageUrl = "ParisBar.jpg",
-                            IsActive = true,
-                            Name = "Cheers Bar",
-                            OverallScore = 4,
-                            Website = "https://lecalbarcocktail.com/"
-                        });
+                    b.ToTable("Bars");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.BarReviewAndRate", b =>
@@ -441,45 +375,13 @@ namespace RatedTravel.Data.Migrations
                     b.HasIndex("BarId");
 
                     b.ToTable("BarReviewsAndRates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BarId = 1,
-                            IsActive = true,
-                            LocationRate = 4,
-                            MusicRate = 4,
-                            PriceRate = 3,
-                            ReviewText = "Great atmosphere and friendly staff!",
-                            ServiceRate = 5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BarId = 2,
-                            IsActive = true,
-                            LocationRate = 3,
-                            MusicRate = 5,
-                            PriceRate = 2,
-                            ReviewText = "Lively place with good music, but drinks are a bit overpriced.",
-                            ServiceRate = 4
-                        });
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.City", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AppUserId1")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -491,8 +393,8 @@ namespace RatedTravel.Data.Migrations
                         .HasMaxLength(3000)
                         .HasColumnType("nvarchar(3000)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -515,51 +417,23 @@ namespace RatedTravel.Data.Migrations
                     b.Property<int>("TransportScore")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("AppUserId1");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Cities");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Country = "United Kingdom",
-                            Description = "London is the capital and largest city of England and the United Kingdom. It is a vibrant and diverse city known for its rich history, iconic landmarks, and cultural attractions. From the majestic Tower of London to the bustling streets of Covent Garden, there is something for everyone in this cosmopolitan metropolis.",
-                            EmployeeId = 1,
-                            ImageUrl = "London.jpg",
-                            IsActive = true,
-                            Name = "London",
-                            NightlifeScore = 8,
-                            TransportScore = 9
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Country = "France",
-                            Description = "Paris, the capital of France, is a city renowned for its art, fashion, and cuisine. With its world-famous landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, Paris attracts millions of visitors each year. The city's charming streets, sidewalk cafes, and romantic atmosphere make it a favorite destination for couples and art enthusiasts.",
-                            EmployeeId = 1,
-                            ImageUrl = "Paris.jpg",
-                            IsActive = true,
-                            Name = "Paris",
-                            NightlifeScore = 9,
-                            TransportScore = 8
-                        });
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -571,23 +445,14 @@ namespace RatedTravel.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FullName = "Antoni Tsekov",
-                            PhoneNumber = "1234567890",
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Restaurant", b =>
@@ -603,22 +468,16 @@ namespace RatedTravel.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AppUserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -638,42 +497,18 @@ namespace RatedTravel.Data.Migrations
                     b.Property<int>("OverallScore")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("AppUserId1");
+                    b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Restaurants");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "789 Oak Street",
-                            AppUserId = 1,
-                            CityId = 1,
-                            Description = "A charming bistro offering delicious cuisine.",
-                            EmployeeId = 1,
-                            ImageUrl = "BistroLondon.jpg",
-                            IsActive = true,
-                            Name = "The Bistro",
-                            OverallScore = 4
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "321 Pine Street",
-                            AppUserId = 1,
-                            CityId = 2,
-                            Description = "An Italian restaurant known for its authentic dishes.",
-                            ImageUrl = "LaTrattoria.jpg",
-                            IsActive = true,
-                            Name = "La Trattoria",
-                            OverallScore = 4
-                        });
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.RestaurantReviewAndRate", b =>
@@ -714,84 +549,53 @@ namespace RatedTravel.Data.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("RestaurantReviewsAndRates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FoodRate = 5,
-                            IsActive = true,
-                            LocationRate = 4,
-                            PriceRate = 3,
-                            RestaurantId = 1,
-                            ReviewText = "Great food and excellent service!",
-                            ServiceRate = 4
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FoodRate = 3,
-                            IsActive = true,
-                            LocationRate = 3,
-                            PriceRate = 4,
-                            RestaurantId = 2,
-                            ReviewText = "Average food quality but the ambiance is nice.",
-                            ServiceRate = 4
-                        });
                 });
 
-            modelBuilder.Entity("RatedTravel.Data.DataModels.AppUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("AppUser");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -800,10 +604,6 @@ namespace RatedTravel.Data.Migrations
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Attraction", b =>
                 {
-                    b.HasOne("RatedTravel.Data.DataModels.AppUser", "AppUser")
-                        .WithMany("CreatedAttractions")
-                        .HasForeignKey("AppUserId1");
-
                     b.HasOne("RatedTravel.Data.DataModels.City", "City")
                         .WithMany("Attractions")
                         .HasForeignKey("CityId")
@@ -814,19 +614,21 @@ namespace RatedTravel.Data.Migrations
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
-                    b.Navigation("AppUser");
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", "User")
+                        .WithMany("CreatedAttractions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("City");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Bar", b =>
                 {
-                    b.HasOne("RatedTravel.Data.DataModels.AppUser", "AppUser")
-                        .WithMany("CreatedBars")
-                        .HasForeignKey("AppUserId1");
-
                     b.HasOne("RatedTravel.Data.DataModels.City", "City")
                         .WithMany("Bars")
                         .HasForeignKey("CityId")
@@ -837,11 +639,17 @@ namespace RatedTravel.Data.Migrations
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
-                    b.Navigation("AppUser");
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", "User")
+                        .WithMany("CreatedBars")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("City");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.BarReviewAndRate", b =>
@@ -857,36 +665,34 @@ namespace RatedTravel.Data.Migrations
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.City", b =>
                 {
-                    b.HasOne("RatedTravel.Data.DataModels.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId1");
-
                     b.HasOne("RatedTravel.Data.DataModels.Employee", "Employee")
                         .WithMany("OwnedCities")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Employee", b =>
                 {
-                    b.HasOne("RatedTravel.Data.DataModels.AppUser", "AppUser")
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Restaurant", b =>
                 {
-                    b.HasOne("RatedTravel.Data.DataModels.AppUser", "AppUser")
-                        .WithMany("CreatedRestaurants")
-                        .HasForeignKey("AppUserId1");
-
                     b.HasOne("RatedTravel.Data.DataModels.City", "City")
                         .WithMany("Restaurants")
                         .HasForeignKey("CityId")
@@ -897,11 +703,17 @@ namespace RatedTravel.Data.Migrations
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
-                    b.Navigation("AppUser");
+                    b.HasOne("RatedTravel.Data.DataModels.ApplicationUser", "User")
+                        .WithMany("CreatedRestaurants")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("City");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.RestaurantReviewAndRate", b =>
@@ -913,6 +725,15 @@ namespace RatedTravel.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("RatedTravel.Data.DataModels.ApplicationUser", b =>
+                {
+                    b.Navigation("CreatedAttractions");
+
+                    b.Navigation("CreatedBars");
+
+                    b.Navigation("CreatedRestaurants");
                 });
 
             modelBuilder.Entity("RatedTravel.Data.DataModels.Bar", b =>
@@ -937,15 +758,6 @@ namespace RatedTravel.Data.Migrations
             modelBuilder.Entity("RatedTravel.Data.DataModels.Restaurant", b =>
                 {
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("RatedTravel.Data.DataModels.AppUser", b =>
-                {
-                    b.Navigation("CreatedAttractions");
-
-                    b.Navigation("CreatedBars");
-
-                    b.Navigation("CreatedRestaurants");
                 });
 #pragma warning restore 612, 618
         }

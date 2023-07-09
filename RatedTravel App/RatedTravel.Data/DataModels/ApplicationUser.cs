@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace RatedTravel.Data.DataModels
 {
-    public class AppUser:IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
-        public AppUser()
+        public ApplicationUser()
         {
+            this.Id = Guid.NewGuid();
             this.CreatedBars= new HashSet<Bar>();
             this.CreatedRestaurants= new HashSet<Restaurant>();
             this.CreatedAttractions= new HashSet<Attraction>();
