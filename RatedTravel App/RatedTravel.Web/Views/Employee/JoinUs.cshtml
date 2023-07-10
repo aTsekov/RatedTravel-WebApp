@@ -1,0 +1,42 @@
+﻿@model BecomeEmployeeFormModel
+@{
+	ViewBag.Title = "Become one of us!";
+}
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-6">
+			<div class="card darkblue text-white border-4">
+				<div class="card-header bg-secondary text-white">
+					<h3 class="mb-0">@ViewBag.Title</h3>
+				</div>
+				<div class="card-body">
+					@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
+					{
+						<div class="alert alert-danger" role="alert">
+							@ViewData.ModelState["Error"].Errors.First().ErrorMessage
+						</div>
+					}
+					<form method="post">
+						<div class="form-group">
+							<label asp-for="FullName" class="text-black">Name:</label>
+							<input asp-for="FullName" class="form-control" placeholder="John Doe">
+							<span asp-validation-for="FullName" class="small text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="PhoneNumber" class="text-black">Phone Number:</label>
+							<input asp-for="PhoneNumber" class="form-control" placeholder="+32 499-00-00-00">
+							<span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+						</div>
+						<div class="text-center">
+							<input class="btn btn-primary mt-3" type="submit" value="Save" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

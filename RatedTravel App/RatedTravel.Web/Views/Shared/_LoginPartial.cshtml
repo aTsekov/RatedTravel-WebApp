@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using RatedTravel.Data.DataModels
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -7,13 +8,13 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-white btn btn-white" asp-area="" asp-controller="Employee" asp-action="JoinUs">Become one of us!</a>
+            <a class="nav-link text-white btn btn-white" asp-area="" asp-controller="Employee" asp-action="JoinUs">Wanna join us?</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white btn btn-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/">
                 <button type="submit" class="nav-link btn btn-white">Logout</button>
             </form>
         </li>
