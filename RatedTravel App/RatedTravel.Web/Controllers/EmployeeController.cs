@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RatedTravel.Core.Interfaces;
-using static RaterTravel.Common.NotificationMessagesConstants;
+//using static RaterTravel.Common.NotificationMessagesConstants;
+using RaterTravel.Common;
 
 namespace RatedTravel.App.Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace RatedTravel.App.Web.Controllers
             bool isValidForEmployee = await this.employeeService.AgentExistsByIdAndHasMoreThanThreeCreatedItems(userId);
             if (!isValidForEmployee)
             {
-	            TempData[ErrorMessage] = "Sorry but you don't meet the requirements!";
+	            this.TempData[NotificationMessagesConstants.ErrorMessage] = "Sorry but you don't meet the requirements!";
 
 	            return this.RedirectToAction("Index", "Home");
             }
