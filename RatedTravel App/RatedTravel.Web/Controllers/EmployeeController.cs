@@ -50,13 +50,19 @@ namespace RatedTravel.App.Web.Controllers
 	        }
 
 	        bool isPhoneNumberAlreadyUser = await this.employeeService.EmployeeExistsByPhoneNumberAsync(model.PhoneNumber);
+	        bool isNameAlreadyUser = await this.employeeService.EmployeeExistsByNameAsync(model.FullName);
 
 	        if (isPhoneNumberAlreadyUser)
 	        {
-		        this.ModelState.AddModelError(nameof(model.PhoneNumber), "A person with the provided phone number already exists!");
+		        this.ModelState.AddModelError(nameof(model.PhoneNumber), "A user with the provided phone number already exists!");
 
 	        }
-	        if (!this.ModelState.IsValid)
+	        if (isNameAlreadyUser)
+	        {
+		        this.ModelState.AddModelError(nameof(model.FullName), "A user with the same name already exists!");
+
+	        }
+			if (!this.ModelState.IsValid)
 	        {
 		        return this.View(model);
 	        }

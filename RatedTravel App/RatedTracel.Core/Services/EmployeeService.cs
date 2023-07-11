@@ -41,6 +41,13 @@ namespace RatedTravel.Core.Services
 	        return isPhoneNumberAlreadyUsed;
         }
 
+        public async Task<bool> EmployeeExistsByNameAsync(string name)
+        {
+	        bool isNameAlreadyUsed =  await this.dbContext.Employees.AnyAsync( e=> e.FullName == name);
+
+            return isNameAlreadyUsed;
+        }
+
         public async Task CreateEmployeeAsync(string userId, BecomeEmployeeFormModel model)
         {
 	        Employee empl = new Employee()

@@ -11,7 +11,7 @@ namespace RatedTravel.Core.Interfaces
     {
         Task<bool> EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(string userId);
         Task<bool> EmployeeExistsByPhoneNumberAsync(string phoneNumber);
-
+        Task<bool> EmployeeExistsByNameAsync(string name);
         Task CreateEmployeeAsync(string userId, BecomeEmployeeFormModel model);
     }
 }
