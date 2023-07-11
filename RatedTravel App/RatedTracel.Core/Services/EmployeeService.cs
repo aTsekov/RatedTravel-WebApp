@@ -7,10 +7,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Data;
+using RatedTravel.Data.DataModels;
+using RatedTravel.Web.ViewModels.Employee;
 
 namespace RatedTravel.Core.Services
 {
-    public class EmployeeService :IEmploeeService
+    public class EmployeeService :IEmployeeService
     {
         private readonly RatedTravelDbContext dbContext;
 
@@ -18,18 +20,38 @@ namespace RatedTravel.Core.Services
         {
             this.dbContext = dbContext;
         }
-        public async Task<bool> AgentExistsByIdAndHasMoreThanThreeCreatedItems(string userId)
+        public async Task<bool> EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(string userId)
         {
             //You can become an employee only if you are not an employee already and if you have created at least 3 Items
 
-            bool isAlreadyEmployee = await this.dbContext.Employees.AnyAsync(a => a.UserId.ToString() == userId);
-            int counter = await this.dbContext.Attractions.CountAsync(a => a.UserId.ToString() == userId);
+            bool isAlreadyEmployee = await this.dbContext.Employees.AnyAsync(e => e.UserId.ToString() == userId);
+            int counter = await this.dbContext.Attractions.CountAsync(e => e.UserId.ToString() == userId);
             counter += await this.dbContext.Bars.CountAsync(b => b.UserId.ToString() == userId);
             counter += await this.dbContext.Restaurants.CountAsync(r => r.UserId.ToString() == userId);
 
             bool isValidToBecomeEmployee = !isAlreadyEmployee && counter >=3;
 
             return isValidToBecomeEmployee;
+        }
+
+        public async Task<bool> EmployeeExistsByPhoneNumberAsync(string phoneNumber)
+        {
+	        bool isPhoneNumberAlreadyUsed = await this.dbContext.Employees.AnyAsync(e => e.PhoneNumber == phoneNumber);
+
+	        return isPhoneNumberAlreadyUsed;
+        }
+
+        public async Task CreateEmployeeAsync(string userId, BecomeEmployeeFormModel model)
+        {
+	        Employee empl = new Employee()
+	        {
+		        FullName = model.FullName,
+		        PhoneNumber = model.PhoneNumber,
+		        UserId = Guid.Parse(userId),
+	        };
+           await this.dbContext.Employees.AddAsync(empl);
+           await this.dbContext.SaveChangesAsync();
+
         }
     }
 }

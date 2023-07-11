@@ -1,0 +1,28 @@
+﻿@model BecomeEmployeeFormModel
+@{
+	ViewBag.Title = "Welcome";
+}
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-6">
+			<div class="card darkblue text-white border-4">
+				<div class="card-header bg-secondary text-white">
+					<h3 class="mb-0">@ViewBag.Title</h3>
+				</div>
+				<div class="card-body text-black">
+					<p>Welcome to the team. Apart from being able to add attractions, Bars and Restaurants, you are now able to add Cities as well and grow our network!</p>
+					<p class="lead">
+						@if (User.Identity?.IsAuthenticated ?? false)
+						{
+							<a asp-controller="City" asp-action="Add" class="btn btn-secondary btn-lg" role="button" style="color: white;">Add City</a>
+						}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
