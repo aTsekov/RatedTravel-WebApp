@@ -34,6 +34,20 @@ namespace RatedTravel.Core.Services
             return isValidToBecomeEmployee;
         }
 
+        public async Task<bool> EmployeeExistsByIdAsync(string userId)
+        {
+			bool isAlreadyEmployee = await this.dbContext.Employees.AnyAsync(e => e.UserId.ToString() == userId);
+
+			return isAlreadyEmployee;
+        }
+
+        public async Task<Employee> EmployeeIdAsync(string userId)
+        {
+	        var employee = await  dbContext.Employees.FirstOrDefaultAsync(e => e.Id.ToString() == userId);
+
+	        return employee;
+        }
+
         public async Task<bool> EmployeeExistsByPhoneNumberAsync(string phoneNumber)
         {
 	        bool isPhoneNumberAlreadyUsed = await this.dbContext.Employees.AnyAsync(e => e.PhoneNumber == phoneNumber);

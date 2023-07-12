@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Security.Claims" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RatedTravel.Data\RatedTravel.Data.csproj" />
     <ProjectReference Include="..\RatedTravel.Web.ViewModels\RatedTravel.Web.ViewModels.csproj" />
     <ProjectReference Include="..\RaterTravel.Common\RaterTravel.Common.csproj" />

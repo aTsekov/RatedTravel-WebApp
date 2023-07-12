@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RatedTravel.Core.Interfaces;
@@ -24,6 +23,7 @@ namespace RatedTravel.App.Web.Controllers
         public async Task<IActionResult> JoinUs()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
 
             bool isValidForEmployee = await this.employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
             if (!isValidForEmployee)
