@@ -1,5 +1,4 @@
-﻿
-@model CityFormModel 
+﻿@model CityFormModel
 
 <div class="container-fluid bg-lightblue-transparent text-white py-5">
     <div class="row justify-content-center align-items-center">
@@ -11,30 +10,30 @@
                 <div class="card-body">
                     <form asp-controller="City" asp-action="AddCity" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="name" class="text-black">City Name:</label>
-                            <input type="text" class="form-control bg-lightblue text-black" id="name" name="name" required>
+                            <label for="Name" class="text-black">City Name:</label>
+                            <input type="text" class="form-control bg-lightblue text-black" id="Name" name="Name" required>
                         </div>
                         <div class="form-group">
-                            <label for="country" class="text-black">Country:</label>
-                            <input type="text" class="form-control bg-lightblue text-black" id="country" name="country" required>
+                            <label for="Country" class="text-black">Country:</label>
+                            <input type="text" class="form-control bg-lightblue text-black" id="Country" name="Country" required>
                         </div>
                         <div class="form-group">
-                            <label for="image" class="text-black">Upload Image:</label>
+                            <label for="ImageFile" class="text-black">Upload Image:</label>
                             <div class="input-group">
-                                <input type="file" class="form-control-file bg-lightblue text-black" id="image" name="image">
+                                <input type="file" class="form-control-file bg-lightblue text-black" id="ImageFile" name="ImageFile">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="text-black">Description:</label>
-                            <textarea class="form-control bg-lightblue text-black" id="description" name="description" rows="3" required></textarea>
+                            <label for="Description" class="text-black">Description:</label>
+                            <textarea class="form-control bg-lightblue text-black" id="Description" name="Description" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="nightlifeScore" class="text-black">Night Life Score (1-5):</label>
-                            <input type="number" class="form-control bg-lightblue text-black" id="nightlifeScore" name="nightlifeScore" min="1" max="5" required>
+                            <label for="NightlifeScore" class="text-black">Night Life Score (1-5):</label>
+                            <input type="number" class="form-control bg-lightblue text-black" id="NightlifeScore" name="NightlifeScore" min="1" max="5" required>
                         </div>
                         <div class="form-group">
-                            <label for="transportationScore" class="text-black">Transportation Score (1-5):</label>
-                            <input type="number" class="form-control bg-lightblue text-black" id="transportationScore" name="transportScore" min="1" max="5" required>
+                            <label for="TransportScore" class="text-black">Transportation Score (1-5):</label>
+                            <input type="number" class="form-control bg-lightblue text-black" id="TransportScore" name="TransportScore" min="1" max="5" required>
                         </div>
 
                         <button class="btn card-header bg-secondary text-white border">Add City</button>
@@ -44,3 +43,5 @@
         </div>
     </div>
 </div>
+
+                            
