@@ -76,8 +76,8 @@ namespace RatedTravel.App.Web.Controllers
 	        {
 				
 				var employee = await employeeService.EmployeeIdAsync(userId);
-				var emplId = employee.Id.ToString(); 
-				await cityService.CreateCityAsync(emplId, userId, model);
+				var emplId = employee.Id.ToString();
+
                 // Handle the uploaded image file
                 if (model.ImageFile != null && model.ImageFile.Length > 0)
                 {
@@ -93,9 +93,7 @@ namespace RatedTravel.App.Web.Controllers
                         await model.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    // Update the city entity with the image path
-                    model.ImageUrl = "/images/" + fileName;
-                    await cityService.UpdateCityAsync(model);
+                    await cityService.CreateCityAsync(emplId, userId, model);
                 }
 
             }

@@ -43,7 +43,8 @@ namespace RatedTravel.Core.Services
 
         public async Task<Employee> EmployeeIdAsync(string userId)
         {
-	        var employee = await  dbContext.Employees.FirstOrDefaultAsync(e => e.Id.ToString() == userId);
+            userId.ToUpper();
+	        var employee = await  dbContext.Employees.FirstOrDefaultAsync(e => e.UserId.ToString() == userId);
 
 	        return employee;
         }

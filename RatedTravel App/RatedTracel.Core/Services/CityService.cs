@@ -39,53 +39,51 @@ namespace RatedTravel.Core.Services
 			return await dbContext.Cities.AnyAsync(c => c.Name == city);
 		}
 
-		
 
-		public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
-		{
-            public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
+
+
+        public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
+        {
+            City newCity = new City()
             {
-                City newCity = new City()
+                Name = formModel.Name,
+                Country = formModel.Country,
+                Description = formModel.Description,
+                NightlifeScore = formModel.NightlifeScore,
+                TransportScore = formModel.TransportScore,
+                EmployeeId = Guid.Parse(emplId),
+                UserId = Guid.Parse(userId)
+            };
+
+            // Handle the uploaded image file
+            if (formModel.ImageFile != null && formModel.ImageFile.Length > 0)
+            {
+                // Generate the filename for the image using the city name
+                var extension = Path.GetExtension(formModel.ImageFile.FileName);
+                var fileName = formModel.Name + extension;
+                var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                // Save the image file to the specified path
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    Name = formModel.Name,
-                    Country = formModel.Country,
-                    Description = formModel.Description,
-                    NightlifeScore = formModel.NightlifeScore,
-                    TransportScore = formModel.TransportScore,
-                    EmployeeId = Guid.Parse(emplId),
-                    UserId = Guid.Parse(userId)
-                };
-                
-
-                // Handle the uploaded image file
-                if (formModel.ImageFile != null && formModel.ImageFile.Length > 0)
-                {
-                    // Generate the filename for the image using the city name
-                    var fileName = formModel.Name + "_" + formModel.ImageFile.FileName;
-
-                    // Define the file path within the wwwroot folder where the image will be saved
-                    var filePath = Path.Combine("wwwroot", "images", fileName);
-
-                    // Save the image file to the specified path
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await formModel.ImageFile.CopyToAsync(fileStream);
-                    }
-
-                    // Update the city entity with the image path
-                    newCity.ImageUrl = "/images/" + fileName;
-                }
-                else
-                {
-                    // If the image file is not uploaded, set the image URL to null
-                    newCity.ImageUrl = null;
+                    await formModel.ImageFile.CopyToAsync(fileStream);
                 }
 
-                await this.dbContext.Cities.AddAsync(newCity);
-                await this.dbContext.SaveChangesAsync();
+                // Update the city entity with the image path
+                newCity.ImageUrl = fileName;
+            }
+            else
+            {
+                // If the image file is not uploaded, set the image URL to null
+                newCity.ImageUrl = null;
             }
 
+            await this.dbContext.Cities.AddAsync(newCity);
+            await this.dbContext.SaveChangesAsync();
         }
+
+
+
 
     }
 }
