@@ -82,9 +82,19 @@ namespace RatedTravel.Core.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task SelectCityAsync(CitySelectModel model)
+        {
+             model = await this.dbContext.Cities
+                .Select(c => new CitySelectModel()
+                {
+                    Name = c.Name,
+                    Country = c.Country,
+                    Description = c.Description,
+                    ImageUrl = c.ImageUrl,
+                }).
 
-
-
+            return model;
+        }
     }
 }
     
