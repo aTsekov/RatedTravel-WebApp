@@ -78,8 +78,27 @@ namespace RatedTravel.App.Web.Controllers
 				var employee = await employeeService.EmployeeIdAsync(userId);
 				var emplId = employee.Id.ToString(); 
 				await cityService.CreateCityAsync(emplId, userId, model);
+                // Handle the uploaded image file
+                if (model.ImageFile != null && model.ImageFile.Length > 0)
+                {
+                    // Generate the filename for the image using the city name
+                    var fileName = model.Name + "_" + model.ImageFile.FileName;
 
-			}
+                    // Define the file path within the wwwroot folder where the image will be saved
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                    // Save the image file to the specified path
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    // Update the city entity with the image path
+                    model.ImageUrl = "/images/" + fileName;
+                    await cityService.UpdateCityAsync(model);
+                }
+
+            }
 	        catch (Exception)
 	        {
 		        this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";

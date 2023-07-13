@@ -43,42 +43,51 @@ namespace RatedTravel.Core.Services
 
 		public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
 		{
-			City newCity = new City()
-			{
-				Name = formModel.Name,
-				Country = formModel.Country,
-				Description = formModel.Description,
-				NightlifeScore = formModel.NightlifeScore,
-				TransportScore = formModel.TransportScore,
-				EmployeeId = Guid.Parse(emplId),
-				UserId = Guid.Parse(userId)
-			};
+            public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
+            {
+                City newCity = new City()
+                {
+                    Name = formModel.Name,
+                    Country = formModel.Country,
+                    Description = formModel.Description,
+                    NightlifeScore = formModel.NightlifeScore,
+                    TransportScore = formModel.TransportScore,
+                    EmployeeId = Guid.Parse(emplId),
+                    UserId = Guid.Parse(userId)
+                };
+                
 
-			await this.dbContext.Cities.AddAsync(newCity);
-			await this.dbContext.SaveChangesAsync();
+                // Handle the uploaded image file
+                if (formModel.ImageFile != null && formModel.ImageFile.Length > 0)
+                {
+                    // Generate the filename for the image using the city name
+                    var fileName = formModel.Name + "_" + formModel.ImageFile.FileName;
 
-			// Handle the uploaded image file
-			if (formModel.ImageFile != null && formModel.ImageFile.Length > 0)
-			{
-				// Generate the filename for the image using the city name
-				var fileName = formModel.Name + "_" + formModel.ImageFile.FileName;
+                    // Define the file path within the wwwroot folder where the image will be saved
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
 
-				// Define the file path within the wwwroot folder where the image will be saved
-				var filePath = Path.Combine("wwwroot", "images", fileName);
+                    // Save the image file to the specified path
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formModel.ImageFile.CopyToAsync(fileStream);
+                    }
 
-				// Save the image file to the specified path
-				using (var fileStream = new FileStream(filePath, FileMode.Create))
-				{
-					await formModel.ImageFile.CopyToAsync(fileStream);
-				}
+                    // Update the city entity with the image path
+                    newCity.ImageUrl = "/images/" + fileName;
+                }
+                else
+                {
+                    // If the image file is not uploaded, set the image URL to null
+                    newCity.ImageUrl = null;
+                }
 
-				// Update the city entity with the image path
-				newCity.ImageUrl = "/images/" + fileName;
-				await dbContext.SaveChangesAsync();
-			}
-		}
+                await this.dbContext.Cities.AddAsync(newCity);
+                await this.dbContext.SaveChangesAsync();
+            }
 
-	}
+        }
+
+    }
 }
     
 
