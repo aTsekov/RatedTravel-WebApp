@@ -14,5 +14,7 @@ namespace RatedTravel.Core.Interfaces
         Task<bool> DoesCityExistsAsync(string city);
 
         Task CreateCityAsync(string emplId, string userId, CityFormModel formModel);
+
+        Task SelectCityAsync(CitySelectModel model);
     }
 }

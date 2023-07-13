@@ -20,11 +20,12 @@ namespace RatedTravel.App.Web.Controllers
 	        this.employeeService = employeeService;
 			this.cityService = cityService;
         }
-		//[AllowAnonymous]
-		//public Task<IActionResult> SelectCity()
-		//{
-		//	return View();
-		//}
+		[AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> SelectCity(CitySelectModel model)
+		{
+			return View(model);
+		}
 
 		[HttpGet]
         //Checking if the user is allowed to add a city or not. 
