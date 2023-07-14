@@ -36,7 +36,7 @@ namespace RatedTravel.Core.Services
 
         public async Task<bool> EmployeeExistsByIdAsync(string userId)
         {
-			bool isAlreadyEmployee = await this.dbContext.Employees.AnyAsync(e => e.UserId.ToString() == userId);
+			bool isAlreadyEmployee = await this.dbContext.Employees.AnyAsync(e => e.Id.ToString() == userId);
 
 			return isAlreadyEmployee;
         }
@@ -74,6 +74,15 @@ namespace RatedTravel.Core.Services
            await this.dbContext.Employees.AddAsync(empl);
            await this.dbContext.SaveChangesAsync();
 
+        }
+
+        public async Task<bool> EmployeeExistsByUserIdAsync(string userId)
+        {
+            bool result = await this.dbContext
+                .Employees
+                .AnyAsync(a => a.UserId.ToString() == userId);
+
+            return result;
         }
     }
 }

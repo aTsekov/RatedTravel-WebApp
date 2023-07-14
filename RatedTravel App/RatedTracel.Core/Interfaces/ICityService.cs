@@ -16,5 +16,12 @@ namespace RatedTravel.Core.Interfaces
         Task CreateCityAsync(string emplId, string userId, CityFormModel formModel);
 
         Task<CitySelectModel> SelectCityAsync(string cityId);
+
+        Task DeleteCityAsync(string cityId);
+
+        Task<CityFormModel> EditAsync(string cityId);
+        public Task<bool> DoesCityExistsByIdAsync(string cityId);
+
+        public Task EditCityByIdAndFormModelAsync(string houseId, CityFormModel cityFormModel);
     }
 }

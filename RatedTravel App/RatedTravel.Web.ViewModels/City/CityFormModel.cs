@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using Microsoft.AspNetCore.Http;
 using static RaterTravel.Common.ModelsValidationConstants.CityFormModel;
 using static RaterTravel.Common.GeneralApplicationConstants;
@@ -35,6 +36,8 @@ namespace RatedTravel.Web.ViewModels.City
 		[Range(MinScore, MaxScore)]
 		[Display(Name = "Transportation Score")]
 		public int TransportScore { get; set; }
+
+		public string? EmployeeId { get; set; }
 
 
 

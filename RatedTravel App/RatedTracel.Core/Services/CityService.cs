@@ -39,7 +39,23 @@ namespace RatedTravel.Core.Services
 			return await dbContext.Cities.AnyAsync(c => c.Name == city);
 		}
 
+        public async Task<bool> DoesCityExistsByIdAsync(string cityId)
+        {
+            return await dbContext.Cities.AnyAsync(c => c.Id.ToString() == cityId);
+        }
 
+        public async Task EditCityByIdAndFormModelAsync(string cityId, CityFormModel cityFormModel)
+        {
+            City city = await this.dbContext.Cities.Where(c => c.IsActive).FirstAsync(c => c.Id.ToString() == cityId);
+
+            city.Name = cityFormModel.Name;
+            city.Country = cityFormModel.Country;
+            city.Description = cityFormModel.Description;
+            city.NightlifeScore = cityFormModel.NightlifeScore;
+            city.TransportScore = cityFormModel.TransportScore;
+
+            await this.dbContext.SaveChangesAsync();
+        }
 
 
         public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
@@ -100,6 +116,29 @@ namespace RatedTravel.Core.Services
 
 
         }
+        public async Task<CityFormModel> EditAsync(string cityId)
+        {
+            City? cityToEdit = await this.dbContext.Cities.FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
+
+            return new CityFormModel
+            {
+
+                Name = cityToEdit.Name,
+                Country = cityToEdit.Country,
+                Description = cityToEdit.Description,
+                NightlifeScore = cityToEdit.NightlifeScore,
+                TransportScore = cityToEdit.TransportScore,
+                
+            };
+        }
+
+
+        public Task DeleteCityAsync(string cityId)
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }
     

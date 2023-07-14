@@ -82,7 +82,7 @@ namespace RatedTravel.App.Web.Controllers
         {
 			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			bool isEmployee = await this.employeeService.EmployeeExistsByIdAsync(userId);
+			bool isEmployee = await this.employeeService.EmployeeExistsByUserIdAsync(userId);
 
 	        if (!isEmployee)
 	        {
@@ -141,6 +141,84 @@ namespace RatedTravel.App.Web.Controllers
 			//TODO: to return to a specific city once I create that action and view. 
 			return RedirectToAction("Index", "Home");
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditCity(string id)
+        {
+            bool cityExists = await cityService.DoesCityExistsByIdAsync(id);
+
+            if (!cityExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exists!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isEmployee =
+                await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+            if (!isEmployee)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must part of our team in order to edit the city!";
+
+                return this.RedirectToAction("JoinUs", "Employee");
+            }
+
+            try
+            {
+                CityFormModel formModel = await this.cityService
+                    .EditAsync(id);
+               
+
+                return this.View(formModel);
+            }
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                return this.RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, CityFormModel model)
+        {
+
+
+            bool cityExists = await cityService.DoesCityExistsByIdAsync(id);
+
+            if (!cityExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exists!";
+
+                return RedirectToAction("Index", "Home");
+            }
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isEmployee =
+                await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+            if (!isEmployee)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must part of our team in order to edit the city!";
+
+                return this.RedirectToAction("JoinUs", "Employee");
+            }
+
+            try
+            {
+                await this.cityService.EditCityByIdAndFormModelAsync(id, model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty,
+                    "Unexpected error occurred while trying to update the City. Please try again later or contact administrator!");
+                
+                return View(model);
+            }
+
+            this.TempData[NotificationMessagesConstants.SuccessMessage] = "The city was edited successfully!";
+             return RedirectToAction("SelectCity", "City", new { id });
         }
 
 
