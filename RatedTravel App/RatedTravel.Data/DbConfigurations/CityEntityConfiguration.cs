@@ -45,8 +45,8 @@ namespace RatedTravel.Data.DbConfigurations
                         Country = "United Kingdom",
                         Description = "London is the capital and largest city of England and the United Kingdom. It is a vibrant and diverse city known for its rich history, iconic landmarks, and cultural attractions. From the majestic Tower of London to the bustling streets of Covent Garden, there is something for everyone in this cosmopolitan metropolis.",
                         ImageUrl = "London.jpg",
-                        NightlifeScore = 8,
-                        TransportScore = 9,
+                        NightlifeScore = 4,
+                        TransportScore = 5,
                         IsActive = true,
                         EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
                     },
@@ -57,8 +57,8 @@ namespace RatedTravel.Data.DbConfigurations
                         Country = "France",
                         Description = "Paris, the capital of France, is a city renowned for its art, fashion, and cuisine. With its world-famous landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, Paris attracts millions of visitors each year. The city's charming streets, sidewalk cafes, and romantic atmosphere make it a favorite destination for couples and art enthusiasts.",
                         ImageUrl = "Paris.jpg",
-                        NightlifeScore = 9,
-                        TransportScore = 8,
+                        NightlifeScore = 4,
+                        TransportScore = 4,
                         IsActive = true,
                         EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
                     }

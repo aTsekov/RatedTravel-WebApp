@@ -1,24 +1,84 @@
-﻿@model CitySelectModel
+﻿@using RatedTravel.Core.Interfaces
+@model CitySelectModel
 
-<div class="container">
-	<div class="row">
-		<div class="col-4">
-			<img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="City Image">
-		</div>
-		<div class="card col-8 border-0">
-			<p style="font-size: 25px;"><u>@Model.Name</u></p>
-			<p>Located in: <b>@Model.Country</b></p>
-			<p>@Model.Description</p>
-			<div class="form-inline">
-				@if (User.Identity?.IsAuthenticated ?? false)
-				{
-					@if (Model.EmployeeId != null)
-					{
-						<a class="btn btn-warning" asp-controller="City" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-						<a class="ml-2 btn btn-danger" asp-controller="City" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-					}
-				}
-			</div>
-		</div>
-	</div>
+@inject IEmployeeService EmployeeService
+
+@{
+    bool isUserEmployee = await EmployeeService.EmployeeExistsByIdAsync(Model.EmployeeId);
+}
+
+@{
+    ViewData["Title"] = "Welcome to " + Model.Name;
+}
+
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card darkblue text-white border-4">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">@Model.Name</h3>
+                </div>
+                <div class="card-body text-black">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+                                <img class="card-img-top" style="max-height: 300px;" src="~/Images/@Model.ImageUrl" alt="City Image">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                <p>Located in: <b>@Model.Country</b></p>
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col text-left">
+                                <p>
+                                    Nightlife Score
+                                    <div class="starability-result" data-rating="@Model.NightlifeScore"></div>
+                                    
+                                </p>
+                            </div>
+                            <div class="col text-right">
+                                <p>
+                                    Transportation Score
+                                    <div class="starability-result" data-rating="@Model.TransportScore"></div>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                @if (isUserEmployee == true)
+                                {
+                                    <a class="btn btn-warning" asp-controller="City" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                    <a class="ml-2 btn btn-danger" asp-controller="City" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                                }
+                                
+                                <a class="btn card-header bg-secondary text-white border" asp-controller="Home" asp-action="Index">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<style>
+    .score-number {
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.starability-result').starability();
+    });
+</script>
