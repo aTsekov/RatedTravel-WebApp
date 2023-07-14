@@ -17,7 +17,7 @@
         <p class="lead">
             @if (User.Identity?.IsAuthenticated?? false)
             {
-                <a asp-controller="City" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add City</a>
+                <a asp-controller="City" asp-action="AddCity" class="btn btn-primary btn-lg" role="button">Add City</a>
             }
         </p>
     </div>
@@ -58,10 +58,10 @@
 					<h3 class="mb-0">Select a City</h3>
 				</div>
 				<div class="card-body">
-					<form asp-controller="City" asp-action="SelectCity">
+					<form asp-controller="City" asp-action="SelectCity" method="get">
 						<div class="form-group">
 							<label for="cities" class="text-black">Select a city:</label>
-							<select class="form-control bg-lightblue text-black" id="cities" name="cities">
+							<select class="form-control bg-lightblue text-black" id="cities" name="cityId">
 								@foreach (var city in cities)
 								{
 									<option value="@city.Id">@city.Name</option>

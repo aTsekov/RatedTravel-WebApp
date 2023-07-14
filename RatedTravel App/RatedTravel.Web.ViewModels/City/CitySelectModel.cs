@@ -9,6 +9,9 @@ namespace RatedTravel.Web.ViewModels.City
     public class CitySelectModel
     {
 
+
+        public string Id { get; set; } = null!;
+
         [Required]
         [StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength)]
         public string Name { get; set; } = null!;
@@ -33,6 +36,8 @@ namespace RatedTravel.Web.ViewModels.City
         [Range(MinScore, MaxScore)]
         [Display(Name = "Transportation Score")]
         public int TransportScore { get; set; }
+
+        public string? EmployeeId { get; set; }
 
     }
 }

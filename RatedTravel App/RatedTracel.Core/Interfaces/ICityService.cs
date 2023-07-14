@@ -15,6 +15,6 @@ namespace RatedTravel.Core.Interfaces
 
         Task CreateCityAsync(string emplId, string userId, CityFormModel formModel);
 
-        Task SelectCityAsync(CitySelectModel model);
+        Task<CitySelectModel> SelectCityAsync(string cityId);
     }
 }

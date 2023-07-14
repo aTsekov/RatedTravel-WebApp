@@ -1,1 +1,24 @@
-﻿
+﻿@model CitySelectModel
+
+<div class="container">
+	<div class="row">
+		<div class="col-4">
+			<img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="City Image">
+		</div>
+		<div class="card col-8 border-0">
+			<p style="font-size: 25px;"><u>@Model.Name</u></p>
+			<p>Located in: <b>@Model.Country</b></p>
+			<p>@Model.Description</p>
+			<div class="form-inline">
+				@if (User.Identity?.IsAuthenticated ?? false)
+				{
+					@if (Model.EmployeeId != null)
+					{
+						<a class="btn btn-warning" asp-controller="City" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+						<a class="ml-2 btn btn-danger" asp-controller="City" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+					}
+				}
+			</div>
+		</div>
+	</div>
+</div>

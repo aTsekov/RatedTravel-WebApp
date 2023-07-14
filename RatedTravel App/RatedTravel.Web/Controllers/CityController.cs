@@ -20,11 +20,43 @@ namespace RatedTravel.App.Web.Controllers
 	        this.employeeService = employeeService;
 			this.cityService = cityService;
         }
-		[AllowAnonymous]
+
         [HttpGet]
-        public async Task<IActionResult> SelectCity(CitySelectModel model)
-		{
-			return View(model);
+        [AllowAnonymous]
+        
+        public async Task<IActionResult> SelectCity(string cityId)
+        {
+	        var currentCity = await cityService.SelectCityAsync(cityId);
+	        string cityName = currentCity.Name;
+
+
+			bool doesCityExists = await this.cityService.DoesCityExistsAsync(cityName);
+
+            if (!doesCityExists)
+            {
+                //Automatically the model state becomes invalid.
+                ModelState.AddModelError(nameof(cityName), "This city doesn't exist! Try another one.");
+            }
+            if (!ModelState.IsValid)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] =
+                    "This city doesn't exist! Try another one.";
+                return RedirectToAction("SelectCity", "City");
+            }
+
+
+            try
+            {
+                CitySelectModel model = await this.cityService.SelectCityAsync(cityId);
+
+                return View(model);
+            }
+            catch (Exception )
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                return this.RedirectToAction("Index", "Home");
+            }
+
 		}
 
 		[HttpGet]
@@ -32,9 +64,9 @@ namespace RatedTravel.App.Web.Controllers
         public async Task<IActionResult> AddCity()
         {
 			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			bool isAgent =
+			bool isEmployee =
 		        await this.employeeService.EmployeeExistsByIdAsync(userId);
-	        if (!isAgent)
+	        if (!isEmployee)
 	        {
 		        this.TempData[NotificationMessagesConstants.ErrorMessage] =
 			        "You have to be part of the team in order to be able to add cities";
@@ -50,9 +82,9 @@ namespace RatedTravel.App.Web.Controllers
         {
 			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			bool isAgent = await this.employeeService.EmployeeExistsByIdAsync(userId);
+			bool isEmployee = await this.employeeService.EmployeeExistsByIdAsync(userId);
 
-	        if (!isAgent)
+	        if (!isEmployee)
 	        {
 		        this.TempData[NotificationMessagesConstants.ErrorMessage] =
 			        "You have to be part of the team in order to be able to add cities";
