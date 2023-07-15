@@ -27,4 +27,9 @@
     <ProjectReference Include="..\RaterTravel.Common\RaterTravel.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Bar\" />
+    <Folder Include="Views\Restaurant\" />
+  </ItemGroup>
+
 </Project>

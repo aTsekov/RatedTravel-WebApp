@@ -33,6 +33,8 @@ namespace RatedTravel.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ICityService, CityService>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+            builder.Services.AddScoped<IBarService, BarService>();
 
             var app = builder.Build();
 
