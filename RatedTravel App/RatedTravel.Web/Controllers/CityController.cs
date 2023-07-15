@@ -65,12 +65,14 @@ namespace RatedTravel.App.Web.Controllers
         {
 			string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			bool isEmployee =
-		        await this.employeeService.EmployeeExistsByIdAsync(userId);
+		        await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+
 	        if (!isEmployee)
 	        {
 		        this.TempData[NotificationMessagesConstants.ErrorMessage] =
 			        "You have to be part of the team in order to be able to add cities";
-		        return RedirectToAction("JoinUs", "Employee");
+		        return RedirectToAction("Index", "Home");
 	        }
 
 	        return View();
@@ -108,8 +110,8 @@ namespace RatedTravel.App.Web.Controllers
 	        try
 	        {
 				
-				var employee = await employeeService.EmployeeIdAsync(userId);
-				var emplId = employee.Id.ToString();
+				var employee = await employeeService.EmployeeByUserIdAsync(userId);
+                var emplId = employee.Id.ToString();
 
                 // Handle the uploaded image file
                 if (model.ImageFile != null && model.ImageFile.Length > 0)
@@ -182,7 +184,7 @@ namespace RatedTravel.App.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, CityFormModel model)
+        public async Task<IActionResult> EditCity(string id, CityFormModel model)
         {
 
 
@@ -218,7 +220,7 @@ namespace RatedTravel.App.Web.Controllers
             }
 
             this.TempData[NotificationMessagesConstants.SuccessMessage] = "The city was edited successfully!";
-             return RedirectToAction("SelectCity", "City", new { id });
+             return RedirectToAction("Index", "Home", new { id });
         }
 
 

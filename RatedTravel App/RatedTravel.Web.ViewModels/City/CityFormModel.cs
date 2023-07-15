@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Http;
 using static RaterTravel.Common.ModelsValidationConstants.CityFormModel;
 using static RaterTravel.Common.GeneralApplicationConstants;
 
-
 namespace RatedTravel.Web.ViewModels.City
 {
 	public class CityFormModel
 	{
+        public string? Id { get; set; } 
 
-		[Required]
+        [Required]
 		[StringLength(CityNameMaxLength, MinimumLength = CityNameMinLength)]
 		public string Name { get; set; } = null!;
 
@@ -43,3 +43,4 @@ namespace RatedTravel.Web.ViewModels.City
 
 	}
 }
+

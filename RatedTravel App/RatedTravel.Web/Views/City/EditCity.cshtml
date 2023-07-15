@@ -8,7 +8,57 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<partial name="_CityFormPartial" model="@Model" />
+
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card darkblue text-white border-4">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">Edit City</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="City" asp-action="EditCity" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="@Model.Name" class="text-black">City Name:</label>
+                            <input asp-for="@Model.Name" class="form-control bg-lightblue text-black" id="Name" name="Name" required>
+                            <span asp-validation-for="Name" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Country" class="text-black">Country:</label>
+                            <input asp-for="Country" class="form-control bg-lightblue text-black" id="Country" name="Country" required>
+                            <span asp-validation-for="Country" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ImageFile" class="text-black">Upload Image:</label>
+                            <div class="input-group">
+                                <input asp-for="ImageFile" class="form-control-file bg-lightblue text-black" id="ImageFile" name="ImageFile">
+                            </div>
+                            <span asp-validation-for="ImageFile" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="text-black">Description:</label>
+                            <textarea asp-for="Description" class="form-control bg-lightblue text-black" id="Description" name="Description" rows="3" required></textarea>
+                            <span asp-validation-for="Description" class="small text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="NightlifeScore" class="text-black">Night Life Score (1-5):</label>
+                            <input asp-for="NightlifeScore" class="form-control bg-lightblue text-black" id="NightlifeScore" name="NightlifeScore" min="1" max="5" required>
+                            <span asp-validation-for="NightlifeScore" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TransportScore" class="text-black">Transportation Score (1-5):</label>
+                            <input asp-for="TransportScore" class="form-control bg-lightblue text-black" id="TransportScore" name="TransportScore" min="1" max="5" required>
+                            <span asp-validation-for="TransportScore" class="small text-danger"></span>
+                        </div>
+
+                        <button class="btn card-header bg-secondary text-white border">Edit City</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
 	<partial name="_ValidationScriptsPartial.cshtml" />

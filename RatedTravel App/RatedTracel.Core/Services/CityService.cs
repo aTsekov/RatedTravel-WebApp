@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Microsoft.EntityFrameworkCore;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Data;
 using RatedTravel.Data.DataModels;
 using RatedTravel.Web.ViewModels.City;
+
 using RatedTravel.Web.ViewModels.Home;
 
 namespace RatedTravel.Core.Services
