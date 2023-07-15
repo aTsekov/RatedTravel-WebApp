@@ -20,7 +20,7 @@ namespace RatedTravel.Core.Services
 
 		public async Task<IEnumerable<IndexViewModel>> OurCitiesAsync()
 		{
-			IEnumerable<IndexViewModel> ourCities = await this.dbContext.Cities.OrderBy(c => c.Id)
+			IEnumerable<IndexViewModel> ourCities = await this.dbContext.Cities.Where(c => c.IsActive == true).OrderBy(c => c.Id)
 				.Select(c => new IndexViewModel()
 				{
 					Id = c.Id.ToString(),
@@ -33,12 +33,12 @@ namespace RatedTravel.Core.Services
 
 		public async Task<bool> DoesCityExistsAsync(string city)
 		{
-			return await dbContext.Cities.AnyAsync(c => c.Name == city);
+			return await dbContext.Cities.Where(c => c.IsActive == true).AnyAsync(c => c.Name == city);
 		}
 
         public async Task<bool> DoesCityExistsByIdAsync(string cityId)
         {
-            return await dbContext.Cities.AnyAsync(c => c.Id.ToString() == cityId);
+            return await dbContext.Cities.Where(c => c.IsActive == true).AnyAsync(c => c.Id.ToString() == cityId);
         }
 
         public async Task EditCityByIdAndFormModelAsync(string cityId, CityFormModel cityFormModel)
@@ -50,6 +50,16 @@ namespace RatedTravel.Core.Services
             city.Description = cityFormModel.Description;
             city.NightlifeScore = cityFormModel.NightlifeScore;
             city.TransportScore = cityFormModel.TransportScore;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteCityByIdAsync(string cityId)
+        {
+            City cityToDelete = await this.dbContext.Cities.Where(c => c.IsActive)
+                .FirstAsync(c => c.Id.ToString() == cityId);
+
+            cityToDelete.IsActive = false;
 
             await this.dbContext.SaveChangesAsync();
         }
@@ -97,7 +107,7 @@ namespace RatedTravel.Core.Services
 
         public async Task<CitySelectModel> SelectCityAsync(string cityId)
         {
-            City? currentCity = await this.dbContext.Cities.FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
+            City? currentCity = await this.dbContext.Cities.Where(c => c.IsActive == true).FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
 
             return new CitySelectModel
             {
@@ -113,9 +123,22 @@ namespace RatedTravel.Core.Services
 
 
         }
+
+        public async Task<CityDeleteModel> GetCityForDelete(string cityId)
+        {
+            City cityToDelete = await this.dbContext.Cities.Where(c => c.IsActive == true)
+                .FirstAsync(c => c.Id.ToString() == cityId);
+            return new CityDeleteModel
+            {
+                Name = cityToDelete.Name,
+                Country = cityToDelete.Country,
+                ImageUrl = cityToDelete.ImageUrl
+            };
+        }
+
         public async Task<CityFormModel> EditAsync(string cityId)
         {
-            City? cityToEdit = await this.dbContext.Cities.FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
+            City? cityToEdit = await this.dbContext.Cities.Where(c => c.IsActive == true).FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
 
             return new CityFormModel
             {
@@ -130,10 +153,7 @@ namespace RatedTravel.Core.Services
         }
 
 
-        public Task DeleteCityAsync(string cityId)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         
     }

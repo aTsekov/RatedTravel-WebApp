@@ -223,6 +223,86 @@ namespace RatedTravel.App.Web.Controllers
              return RedirectToAction("Index", "Home", new { id });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteCity(string id)
+        {
+            bool cityExists = await cityService.DoesCityExistsByIdAsync(id);
+
+            if (!cityExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You cannot delete a city that doesn't exist!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isEmployee =
+                await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+            if (!isEmployee)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must part of our team in order to delete a city!";
+
+                return this.RedirectToAction("JoinUs", "Employee");
+            }
+
+            try
+            {
+                CityDeleteModel deleteModel = await this.cityService
+                    .GetCityForDelete(id);
+
+
+                return this.View(deleteModel);
+            }
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                return this.RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCity(string id, CityDeleteModel model)
+        {
+
+
+            bool cityExists = await cityService.DoesCityExistsByIdAsync(id);
+
+            if (!cityExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exists!";
+
+                return RedirectToAction("Index", "Home");
+            }
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isEmployee =
+                await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+            if (!isEmployee)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must part of our team in order to delete the city!";
+
+                return this.RedirectToAction("JoinUs", "Employee");
+            }
+
+            try
+            {
+                await this.cityService.DeleteCityByIdAsync(id);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty,
+                    "Unexpected error occurred while trying to update the City. Please try again later or contact administrator!");
+
+                return View(model);
+            }
+
+            this.TempData[NotificationMessagesConstants.SuccessMessage] = "The city was deleted successfully!";
+            return RedirectToAction("Index", "Home", new { id });
+        }
+
+
+
 
     }
 }

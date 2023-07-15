@@ -12,11 +12,13 @@ namespace RatedTravel.Core.Interfaces
 
         Task<CitySelectModel> SelectCityAsync(string cityId);
 
-        Task DeleteCityAsync(string cityId);
+        Task<CityDeleteModel> GetCityForDelete(string cityId);
 
         Task<CityFormModel> EditAsync(string cityId);
-        public Task<bool> DoesCityExistsByIdAsync(string cityId);
+         Task<bool> DoesCityExistsByIdAsync(string cityId);
 
-        public Task EditCityByIdAndFormModelAsync(string houseId, CityFormModel cityFormModel);
+         Task EditCityByIdAndFormModelAsync(string houseId, CityFormModel cityFormModel);
+
+         Task DeleteCityByIdAsync(string cityId);
     }
 }

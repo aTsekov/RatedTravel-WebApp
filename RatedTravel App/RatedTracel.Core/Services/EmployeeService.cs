@@ -25,9 +25,9 @@ namespace RatedTravel.Core.Services
             //You can become an employee only if you are not an employee already and if you have created at least 3 Items
 
             bool isAlreadyEmployee = await this.dbContext.Employees.AnyAsync(e => e.UserId.ToString() == userId);
-            int counter = await this.dbContext.Attractions.CountAsync(e => e.UserId.ToString() == userId);
-            counter += await this.dbContext.Bars.CountAsync(b => b.UserId.ToString() == userId);
-            counter += await this.dbContext.Restaurants.CountAsync(r => r.UserId.ToString() == userId);
+            int counter = await this.dbContext.Attractions.Where(c => c.IsActive == true).CountAsync(e => e.UserId.ToString() == userId);
+            counter += await this.dbContext.Bars.Where(c => c.IsActive == true).CountAsync(b => b.UserId.ToString() == userId);
+            counter += await this.dbContext.Restaurants.Where(c => c.IsActive == true).CountAsync(r => r.UserId.ToString() == userId);
 
             bool isValidToBecomeEmployee = !isAlreadyEmployee && counter >=3;
 
