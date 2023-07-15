@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RatedTravel.Core.Interfaces
+
+
+@inject IEmployeeService EmployeeService
+@{
+	string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	bool isEmployee =
+		await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -64,19 +77,40 @@
 					</li>
 					@if (User.Identity?.IsAuthenticated ?? false)
 					{
-						<li class="nav-item">
-							<a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="MyPlaces">Places added by me</a>
-						</li>
+							<li class="nav-item dropdown">
+								<div class="dropdown">
+									<button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown">
+										My Places
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="City" asp-action="AllCities">All City</a>
+										</li>
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="Attraction" asp-action="AllAttractions">All Attractions</a>
+										</li>
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="Bar" asp-action="AllBars">All Bars</a>
+										</li>
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="Restaurant" asp-action="AllRestaurants"> All Restaurants</a>
+										</li>
+									</ul>
+								</div>
+							</li>
 						<li class="nav-item dropdown">
 							<div class="dropdown">
 								<button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown">
 									Add a Place
 								</button>
 								<ul class="dropdown-menu">
-									@*TO DO If user is an employee display the add city as well*@
-									<li>
-										<a class="dropdown-item text-dark" asp-controller="City" asp-action="AddCity">City</a>
-									</li>
+									@if (isEmployee == true)
+									{
+											<li>
+												<a class="dropdown-item text-dark" asp-controller="City" asp-action="AddCity">City</a>
+											</li>
+									}
+									
 									<li>
 										<a class="dropdown-item text-dark" asp-controller="Attraction" asp-action="AddAttraction">Attraction</a>
 									</li>

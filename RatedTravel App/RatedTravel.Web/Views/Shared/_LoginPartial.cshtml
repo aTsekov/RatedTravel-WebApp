@@ -1,15 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RatedTravel.Core.Interfaces
 @using RatedTravel.Data.DataModels
+@using System.Security.Claims
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IEmployeeService EmployeeService
+@{
+    string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool isEmployee =
+        await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+}
+
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-white btn btn-white" asp-area="" asp-controller="Employee" asp-action="JoinUs">Wanna join us?</a>
-        </li>
+	    @if (isEmployee == false)
+	    {
+		    <li class="nav-item">
+			    <a class="nav-link text-white btn btn-white" asp-area="" asp-controller="Employee" asp-action="JoinUs">Wanna join us?</a>
+		    </li>
+	    }
+        
         <li class="nav-item">
             <a class="nav-link text-white btn btn-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
