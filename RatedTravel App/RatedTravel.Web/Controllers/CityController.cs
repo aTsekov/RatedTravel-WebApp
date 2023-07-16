@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Packaging;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Web.ViewModels.City;
 using RaterTravel.Common;
@@ -301,7 +302,26 @@ namespace RatedTravel.App.Web.Controllers
             return RedirectToAction("Index", "Home", new { id });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AllCities()
+        {
+            List<CityAllModel> allCities = new List<CityAllModel>();
 
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isUserEmployee = await this.employeeService.EmployeeExistsByIdAsync(userId);
+
+            try
+            {
+                allCities.AddRange(await cityService.AllCitiesAsync());
+
+                return View(allCities);
+            }
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                return this.RedirectToAction("Index", "Home");
+            }
+        }
 
 
     }

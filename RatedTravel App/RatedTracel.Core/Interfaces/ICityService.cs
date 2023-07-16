@@ -6,6 +6,7 @@ namespace RatedTravel.Core.Interfaces
     public interface ICityService
     {
         Task<IEnumerable<IndexViewModel>> OurCitiesAsync();
+        Task<IEnumerable<CityAllModel>> AllCitiesAsync();
         Task<bool> DoesCityExistsAsync(string city);
 
         Task CreateCityAsync(string emplId, string userId, CityFormModel formModel);

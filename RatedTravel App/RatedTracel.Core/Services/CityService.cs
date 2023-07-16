@@ -18,20 +18,41 @@ namespace RatedTravel.Core.Services
 			this.dbContext = dbContext;
 		}
 
-		public async Task<IEnumerable<IndexViewModel>> OurCitiesAsync()
-		{
-			IEnumerable<IndexViewModel> ourCities = await this.dbContext.Cities.Where(c => c.IsActive == true).OrderBy(c => c.Id)
-				.Select(c => new IndexViewModel()
-				{
-					Id = c.Id.ToString(),
-					Name = c.Name,
-					ImageUrl = c.ImageUrl
-				}).ToListAsync();
+        public async Task<IEnumerable<IndexViewModel>> OurCitiesAsync()
+        {
+            IEnumerable<IndexViewModel> ourCities = await this.dbContext.Cities.Where(c => c.IsActive == true).OrderBy(c => c.Id)
+                .Select(c => new IndexViewModel()
+                {
+                    Id = c.Id.ToString(),
+                    Name = c.Name,
+                    ImageUrl = c.ImageUrl
+                }).ToListAsync();
 
-			return ourCities;
-		}
+            return ourCities;
+        }
 
-		public async Task<bool> DoesCityExistsAsync(string city)
+        public async Task<IEnumerable<CityAllModel>> AllCitiesAsync()
+        {
+
+            List<CityAllModel> cities = await dbContext.Cities
+                .Select(c => new CityAllModel
+                {
+                    Id = c.Id.ToString(),
+                    Name = c.Name,
+                    Country = c.Country,
+                    ImageUrl = c.ImageUrl,
+                    Description = c.Description,
+                    NightlifeScore = c.NightlifeScore,
+                    TransportScore = c.TransportScore,
+                    EmployeeId = c.EmployeeId.ToString()
+                })
+                .ToListAsync();
+
+            return cities;
+
+        }
+
+        public async Task<bool> DoesCityExistsAsync(string city)
 		{
 			return await dbContext.Cities.Where(c => c.IsActive == true).AnyAsync(c => c.Name == city);
 		}
