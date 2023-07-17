@@ -27,5 +27,21 @@ namespace RaterTravel.Common
 			public const int CityDescriptionMinLength = 10;
 			
 		}
-	}
+
+        public static class RestaurantFormModel
+        {
+            public const int RestaurantNameMaxLength = 50;
+            public const int RestaurantNameMinLength = 3;
+
+            public const int RestaurantAddressMaxLength = 150;
+            public const int RestaurantAddressMinLength = 10;
+
+            public const int RestaurantDescriptionMaxLength = 3000;
+            public const int RestaurantDescriptionMinLength = 10;
+
+            public const int RestaurantOverallMaxLength = 1;
+            public const int RestaurantOverallMinLength = 5;
+
+        }
+    }
 }

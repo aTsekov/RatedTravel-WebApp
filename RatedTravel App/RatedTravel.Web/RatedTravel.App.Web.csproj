@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Bar\" />
-    <Folder Include="Views\Restaurant\" />
   </ItemGroup>
 
 </Project>

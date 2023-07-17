@@ -85,6 +85,15 @@ namespace RatedTravel.Core.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task<string> GetCityIdByName(string cityName)
+        {
+            var city = await dbContext.Cities.Where(c => c.IsActive).FirstAsync(c => c.Name == cityName);
+
+            string result = city.Id.ToString();
+
+            return result;
+        }
+
 
         public async Task CreateCityAsync(string emplId, string userId, CityFormModel formModel)
         {
@@ -108,7 +117,7 @@ namespace RatedTravel.Core.Services
                 var filePath = Path.Combine("wwwroot", "images", fileName);
 
                 // Save the image file to the specified path
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                await using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await formModel.ImageFile.CopyToAsync(fileStream);
                 }
