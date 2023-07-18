@@ -14,60 +14,70 @@
 @{
     ViewData["Title"] = "Welcome to " + Model.Name;
 }
-
 <div class="container-fluid bg-lightblue-transparent text-white py-5">
-    <div class="row justify-content-center align-items-center">
-        <div class="col-md-6">
-            <div class="card darkblue text-white border-4">
-                <div class="card-header bg-secondary text-white">
-                    <h3 class="mb-0">@Model.Name</h3>
-                </div>
-                <div class="card-body text-black">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col text-center">
-                                <img class="card-img-top" style="max-height: 300px;" src="~/Images/@Model.ImageUrl" alt="City Image">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col text-center">
-                                <p>Located in: <b>@Model.Country</b></p>
-                                <p>@Model.Description</p>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col text-left">
-                                <p>
-                                    Nightlife Score
-                                    <div class="starability-result" data-rating="@Model.NightlifeScore"></div>
-                                    
-                                </p>
-                            </div>
-                            <div class="col text-right">
-                                <p>
-                                    Transportation Score
-                                    <div class="starability-result" data-rating="@Model.TransportScore"></div>
-                                    
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col text-center">
-                                @if (isEmployee == true)
-                                {
-                                    <a class="btn btn-warning" asp-controller="City" asp-action="EditCity" asp-route-id="@Model.Id">Edit</a>
-                                    <a class="ml-2 btn btn-danger" asp-controller="City" asp-action="DeleteCity" asp-route-id="@Model.Id">Delete</a>
-                                }
-                                
-                                <a class="btn card-header bg-secondary text-white border" asp-controller="Home" asp-action="Index">Back</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-8">
+			<!-- Increased the size of the City card to col-md-8 -->
+			<div class="card darkblue text-white border-4">
+				<div class="card-header bg-secondary text-white">
+					<h3 class="mb-0">@Model.Name</h3>
+				</div>
+				<div class="card-body text-black">
+					<div class="container">
+						<div class="row">
+							<div class="col text-center">
+								<img class="card-img-top" style="max-height: 300px;" src="~/Images/@Model.ImageUrl" alt="City Image">
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col text-center">
+								<p>Located in: <b>@Model.Country</b></p>
+								<p>@Model.Description</p>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col text-left">
+								<p>
+									Nightlife Score
+									<div class="starability-result" data-rating="@Model.NightlifeScore"></div>
+								</p>
+							</div>
+							<div class="col text-right">
+								<p>
+									Transportation Score
+									<div class="starability-result" data-rating="@Model.TransportScore"></div>
+								</p>
+							</div>
+						</div>
+						<hr> <!-- Added a line below the scores -->
+						<div class="row mt-3 justify-content-center">
+							<!-- Centered the buttons -->
+							<div class="col text-center">
+								<a class="btn card-header bg-secondary text-white border" asp-controller="Restaurant" asp-action="AllRestaurantsInACity" asp-route-cityId="@Model.Id">View all restaurants in @Model.Name</a>
+
+							</div>
+							<div class="col text-center">
+								<a class="btn card-header bg-secondary text-white border" asp-controller="Bar" asp-action="AllBars" asp-route-id="@Model.Id">View all bars in @Model.Name</a>
+							</div>
+						</div>
+						<hr> <!-- Added a line below the buttons -->
+						<div class="row mt-3">
+							<div class="col text-center">
+								@if (isEmployee == true)
+								{
+									<a class="btn btn-warning" asp-controller="City" asp-action="EditCity" asp-route-id="@Model.Id">Edit</a>
+									<a class="ml-2 btn btn-danger" asp-controller="City" asp-action="DeleteCity" asp-route-id="@Model.Id">Delete</a>
+								}
+								<a class="btn card-header bg-secondary text-white border" asp-controller="Home" asp-action="Index">Back</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
 
 
 

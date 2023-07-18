@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Data;
 using RatedTravel.Data.DataModels;
+using RatedTravel.Web.ViewModels.City;
 using RatedTravel.Web.ViewModels.Restaurant;
 using static RaterTravel.Common.EntityValidationConstants;
 using City = RatedTravel.Data.DataModels.City;
@@ -80,5 +81,70 @@ namespace RatedTravel.Core.Services
         {
             return await dbContext.Restaurants.Where(r => r.IsActive).AnyAsync(r => r.Name == restaurantName);
         }
-    }
+
+		public async Task<IEnumerable<RestaurantAllModel>> AllRestaurantsInACityAsync(string cityId)
+		{
+			List<RestaurantAllModel> restaurants = await dbContext.Restaurants
+				.Where(r => r.City.Id.ToString() == cityId)
+				.Select(r => new RestaurantAllModel
+				{
+					Id = r.Id,
+					Name = r.Name,
+					CityName = r.City.Name,
+					Image = r.ImageUrl,
+					Description = r.Description,
+					Address = r.Address,
+					UserId = r.UserId.ToString(),
+					CityId = r.City.Id.ToString()
+				})
+				.ToListAsync();
+
+			foreach (var resto in restaurants)
+			{
+				double totalScore = await GetOverallScoreOfRestaurant(resto.Id.ToString());
+				resto.OverallScore = totalScore;
+			}
+
+			return restaurants;
+		}
+
+
+		public async Task<double> GetOverallScoreOfRestaurant(string restaurantId)
+        {
+	        List<int> foodRates = await dbContext.RestaurantReviewsAndRates
+		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+		        .Select(s => s.FoodRate)
+		        .ToListAsync();
+
+	        List<int> locationRates = await dbContext.RestaurantReviewsAndRates
+		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+		        .Select(s => s.LocationRate)
+		        .ToListAsync();
+
+	        List<int> priceRates = await dbContext.RestaurantReviewsAndRates
+		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+		        .Select(s => s.PriceRate)
+		        .ToListAsync();
+
+	        List<int> serviceRates = await dbContext.RestaurantReviewsAndRates
+		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+		        .Select(s => s.ServiceRate)
+		        .ToListAsync();
+
+	        // Check if any rates are available
+	        if (foodRates.Count == 0 || locationRates.Count == 0 || priceRates.Count == 0 || serviceRates.Count == 0)
+	        {
+		        
+		        return 0; 
+	        }
+
+	        double totalScore = (foodRates.Average() + locationRates.Average() + priceRates.Average() +
+	                             serviceRates.Average()) / 4.0; // Convert to double by adding ".0"
+
+
+	        return totalScore;
+        }
+
+
+	}
 }

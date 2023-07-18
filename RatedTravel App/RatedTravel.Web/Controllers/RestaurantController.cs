@@ -57,7 +57,7 @@ namespace RatedTravel.App.Web.Controllers
             if (doesRestaurantExistByName)
             {
                 this.TempData[NotificationMessagesConstants.ErrorMessage] =
-                    "The restaurant already exists. To add more restaurant of the same chain edit the existing restaurant and add the address of the new locations.";
+                    "The restaurant already exists. To add more restaurants of the same chain edit the existing restaurant and add the address of the new locations.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -110,5 +110,24 @@ namespace RatedTravel.App.Web.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-    }
+
+		[HttpGet]
+		public async Task<IActionResult> AllRestaurantsInACity(string cityId)
+		{
+			List<RestaurantAllModel> allRestaurantsInACity = new List<RestaurantAllModel>();
+
+			try
+			{
+				allRestaurantsInACity.AddRange(await restaurantService.AllRestaurantsInACityAsync(cityId));
+
+				return View(allRestaurantsInACity);
+			}
+			catch (Exception)
+			{
+				this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+				return this.RedirectToAction("Index", "Home");
+			}
+		}
+
+	}
 }

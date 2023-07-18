@@ -15,7 +15,6 @@ namespace RatedTravel.Web.ViewModels.Restaurant
     public class RestaurantFormModel
     {
 
-        [Key]
         public int Id { get; set; }
 
         [Required]
