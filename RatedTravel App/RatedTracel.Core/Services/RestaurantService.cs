@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,43 +109,81 @@ namespace RatedTravel.Core.Services
 			return restaurants;
 		}
 
+		public async Task<RestaurantDetailsView> DetailsAsync(string cityId, string restaurantId)
+		{
+
+			var restaurant = await dbContext.Restaurants
+				.Include(r => r.Reviews)
+				.Where(r => r.City.Id.ToString() == cityId && r.Id.ToString() == restaurantId)
+				.FirstOrDefaultAsync();
+
+
+			double totalScore = await GetOverallScoreOfRestaurant(restaurant.Id.ToString());
+
+			var model = new RestaurantDetailsView
+			{
+				Id = restaurant.Id,
+				Name = restaurant.Name,
+				CityName = restaurant.City.Name,
+				Image = restaurant.ImageUrl,
+				Address = restaurant.Address,
+				Description = restaurant.Description,
+				OverallScore = totalScore,
+				UserId = restaurant.UserId.ToString(),
+				EmployeeId = restaurant.EmployeeId.ToString(),
+				CityId = restaurant.City.Id.ToString(),
+				Reviews = restaurant.Reviews.Select(r => new RestaurantReviewModel
+				{
+					ReviewId = r.Id,
+					ReviewText = r.ReviewText,
+					LocationRate = r.LocationRate,
+					FoodRate = r.FoodRate,
+					PriceRate = r.PriceRate,
+					ServiceRate = r.ServiceRate
+				})
+			};
+
+			return model;
+		}
+	
+
 
 		public async Task<double> GetOverallScoreOfRestaurant(string restaurantId)
-        {
-	        List<int> foodRates = await dbContext.RestaurantReviewsAndRates
-		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
-		        .Select(s => s.FoodRate)
-		        .ToListAsync();
+		{
+			List<int> foodRates = await dbContext.RestaurantReviewsAndRates
+				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Select(s => s.FoodRate)
+				.ToListAsync();
 
-	        List<int> locationRates = await dbContext.RestaurantReviewsAndRates
-		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
-		        .Select(s => s.LocationRate)
-		        .ToListAsync();
+			List<int> locationRates = await dbContext.RestaurantReviewsAndRates
+				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Select(s => s.LocationRate)
+				.ToListAsync();
 
-	        List<int> priceRates = await dbContext.RestaurantReviewsAndRates
-		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
-		        .Select(s => s.PriceRate)
-		        .ToListAsync();
+			List<int> priceRates = await dbContext.RestaurantReviewsAndRates
+				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Select(s => s.PriceRate)
+				.ToListAsync();
 
-	        List<int> serviceRates = await dbContext.RestaurantReviewsAndRates
-		        .Where(s => s.IsActive && s.Id.ToString() == restaurantId)
-		        .Select(s => s.ServiceRate)
-		        .ToListAsync();
+			List<int> serviceRates = await dbContext.RestaurantReviewsAndRates
+				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Select(s => s.ServiceRate)
+				.ToListAsync();
 
-	        // Check if any rates are available
-	        if (foodRates.Count == 0 || locationRates.Count == 0 || priceRates.Count == 0 || serviceRates.Count == 0)
-	        {
-		        
-		        return 0; 
-	        }
+			// Check if any rates are available
+			if (foodRates.Count == 0 || locationRates.Count == 0 || priceRates.Count == 0 || serviceRates.Count == 0)
+			{
 
-	        double totalScore = (foodRates.Average() + locationRates.Average() + priceRates.Average() +
-	                             serviceRates.Average()) / 4.0; // Convert to double by adding ".0"
+				return 0;
+			}
 
-
-	        return totalScore;
-        }
+			double totalScore = (foodRates.Average() + locationRates.Average() + priceRates.Average() +
+			                     serviceRates.Average()) / 4.0; // Convert to double by adding ".0"
 
 
+			return totalScore;
+		}
 	}
+
+
 }

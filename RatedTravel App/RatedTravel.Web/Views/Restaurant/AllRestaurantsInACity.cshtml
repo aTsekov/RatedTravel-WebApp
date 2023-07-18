@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="city-name-box">
-                <h3>Here are all restaurants in @Model[0].CityName</h3>
+                <h3>Restaurants in @Model[0].CityName</h3>
             </div>
         </div>
     </div>
@@ -66,7 +66,8 @@
                         {
                             <p class="card-text">No reviews</p>
                         }
-                        <a href="@Url.Action("Details", "Restaurant", new { id = restaurant.Id })" class="btn btn-primary">Details</a>
+                        <p> Click on the details to see the reviews and to rate this place</p>
+                        <a href="@Url.Action("RestaurantDetails", "Restaurant", new { id = restaurant.Id })" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>

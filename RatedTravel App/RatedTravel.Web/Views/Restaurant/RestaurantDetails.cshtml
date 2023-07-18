@@ -1,0 +1,76 @@
+﻿@model RatedTravel.Web.ViewModels.Restaurant.RestaurantDetailsView
+
+@{
+    ViewData["Title"] = "Restaurant Details";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>@Model.Name</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="card-img-top" src="~/Images/@Model.Image" alt="Restaurant Image">
+                        </div>
+                        <div class="col-md-8">
+                            <p><strong>Address:</strong> @Model.Address</p>
+                            <p><strong>City:</strong> @Model.CityName</p>
+                            <p><strong>Description:</strong> @Model.Description</p>
+                            <p><strong>Overall Score:</strong> @Model.OverallScore</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <h4>Reviews</h4>
+                    @if (Model.Reviews.Any())
+                    {
+                        foreach (var review in Model.Reviews)
+                        {
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <p><strong>Review:</strong> @review.ReviewText</p>
+                                    <p><strong>Location Rate:</strong> @review.LocationRate</p>
+                                    <p><strong>Food Rate:</strong> @review.FoodRate</p>
+                                    <p><strong>Price Rate:</strong> @review.PriceRate</p>
+                                    <p><strong>Service Rate:</strong> @review.ServiceRate</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No reviews available.</p>
+                    }
+                    <hr />
+                    <h4>Leave a Review</h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="reviewText">Review:</label>
+                            <textarea class="form-control" id="reviewText" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationRate">Location Rate:</label>
+                            <input type="number" class="form-control" id="locationRate">
+                        </div>
+                        <div class="form-group">
+                            <label for="foodRate">Food Rate:</label>
+                            <input type="number" class="form-control" id="foodRate">
+                        </div>
+                        <div class="form-group">
+                            <label for="priceRate">Price Rate:</label>
+                            <input type="number" class="form-control" id="priceRate">
+                        </div>
+                        <div class="form-group">
+                            <label for="serviceRate">Service Rate:</label>
+                            <input type="number" class="form-control" id="serviceRate">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

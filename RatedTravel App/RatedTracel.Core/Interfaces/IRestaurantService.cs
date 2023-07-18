@@ -13,6 +13,7 @@ namespace RatedTravel.Core.Interfaces
         Task<bool> DoesRestaurantExistsByName(string restaurantName);
 
         Task<IEnumerable<RestaurantAllModel>> AllRestaurantsInACityAsync(string cityId);
+        Task<RestaurantDetailsView> DetailsAsync(string cityId, string restaurantId);
 
         Task<double> GetOverallScoreOfRestaurant(string restaurantId);
 

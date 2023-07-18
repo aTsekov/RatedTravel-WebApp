@@ -74,9 +74,6 @@ namespace RatedTravel.App.Web.Controllers
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exists! Try another one.";
             }
 
-
-            
-
             try
             {
                 // Handle the uploaded image file
@@ -112,6 +109,7 @@ namespace RatedTravel.App.Web.Controllers
         }
 
 		[HttpGet]
+        [AllowAnonymous]
 		public async Task<IActionResult> AllRestaurantsInACity(string cityId)
 		{
 			List<RestaurantAllModel> allRestaurantsInACity = new List<RestaurantAllModel>();
@@ -127,6 +125,23 @@ namespace RatedTravel.App.Web.Controllers
 				this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
 				return this.RedirectToAction("Index", "Home");
 			}
+		}
+
+		[HttpGet]
+		[AllowAnonymous]
+
+		public async Task<IActionResult> RestaurantDetails(string cityId, string restaurantId)
+		{
+			var restaurant = await restaurantService.DetailsAsync(cityId, restaurantId);
+
+			if (restaurant == null)
+			{
+				ModelState.AddModelError("", "Restaurant not found");
+				this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			return View(restaurant);
 		}
 
 	}
