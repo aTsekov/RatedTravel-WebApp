@@ -52,6 +52,15 @@ namespace RatedTravel.App.Web.Controllers
             var user = await userManager.GetUserAsync(User);
             bool isUser = user != null;
 
+            bool doesRestaurantExistByName = await restaurantService.DoesRestaurantExistsByName(model.Name);
+
+            if (doesRestaurantExistByName)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] =
+                    "The restaurant already exists. To add more restaurant of the same chain edit the existing restaurant and add the address of the new locations.";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!isUser)
             {
                 this.TempData[NotificationMessagesConstants.ErrorMessage] =
@@ -64,6 +73,7 @@ namespace RatedTravel.App.Web.Controllers
             {
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exists! Try another one.";
             }
+
 
             
 

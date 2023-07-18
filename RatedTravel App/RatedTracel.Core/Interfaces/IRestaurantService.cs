@@ -10,6 +10,7 @@ namespace RatedTravel.Core.Interfaces
         Task CreateRestaurantAsync(string userId, RestaurantFormModel formModel);
 
         Task<bool> DoesRestaurantExistsByIdAsync(string restaurantId);
+        Task<bool> DoesRestaurantExistsByName(string restaurantName);
 
     }
 }

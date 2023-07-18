@@ -41,7 +41,7 @@ namespace RatedTravel.Web.ViewModels.Restaurant
         public string Description { get; set; } = null!;
 
         [Required]
-        [Range(RestaurantOverallMinLength,RestaurantNameMaxLength)]
+        [Range(RestaurantOverallMaxLength, RestaurantOverallMinLength)]
         public int OverallScore { get; set; }
 
         [Required]

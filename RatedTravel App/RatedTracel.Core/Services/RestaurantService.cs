@@ -75,5 +75,10 @@ namespace RatedTravel.Core.Services
         {
             return await dbContext.Restaurants.Where(r => r.IsActive == true).AnyAsync(c => c.Id.ToString() == restaurantId);
         }
+
+        public async Task<bool> DoesRestaurantExistsByName(string restaurantName)
+        {
+            return await dbContext.Restaurants.Where(r => r.IsActive).AnyAsync(r => r.Name == restaurantName);
+        }
     }
 }
