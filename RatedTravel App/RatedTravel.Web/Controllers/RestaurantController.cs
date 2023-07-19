@@ -179,5 +179,83 @@ namespace RatedTravel.App.Web.Controllers
         }
 
 
+
+
+        [HttpPost]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> SubmitReview(string restaurantId, RestaurantRateAndReviewModel model)
+        {
+            bool doesRestaurantExistsByName = await restaurantService.DoesRestaurantExistsByIdAsync(model.RestaurantId);
+
+            if (!doesRestaurantExistsByName)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] =
+                    "You cannot write a review for this restaurant - please contact the administrators.";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+
+            try
+            {
+                await restaurantService.SendReviewAsync(restaurantId, model);
+                this.TempData[NotificationMessagesConstants.SuccessMessage] = "Thank you for your review!";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteReview(string? reviewId)
+        {
+            if (string.IsNullOrEmpty(reviewId))
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid reviewId.";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+
+            try
+            {
+                await restaurantService.DeleteReviewByIdAsync(reviewId);
+                this.TempData[NotificationMessagesConstants.SuccessMessage] = "Review deleted successfully!";
+
+
+                string previousUrl = Request.Headers["Referer"].ToString();
+
+                // Get the URL of the page before the previous one
+                string pageBeforePreviousUrl = Request.Headers["Referer"];
+
+                // Redirect to the page before the previous one
+                if (!string.IsNullOrEmpty(pageBeforePreviousUrl))
+                {
+                    return Redirect(pageBeforePreviousUrl);
+                }
+                else
+                {
+                    // If there's no page before the previous one, redirect to a default URL
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+
     }
 }

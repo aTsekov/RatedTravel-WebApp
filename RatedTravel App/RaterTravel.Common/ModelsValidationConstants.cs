@@ -63,5 +63,24 @@ namespace RaterTravel.Common
 	        public const int RestaurantServiceRateMinLength = 5;
 
 		}
+
+        public static class RestaurantReviewModel
+        {
+            public const int RestaurantReviewTextMinLength = 10;
+            public const int RestaurantReviewTextMaxLength = 1000;
+
+            public const int RestaurantLocationRateMaxLength = 1;
+            public const int RestaurantLocationRateMinLength = 5;
+
+            public const int RestaurantFoodRateMaxLength = 1;
+            public const int RestaurantFoodRateMinLength = 5;
+
+            public const int RestaurantPriceRateMaxLength = 1;
+            public const int RestaurantPriceRateMinLength = 5;
+
+            public const int RestaurantServiceRateMaxLength = 1;
+            public const int RestaurantServiceRateMinLength = 5;
+
+        }
 	}
 }

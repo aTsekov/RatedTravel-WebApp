@@ -1,153 +1,193 @@
-﻿@model RatedTravel.Web.ViewModels.Restaurant.RestaurantDetailsView
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RatedTravel.Core.Interfaces
+@model RatedTravel.Web.ViewModels.Restaurant.RestaurantDetailsView
+
+@inject IEmployeeService EmployeeService
+
+@{
+	string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	bool isEmployee =
+		await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+}
 
 @{
     ViewData["Title"] = "Restaurant Details";
 }
 
 <style>
-    /* Custom star-rating styles */
-    .rating {
-        unicode-bidi: bidi-override;
-        direction: rtl;
-        text-align: center;
-    }
+	.rating {
+		unicode-bidi: bidi-override;
+		direction: rtl;
+		text-align: left; /
+		display: flex;
+		justify-content: flex-start;
+	}
 
-        .rating input {
-            display: none;
-        }
+	.rating input {
+		display: none;
+	}
 
-        .rating label {
-            display: inline-block;
-            font-size: 24px;
-            padding: 3px;
-            cursor: pointer;
-            color: #ddd;
-        }
+	.rating label {
+		display: inline-block;
+		font-size: 24px;
+		padding: 3px;
+		cursor: pointer;
+		color: #ddd;
+	}
 
-            .rating label::before {
-                content: '\2605'; /* Star symbol */
-            }
+	.rating label:before {
+		content: '\2605'; 
+	}
 
-        .rating input:checked ~ label {
-            color: #ffc107; /* Yellow color for filled stars */
-        }
+	.rating input:checked ~ label {
+		color: #ffc107; 
+	}
+
 </style>
 
 <div class="container">
     <div class="row justify-content-center mt-4">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h3>@Model.Name</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <img class="card-img-top" src="~/Images/@Model.Image" alt="Restaurant Image">
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <p><strong>Address:</strong> @Model.Address</p>
                             <p><strong>City:</strong> @Model.CityName</p>
                             <p><strong>Description:</strong> @Model.Description</p>
                             <p><strong>Overall Score:</strong> @Model.OverallScore</p>
                         </div>
                     </div>
-                    <hr />
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Leave a Review</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Restaurant" asp-action="SubmitReview" method="post">
+	                    <div class="form-group">
+		                    <label for="reviewText">Review:</label>
+		                    <textarea class="form-control" id="reviewText" name="ReviewText" rows="3" required></textarea>
+	                    </div>
+                        <div class="form-group">
+                            <label>Location Rate:</label>
+                            <div class="rating">
+                                <input type="radio" name="locationRate" value="5" id="locationRate1" required />
+                                <label for="locationRate1"></label>
+                                <input type="radio" name="locationRate" value="4" id="locationRate2" required />
+                                <label for="locationRate2"></label>
+                                <input type="radio" name="locationRate" value="3" id="locationRate3" required />
+                                <label for="locationRate3"></label>
+                                <input type="radio" name="locationRate" value="2" id="locationRate4" required />
+                                <label for="locationRate4"></label>
+                                <input type="radio" name="locationRate" value="1" id="locationRate5" required />
+                                <label for="locationRate5"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Food Rate:</label>
+                            <div class="rating">
+                                <input type="radio" name="foodRate" value="5" id="foodRate1" required />
+                                <label for="foodRate1"></label>
+                                <input type="radio" name="foodRate" value="4" id="foodRate2" required />
+                                <label for="foodRate2"></label>
+                                <input type="radio" name="foodRate" value="3" id="foodRate3" required />
+                                <label for="foodRate3"></label>
+                                <input type="radio" name="foodRate" value="2" id="foodRate4" required />
+                                <label for="foodRate4"></label>
+                                <input type="radio" name="foodRate" value="1" id="foodRate5" required />
+                                <label for="foodRate5"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Price Rate:</label>
+                            <div class="rating">
+                                <input type="radio" name="priceRate" value="5" id="priceRate1" required />
+                                <label for="priceRate1"></label>
+                                <input type="radio" name="priceRate" value="4" id="priceRate2" required />
+                                <label for="priceRate2"></label>
+                                <input type="radio" name="priceRate" value="3" id="priceRate3" required />
+                                <label for="priceRate3"></label>
+                                <input type="radio" name="priceRate" value="2" id="priceRate4" required />
+                                <label for="priceRate4"></label>
+                                <input type="radio" name="priceRate" value="1" id="priceRate5" required />
+                                <label for="priceRate5"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Rate:</label>
+                            <div class="rating">
+                                <input type="radio" name="serviceRate" value="5" id="serviceRate1" required />
+                                <label for="serviceRate1"></label>
+                                <input type="radio" name="serviceRate" value="4" id="serviceRate2" required />
+                                <label for="serviceRate2"></label>
+                                <input type="radio" name="serviceRate" value="3" id="serviceRate3" required />
+                                <label for="serviceRate3"></label>
+                                <input type="radio" name="serviceRate" value="2" id="serviceRate4" required />
+                                <label for="serviceRate4"></label>
+                                <input type="radio" name="serviceRate" value="1" id="serviceRate5" required />
+                                <label for="serviceRate5"></label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="restaurantId" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        <a class="btn card-header bg-secondary text-white border" asp-controller="Restaurant" asp-action="AllRestaurantsInACity" asp-route-cityId="@Model.CityId">Back</a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
                     <h4>Reviews</h4>
+                </div>
+                <div class="card-body" style="max-height: 748px; overflow-y: auto;">
                     @if (Model.Reviews.Any())
                     {
                         foreach (var review in Model.Reviews)
                         {
-                            <div class="card mt-3">
-                                <div class="card-body">
-                                    <p><strong>Review:</strong> @review.ReviewText</p>
-                                    <p><strong>Location Rate:</strong> @review.LocationRate</p>
-                                    <p><strong>Food Rate:</strong> @review.FoodRate</p>
-                                    <p><strong>Price Rate:</strong> @review.PriceRate</p>
-                                    <p><strong>Service Rate:</strong> @review.ServiceRate</p>
-                                </div>
-                            </div>
+	                        <div class="card mt-3">
+		                        <div class="card-body">
+			                        <p><strong>Review:</strong> @review.ReviewText</p>
+			                        <hr />
+			                        <p><strong>Location Rate:</strong> @review.LocationRate</p>
+			                        <p><strong>Food Rate:</strong> @review.FoodRate</p>
+			                        <p><strong>Price Rate:</strong> @review.PriceRate</p>
+			                        <p><strong>Service Rate:</strong> @review.ServiceRate</p>
+		                        </div>
+	                        </div>
+
+	                        @if (isEmployee == true)
+	                        {
+
+		                        <form asp-controller="Restaurant" asp-action="DeleteReview" method="post">
+			                        @Html.AntiForgeryToken()
+			                        <input type="hidden" name="reviewId" value="@review.ReviewId" />
+			                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
+		                        </form>
+	                        }
+	                        
                         }
                     }
                     else
                     {
                         <p>No reviews available.</p>
                     }
-                    <hr />
-                    <h4>Leave a Review</h4>
-                    <form asp-controller="Restaurant" asp-action="AddReview" method="post">
-                        <div class="form-group">
-                            <label for="reviewText">Review:</label>
-                            <textarea class="form-control" id="reviewText" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="locationRate">Location Rate:</label>
-                            <div class="rating">
-                                <input type="radio" name="locationRate" value="1" id="locationRate1" required />
-                                <label for="locationRate1"></label>
-                                <input type="radio" name="locationRate" value="2" id="locationRate2" required />
-                                <label for="locationRate2"></label>
-                                <input type="radio" name="locationRate" value="3" id="locationRate3" required />
-                                <label for="locationRate3"></label>
-                                <input type="radio" name="locationRate" value="4" id="locationRate4" required />
-                                <label for="locationRate4"></label>
-                                <input type="radio" name="locationRate" value="5" id="locationRate5" required />
-                                <label for="locationRate5"></label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="foodRate">Food Rate:</label>
-                            <div class="rating">
-                                <input type="radio" name="foodRate" value="1" id="foodRate1" required />
-                                <label for="foodRate1"></label>
-                                <input type="radio" name="foodRate" value="2" id="foodRate2" required />
-                                <label for="foodRate2"></label>
-                                <input type="radio" name="foodRate" value="3" id="foodRate3" required />
-                                <label for="foodRate3"></label>
-                                <input type="radio" name="foodRate" value="4" id="foodRate4" required />
-                                <label for="foodRate4"></label>
-                                <input type="radio" name="foodRate" value="5" id="foodRate5" required />
-                                <label for="foodRate5"></label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="priceRate">Price Rate:</label>
-                            <div class="rating">
-                                <input type="radio" name="priceRate" value="1" id="priceRate1" required />
-                                <label for="priceRate1"></label>
-                                <input type="radio" name="priceRate" value="2" id="priceRate2" required />
-                                <label for="priceRate2"></label>
-                                <input type="radio" name="priceRate" value="3" id="priceRate3" required />
-                                <label for="priceRate3"></label>
-                                <input type="radio" name="priceRate" value="4" id="priceRate4" required />
-                                <label for="priceRate4"></label>
-                                <input type="radio" name="priceRate" value="5" id="priceRate5" required />
-                                <label for="priceRate5"></label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="serviceRate">Service Rate:</label>
-                            <div class="rating">
-                                <input type="radio" name="serviceRate" value="1" id="serviceRate1" required />
-                                <label for="serviceRate1"></label>
-                                <input type="radio" name="serviceRate" value="2" id="serviceRate2" required />
-                                <label for="serviceRate2"></label>
-                                <input type="radio" name="serviceRate" value="3" id="serviceRate3" required />
-                                <label for="serviceRate3"></label>
-                                <input type="radio" name="serviceRate" value="4" id="serviceRate4" required />
-                                <label for="serviceRate4"></label>
-                                <input type="radio" name="serviceRate" value="5" id="serviceRate5" required />
-                                <label for="serviceRate5"></label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts{
-	<partial name="_ValidationScriptsPartial.cshtml" />
+    <partial name="_ValidationScriptsPartial.cshtml" />
 }

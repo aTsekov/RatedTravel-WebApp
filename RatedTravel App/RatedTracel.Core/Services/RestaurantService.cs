@@ -13,6 +13,7 @@ using RatedTravel.Web.ViewModels.Restaurant;
 using static RaterTravel.Common.EntityValidationConstants;
 using City = RatedTravel.Data.DataModels.City;
 using Restaurant = RatedTravel.Data.DataModels.Restaurant;
+using RestaurantReviewAndRate = RatedTravel.Data.DataModels.RestaurantReviewAndRate;
 
 namespace RatedTravel.Core.Services
 {
@@ -88,7 +89,7 @@ namespace RatedTravel.Core.Services
 		public async Task<IEnumerable<RestaurantAllModel>> AllRestaurantsInACityAsync(string cityId)
 		{
 			List<RestaurantAllModel> restaurants = await dbContext.Restaurants
-				.Where(r => r.City.Id.ToString() == cityId)
+				.Where(r => r.City.Id.ToString() == cityId && r.IsActive)
 				.Select(r => new RestaurantAllModel
 				{
 					Id = r.Id,
@@ -119,7 +120,7 @@ namespace RatedTravel.Core.Services
             }
 
             var city = await dbContext.Cities
-                .Where(c => c.Id.ToString() == cityId)
+                .Where(c => c.Id.ToString() == cityId && c.IsActive)
                 .FirstOrDefaultAsync();
 
             if (city == null)
@@ -128,8 +129,8 @@ namespace RatedTravel.Core.Services
             }
 
             var restaurant = await dbContext.Restaurants
-                .Include(r => r.Reviews)
-                .Where(r => r.City.Id.ToString() == cityId && r.Id.ToString() == restaurantId)
+                .Include(r => r.Reviews.Where(review => review.IsActive == true))
+                .Where(r => r.City.Id.ToString() == cityId && r.Id.ToString() == restaurantId && r.IsActive == true)
                 .FirstOrDefaultAsync();
 
             if (restaurant == null)
@@ -170,22 +171,24 @@ namespace RatedTravel.Core.Services
         public async Task<double> GetOverallScoreOfRestaurant(string restaurantId)
 		{
 			List<int> foodRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
 				.Select(s => s.FoodRate)
 				.ToListAsync();
 
+            
+
 			List<int> locationRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
 				.Select(s => s.LocationRate)
 				.ToListAsync();
 
 			List<int> priceRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
 				.Select(s => s.PriceRate)
 				.ToListAsync();
 
 			List<int> serviceRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
+				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
 				.Select(s => s.ServiceRate)
 				.ToListAsync();
 
@@ -198,11 +201,50 @@ namespace RatedTravel.Core.Services
 
 			double totalScore = (foodRates.Average() + locationRates.Average() + priceRates.Average() +
 			                     serviceRates.Average()) / 4.0; // Convert to double by adding ".0"
+            double roundedScore = Math.Round(totalScore, 1);
 
-
-			return totalScore;
+            return roundedScore;
 		}
-	}
+
+        public async Task SendReviewAsync(string restaurantId, RestaurantRateAndReviewModel model)
+        {
+            var restaurant = await dbContext.Restaurants
+                .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+
+            if (restaurant == null)
+            {
+                throw new ArgumentException("Restaurant not found.");
+            }
+
+            RestaurantReviewAndRate review = new RestaurantReviewAndRate
+            {
+                ReviewText = model.ReviewText,
+                FoodRate = model.FoodRate,
+                LocationRate = model.LocationRate,
+                PriceRate = model.PriceRate,
+                ServiceRate = model.ServiceRate,
+                RestaurantId = restaurant.Id
+            };
+
+            await dbContext.RestaurantReviewsAndRates.AddAsync(review);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteReviewByIdAsync(string reviewId)
+        {
+            var reviewToDelete = await dbContext.RestaurantReviewsAndRates.Where( r => r.IsActive)
+                .FirstOrDefaultAsync(r => r.Id.ToString() == reviewId);
+
+            if (reviewToDelete == null)
+            {
+                throw new ArgumentException($"Review with ID '{reviewId}' not found.");
+            }
+
+            reviewToDelete.IsActive = false;
+
+            await dbContext.SaveChangesAsync();
+        }
+    }
 
 
 }

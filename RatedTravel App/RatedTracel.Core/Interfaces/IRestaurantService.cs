@@ -17,5 +17,9 @@ namespace RatedTravel.Core.Interfaces
 
         Task<double> GetOverallScoreOfRestaurant(string restaurantId);
 
+        Task SendReviewAsync(string restaurantId, RestaurantRateAndReviewModel model);
+
+        Task DeleteReviewByIdAsync(string reviewId);
+
     }
 }
