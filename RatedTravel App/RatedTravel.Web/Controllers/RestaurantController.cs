@@ -108,41 +108,76 @@ namespace RatedTravel.App.Web.Controllers
 
         }
 
-		[HttpGet]
+        [HttpGet]
         [AllowAnonymous]
-		public async Task<IActionResult> AllRestaurantsInACity(string cityId)
-		{
-			List<RestaurantAllModel> allRestaurantsInACity = new List<RestaurantAllModel>();
+        public async Task<IActionResult> AllRestaurantsInACity(string cityId)
+        {
+            List<RestaurantAllModel> allRestaurantsInACity = new List<RestaurantAllModel>();
 
-			try
-			{
-				allRestaurantsInACity.AddRange(await restaurantService.AllRestaurantsInACityAsync(cityId));
+            try
+            {
+                allRestaurantsInACity.AddRange(await restaurantService.AllRestaurantsInACityAsync(cityId));
 
-				return View(allRestaurantsInACity);
-			}
-			catch (Exception)
-			{
-				this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
-				return this.RedirectToAction("Index", "Home");
-			}
-		}
+                if (allRestaurantsInACity.Count == 0)
+                {
+                    ModelState.AddModelError("", "No restaurants found in the selected city.");
+                }
 
-		[HttpGet]
+                if (!ModelState.IsValid)
+                {
+                    this.TempData[NotificationMessagesConstants.ErrorMessage] = "We couldn't find restaurants in this city.";
+
+                    // Get the previous URL from Referer header
+                    string previousUrl = Request.Headers["Referer"].ToString();
+                    return Redirect(previousUrl);
+                }
+
+                return View(allRestaurantsInACity);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for troubleshooting
+                // You can use a logger service, for example: logger.LogError(ex, "Error in AllRestaurantsInACity action");
+
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+
+                // Get the previous URL from Referer header
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+        }
+
+
+
+        [HttpGet]
 		[AllowAnonymous]
 
-		public async Task<IActionResult> RestaurantDetails(string cityId, string restaurantId)
-		{
-			var restaurant = await restaurantService.DetailsAsync(cityId, restaurantId);
+        public async Task<IActionResult> RestaurantDetails(string cityId, string restaurantId)
+        {
+            try
+            {
+                var restaurant = await restaurantService.DetailsAsync(cityId, restaurantId);
 
-			if (restaurant == null)
-			{
-				ModelState.AddModelError("", "Restaurant not found");
-				this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
-				return this.RedirectToAction("Index", "Home");
-			}
+                if (restaurant == null)
+                {
+                    ModelState.AddModelError("", "Restaurant not found");
+                    this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                    return this.RedirectToAction("Index", "Home");
+                }
 
-			return View(restaurant);
-		}
+                return View(restaurant);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for troubleshooting
+                // You can use a logger service, for example: logger.LogError(ex, "Error in RestaurantDetails action");
 
-	}
+                ModelState.AddModelError("", "Oops, something went wrong :( Please try again later or contact us");
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                return this.RedirectToAction("Index", "Home");
+            }
+        }
+
+
+    }
 }

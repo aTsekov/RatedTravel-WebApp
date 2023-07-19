@@ -22,11 +22,13 @@ namespace RatedTravel.Core.Services
 
         private readonly RatedTravelDbContext dbContext;
         private readonly ICityService cityService;
+        private readonly IEmployeeService employeeService;
 
-        public RestaurantService(RatedTravelDbContext dbContext, ICityService cityService)
+        public RestaurantService(RatedTravelDbContext dbContext, ICityService cityService, IEmployeeService employeeService)
         {
             this.dbContext = dbContext;
             this.cityService = cityService;
+			this.employeeService = employeeService;
         }
 
 
@@ -109,46 +111,63 @@ namespace RatedTravel.Core.Services
 			return restaurants;
 		}
 
-		public async Task<RestaurantDetailsView> DetailsAsync(string cityId, string restaurantId)
-		{
+        public async Task<RestaurantDetailsView> DetailsAsync(string cityId, string restaurantId)
+        {
+            if (string.IsNullOrEmpty(cityId) || string.IsNullOrEmpty(restaurantId))
+            {
+                throw new ArgumentException("CityId and RestaurantId cannot be null or empty.");
+            }
 
-			var restaurant = await dbContext.Restaurants
-				.Include(r => r.Reviews)
-				.Where(r => r.City.Id.ToString() == cityId && r.Id.ToString() == restaurantId)
-				.FirstOrDefaultAsync();
+            var city = await dbContext.Cities
+                .Where(c => c.Id.ToString() == cityId)
+                .FirstOrDefaultAsync();
+
+            if (city == null)
+            {
+                throw new ArgumentException("City not found.");
+            }
+
+            var restaurant = await dbContext.Restaurants
+                .Include(r => r.Reviews)
+                .Where(r => r.City.Id.ToString() == cityId && r.Id.ToString() == restaurantId)
+                .FirstOrDefaultAsync();
+
+            if (restaurant == null)
+            {
+                throw new ArgumentException("Restaurant not found.");
+            }
+
+            double totalScore = await GetOverallScoreOfRestaurant(restaurant.Id.ToString());
+
+            var model = new RestaurantDetailsView
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                CityName = city.Name,
+                Image = restaurant.ImageUrl,
+                Address = restaurant.Address,
+                Description = restaurant.Description,
+                OverallScore = totalScore,
+                UserId = restaurant.UserId.ToString(),
+                CityId = restaurant.City.Id.ToString(),
+                Reviews = restaurant.Reviews.Select(r => new RestaurantReviewModel
+                {
+                    ReviewId = r.Id,
+                    ReviewText = r.ReviewText,
+                    LocationRate = r.LocationRate,
+                    FoodRate = r.FoodRate,
+                    PriceRate = r.PriceRate,
+                    ServiceRate = r.ServiceRate
+                })
+            };
+
+            return model;
+        }
 
 
-			double totalScore = await GetOverallScoreOfRestaurant(restaurant.Id.ToString());
-
-			var model = new RestaurantDetailsView
-			{
-				Id = restaurant.Id,
-				Name = restaurant.Name,
-				CityName = restaurant.City.Name,
-				Image = restaurant.ImageUrl,
-				Address = restaurant.Address,
-				Description = restaurant.Description,
-				OverallScore = totalScore,
-				UserId = restaurant.UserId.ToString(),
-				EmployeeId = restaurant.EmployeeId.ToString(),
-				CityId = restaurant.City.Id.ToString(),
-				Reviews = restaurant.Reviews.Select(r => new RestaurantReviewModel
-				{
-					ReviewId = r.Id,
-					ReviewText = r.ReviewText,
-					LocationRate = r.LocationRate,
-					FoodRate = r.FoodRate,
-					PriceRate = r.PriceRate,
-					ServiceRate = r.ServiceRate
-				})
-			};
-
-			return model;
-		}
-	
 
 
-		public async Task<double> GetOverallScoreOfRestaurant(string restaurantId)
+        public async Task<double> GetOverallScoreOfRestaurant(string restaurantId)
 		{
 			List<int> foodRates = await dbContext.RestaurantReviewsAndRates
 				.Where(s => s.IsActive && s.Id.ToString() == restaurantId)
