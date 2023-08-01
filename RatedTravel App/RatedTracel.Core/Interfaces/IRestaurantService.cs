@@ -19,7 +19,11 @@ namespace RatedTravel.Core.Interfaces
 
         Task SendReviewAsync(string restaurantId, RestaurantRateAndReviewModel model);
 
+        Task<RestaurantFormModel> GetRestaurantForEditAsync(string restaurantId);
+
         Task DeleteReviewByIdAsync(string reviewId);
+
+        Task DeleteRestaurantByIdAsync(string restaurantId);
 
     }
 }

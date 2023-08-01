@@ -48,7 +48,7 @@ namespace RatedTravel.App.Web.Controllers
 
         public async Task<IActionResult> AddRestaurant(RestaurantFormModel model)
         {
-            // I need to add a check if the restaurant doesn't exist because if it does I should not create it. 
+            
             var user = await userManager.GetUserAsync(User);
             bool isUser = user != null;
 
@@ -67,7 +67,7 @@ namespace RatedTravel.App.Web.Controllers
                     "You have to logged in in order to add a restaurant!";
                 return RedirectToAction("Index", "Home");
             }
-            bool doesCityExists = await this.cityService.DoesCityExistsAsync(model.Name);
+            bool doesCityExists = await this.cityService.DoesCityExistsAsync(model.CityName);
 
             if (!doesCityExists)
             {
@@ -252,6 +252,68 @@ namespace RatedTravel.App.Web.Controllers
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
                 string previousUrl = Request.Headers["Referer"].ToString();
                 return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRestaurantAsync(string restaurantId)
+        {
+            if (string.IsNullOrEmpty(restaurantId))
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid restaurantId.";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+
+            try
+            {
+                await restaurantService.DeleteRestaurantByIdAsync(restaurantId);
+                this.TempData[NotificationMessagesConstants.SuccessMessage] = "Restaurant deleted successfully!";
+
+
+                return View("DeleteRestaurant");
+
+            }
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
+                return RedirectToAction("Index", "Home");
+            }   
+        }
+
+        [HttpGet]
+
+        public async Task<IActionResult> EditRestaurant(string restaurantId)
+        {
+            if (string.IsNullOrEmpty(restaurantId))
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid restaurantId.";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+
+            try
+            {
+                var restaurant = await restaurantService.GetRestaurantForEditAsync(restaurantId);
+
+                if (restaurant == null)
+                {
+                    this.TempData[NotificationMessagesConstants.ErrorMessage] = "Restaurant not found.";
+                    string previousUrl = Request.Headers["Referer"].ToString();
+                    return Redirect(previousUrl);
+                }
+
+
+                return this.View(restaurant);
+
+            }
+
+            
+            catch (Exception)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
             }
         }
 

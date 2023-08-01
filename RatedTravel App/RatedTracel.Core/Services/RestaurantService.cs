@@ -230,6 +230,31 @@ namespace RatedTravel.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<RestaurantFormModel> GetRestaurantForEditAsync(string restaurantId)
+        {
+            Restaurant? restaurantToEdit = await dbContext.Restaurants
+                .Where( r=> r.IsActive).FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+
+            if (restaurantToEdit == null)
+            {
+                throw new ArgumentException($"Restaurant with ID '{restaurantId}' not found.");
+
+            }
+
+            var model = new RestaurantFormModel
+            {
+                Name = restaurantToEdit.Name,
+                CityId = restaurantToEdit.City.Id.ToString(),
+                Address = restaurantToEdit.Address,
+                Description = restaurantToEdit.Description,
+                OverallScore = restaurantToEdit.OverallScore
+                
+            };
+
+            return model;
+
+        }
+
         public async Task DeleteReviewByIdAsync(string reviewId)
         {
             var reviewToDelete = await dbContext.RestaurantReviewsAndRates.Where( r => r.IsActive)
@@ -241,6 +266,19 @@ namespace RatedTravel.Core.Services
             }
 
             reviewToDelete.IsActive = false;
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteRestaurantByIdAsync(string restaurantId)
+        {
+            var restaurantToDelete = await dbContext.Restaurants.Where(r => r.IsActive)
+                .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+
+            if (restaurantToDelete != null)
+            {
+                restaurantToDelete.IsActive = false;
+            }
 
             await dbContext.SaveChangesAsync();
         }

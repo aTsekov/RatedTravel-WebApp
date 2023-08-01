@@ -57,6 +57,7 @@
                                     }
                                     else
                                     {
+                                        
                                         <span class="bi bi-star"></span>
                                     }
                                 }
@@ -67,8 +68,21 @@
                             <p class="card-text">No reviews</p>
                         }
                         <p> Click on the details to see the reviews and to rate this place</p>
-                        <a href="@Url.Action("RestaurantDetails", "Restaurant", new { cityId = restaurant.CityId, restaurantId = restaurant.Id })" class="btn btn-primary">Details</a>
-
+                        @*                        When the button is clicked, it navigates the user to the RestaurantDetails action in the Restaurant controller,
+												  while passing the cityId and restaurantId as query parameters.
+*@                        <a href="@Url.Action("RestaurantDetails", "Restaurant", new { cityId = restaurant.CityId, restaurantId = restaurant.Id })" class="btn btn-primary">Details</a>
+                        <hr />
+                        <form method="post" asp-controller="Restaurant" asp-action="EditRestaurant">
+	                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
+                            <input type="hidden" name="restaurantId" value="@restaurant.Id" />
+	                        <button type="submit" class="ml-2 btn btn-warning">Edit</button>
+                        </form>
+						<hr />  
+                        <form method="post" asp-controller="Restaurant" asp-action="DeleteRestaurant">
+	                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
+	                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
+	                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
