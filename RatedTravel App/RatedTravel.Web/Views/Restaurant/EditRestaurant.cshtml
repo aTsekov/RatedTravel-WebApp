@@ -1,20 +1,15 @@
 ﻿@model RestaurantFormModel
 
-@{
-    ViewData["Title"] = "Edit Restaurant";
-}
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
 
-<div class="container-fluid bg-lightblue-transparent text-white py-5">
-    <div class="row justify-content-center align-items-center">
-        <div class="col-md-6">
-            <div class="card darkblue text-white border-4">
-                <div class="card-header bg-secondary text-white">
-                    <h3 class="mb-0">Edit Restaurant</h3>
-                </div>
-                <div class="card-body">
+<<div class="container-fluid bg-lightblue-transparent text-white py-5">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-6">
+			<div class="card darkblue text-white border-4">
+				<div class="card-header bg-secondary text-white">
+					<h3 class="mb-0">Edit City</h3>
+				</div>
+				<div class="card-body">
                     <form asp-controller="Restaurant" asp-action="EditRestaurant" enctype="multipart/form-data">
                         <div class="form-group">
                             <label asp-for="Name" class="text-black">Restaurant Name:</label>
@@ -52,12 +47,12 @@
                         <!-- Hidden input fields for cityId and restaurantId -->
                         <input type="hidden" name="cityId" value="@ViewData["cityId"]" />
                         <input type="hidden" name="restaurantId" value="@Model.Id" />
+                        <hr/>
+                        <button type="submit" class="ml-2 btn btn-warning">Edit Restaurant</button>
 
-                        <button type="submit" class="btn card-header bg-secondary text-white border">Edit Restaurant</button>
-                        
-                        @* Go back*@
+                        <!-- Go back -->
                         <hr>
-                        <a href="javascript:history.go(-1)"  class="btn card-header bg-secondary text-white border">Cancel</a>
+                        <a href="javascript:history.go(-1)" class="btn card-header bg-secondary text-white border">Cancel</a>
                     </form>
                 </div>
             </div>

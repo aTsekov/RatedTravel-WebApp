@@ -1,14 +1,5 @@
 ﻿@model CityFormModel
 
-@{
-	ViewData["Title"] = "Add City";
-}
-
-      
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
-
-
 <div class="container-fluid bg-lightblue-transparent text-white py-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6">
@@ -51,8 +42,10 @@
                             <input asp-for="TransportScore" class="form-control bg-lightblue text-black" id="TransportScore" name="TransportScore" min="1" max="5" required>
                             <span asp-validation-for="TransportScore" class="small text-danger"></span>
                         </div>
-
-                        <button class="btn card-header bg-secondary text-white border">Edit City</button>
+                        <hr />
+                        <button class="ml-2 btn btn-warning">Edit City</button>
+                        <hr>
+                        <a href="javascript:history.go(-1)" class="btn card-header bg-secondary text-white border">Cancel</a>
                     </form>
                 </div>
             </div>

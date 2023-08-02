@@ -35,6 +35,7 @@ namespace RatedTravel.Core.Services
         {
 
             List<CityAllModel> cities = await dbContext.Cities
+                .Where(c => c.IsActive == true)
                 .Select(c => new CityAllModel
                 {
                     Id = c.Id.ToString(),
