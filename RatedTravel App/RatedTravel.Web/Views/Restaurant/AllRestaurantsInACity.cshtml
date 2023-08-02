@@ -1,7 +1,19 @@
-﻿@model List<RatedTravel.Web.ViewModels.Restaurant.RestaurantAllModel>
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RatedTravel.Core.Interfaces
+@model List<RatedTravel.Web.ViewModels.Restaurant.RestaurantAllModel>
 
 @{
     ViewData["Title"] = "All Restaurants in " + Model[0].CityName;
+}
+
+
+@inject IEmployeeService EmployeeService
+
+@{
+	string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	bool isEmployee =
+		await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
 }
 
 <style>
@@ -71,18 +83,21 @@
                         @*                        When the button is clicked, it navigates the user to the RestaurantDetails action in the Restaurant controller,
 												  while passing the cityId and restaurantId as query parameters.
 *@                        <a href="@Url.Action("RestaurantDetails", "Restaurant", new { cityId = restaurant.CityId, restaurantId = restaurant.Id })" class="btn btn-primary">Details</a>
-                        <hr />
-                        <form method="post" asp-controller="Restaurant" asp-action="EditRestaurant">
-	                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
-                            <input type="hidden" name="restaurantId" value="@restaurant.Id" />
-	                        <button type="submit" class="ml-2 btn btn-warning">Edit</button>
-                        </form>
-						<hr />  
-                        <form method="post" asp-controller="Restaurant" asp-action="DeleteRestaurant">
-	                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
-	                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
-	                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
-                        </form>
+                        @if (isEmployee)
+                        {
+	                        <hr />
+	                        <form method="post" asp-controller="Restaurant" asp-action="EditRestaurant">
+		                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
+		                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
+		                        <button type="submit" class="ml-2 btn btn-warning">Edit</button>
+	                        </form>
+	                        <hr />  
+	                        <form method="get" asp-controller="Restaurant" asp-action="DeleteRestaurant">
+		                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
+                                <input type="hidden" name="restaurantId" value="@restaurant.Id" />
+		                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
+	                        </form>
+                        }
                     </div>
                 </div>
             </div>

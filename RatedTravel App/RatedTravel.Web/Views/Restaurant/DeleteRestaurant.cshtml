@@ -7,8 +7,7 @@
 
 @{
     string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    bool isEmployee =
-        await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+    bool isEmployee = await EmployeeService.EmployeeExistsByUserIdAsync(userId);
 }
 
 @{
@@ -20,7 +19,7 @@
         <div class="col-md-6">
             <div class="card darkblue text-white border-4">
                 <div class="card-header bg-secondary text-white">
-                    <h3 class="mb-0">@Model.Name</h3>
+                    <h3 class="mb-0"> Restaurant: @Model.Name</h3>
                 </div>
                 <div class="card-body text-black">
                     <div class="container">
@@ -37,14 +36,15 @@
 
                         <div class="row mt-3">
                             <div class="col text-center">
-                                @if (isEmployee == true)
+                                @if (isEmployee)
                                 {
-                                    <form method="post" asp-controller="Restaurant" asp-action="DeleteRestaurant">
-                                        <input type="hidden" asp-for="@Model.Id" />
-                                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
-                                    </form>
-                                    <!-- TODO: Add a button to go back to all restaurants -->
-                                    @* <a class="ml-2 btn btn-danger" asp-controller="Restaurant" asp-action="AllRestaurantsInACity">Back</a> *@
+	                                <form method="post" asp-controller="Restaurant" asp-action="DeleteRestaurant">
+		                                <input type="hidden" asp-for="@Model.Id" />
+		                                <button type="submit" class="ml-2 btn btn-danger">Delete</button>
+	                                </form>
+                                   @* Go back*@
+                                    <hr>
+                                    <a href="javascript:history.go(-1)"  class="btn card-header bg-secondary text-white border">Cancel</a>
                                 }
                             </div>
                         </div>

@@ -255,32 +255,52 @@ namespace RatedTravel.App.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteRestaurantAsync(string restaurantId)
+        [HttpGet]
+        public async Task<IActionResult> DeleteRestaurant(string restaurantId)
         {
             if (string.IsNullOrEmpty(restaurantId))
             {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid restaurantId.";
+                TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid restaurantId.";
                 string previousUrl = Request.Headers["Referer"].ToString();
                 return Redirect(previousUrl);
             }
 
             try
             {
-                await restaurantService.DeleteRestaurantByIdAsync(restaurantId);
-                this.TempData[NotificationMessagesConstants.SuccessMessage] = "Restaurant deleted successfully!";
+                RestaurantDeleteModel deleteModel = await restaurantService.GetRestaurantForDeleteAsync(restaurantId);
 
-
-                return View("DeleteRestaurant");
-
+                return View(deleteModel);
             }
             catch (Exception)
             {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
+                TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
                 return RedirectToAction("Index", "Home");
-            }   
+            }
         }
 
+        
+        [HttpPost]
+        public async Task<IActionResult> DeleteRestaurant(RestaurantDeleteModel model)
+        {
+            if (string.IsNullOrEmpty(model.Id))
+            {
+                TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid restaurantId.";
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+
+            try
+            {
+                await restaurantService.DeleteRestaurantByIdAsync(model.Id);
+                TempData[NotificationMessagesConstants.SuccessMessage] = "Restaurant deleted successfully!";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
+                return View(model);
+            }
+        }
         [HttpGet]
 
         public async Task<IActionResult> EditRestaurant(string restaurantId)
@@ -308,7 +328,7 @@ namespace RatedTravel.App.Web.Controllers
 
             }
 
-            
+
             catch (Exception)
             {
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
@@ -316,8 +336,11 @@ namespace RatedTravel.App.Web.Controllers
                 return Redirect(previousUrl);
             }
         }
-
-
-
     }
+
+    
+
+
+
+    
 }

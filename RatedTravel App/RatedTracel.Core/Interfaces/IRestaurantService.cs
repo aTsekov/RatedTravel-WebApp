@@ -21,6 +21,8 @@ namespace RatedTravel.Core.Interfaces
 
         Task<RestaurantFormModel> GetRestaurantForEditAsync(string restaurantId);
 
+        Task<RestaurantDeleteModel> GetRestaurantForDeleteAsync(string restaurantId);
+
         Task DeleteReviewByIdAsync(string reviewId);
 
         Task DeleteRestaurantByIdAsync(string restaurantId);

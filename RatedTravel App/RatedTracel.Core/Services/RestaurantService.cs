@@ -255,6 +255,22 @@ namespace RatedTravel.Core.Services
 
         }
 
+        public async Task<RestaurantDeleteModel> GetRestaurantForDeleteAsync(string restaurantId)
+        {
+            Restaurant? restaurantToDelete = await dbContext.Restaurants
+                .Include(r => r.City)
+                .Where(r => r.IsActive)
+                .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+
+            return new RestaurantDeleteModel
+            {
+                Id = restaurantToDelete.Id.ToString(),
+                Name = restaurantToDelete.Name,
+                City = restaurantToDelete.City.Name,
+                ImageUrl = restaurantToDelete.ImageUrl
+            };
+        }
+
         public async Task DeleteReviewByIdAsync(string reviewId)
         {
             var reviewToDelete = await dbContext.RestaurantReviewsAndRates.Where( r => r.IsActive)
@@ -270,16 +286,14 @@ namespace RatedTravel.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
+       
         public async Task DeleteRestaurantByIdAsync(string restaurantId)
         {
-            var restaurantToDelete = await dbContext.Restaurants.Where(r => r.IsActive)
+            Restaurant? restaurantToDelete = await dbContext.Restaurants
+                .Where(r => r.IsActive)
                 .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
 
-            if (restaurantToDelete != null)
-            {
-                restaurantToDelete.IsActive = false;
-            }
-
+            restaurantToDelete.IsActive = false;
             await dbContext.SaveChangesAsync();
         }
     }
