@@ -315,6 +315,32 @@ namespace RatedTravel.Core.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<RestaurantAllModel>> AllRestaurantsAsync()
+        {
+            List<RestaurantAllModel> restaurants = await dbContext.Restaurants
+                .Where(r => r.IsActive)
+                .Select(r => new RestaurantAllModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    CityName = r.City.Name,
+                    Image = r.ImageUrl,
+                    Description = r.Description,
+                    Address = r.Address,
+                    UserId = r.UserId.ToString(),
+                    CityId = r.City.Id.ToString()
+                })
+                .ToListAsync();
+
+            foreach (var resto in restaurants)
+            {
+                double totalScore = await GetOverallScoreOfRestaurant(resto.Id.ToString());
+                resto.OverallScore = totalScore;
+            }
+
+            return restaurants;
+        }
+
 
         public async Task<RestaurantDeleteModel> GetRestaurantForDeleteAsync(string restaurantId)
         {

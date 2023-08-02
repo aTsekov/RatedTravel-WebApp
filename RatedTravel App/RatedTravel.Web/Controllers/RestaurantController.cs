@@ -386,6 +386,39 @@ namespace RatedTravel.App.Web.Controllers
             return RedirectToAction("AllRestaurantsInACity", "Restaurant", new { cityId });
         }
 
+        [HttpGet]
+        
+        public async Task<IActionResult> AllRestaurants(string cityId)
+        {
+            List<RestaurantAllModel> allRestaurants = new List<RestaurantAllModel>();
+
+            try
+            {
+                allRestaurants.AddRange(await restaurantService.AllRestaurantsAsync());
+
+                if (allRestaurants.Count == 0)
+                {
+                    ModelState.AddModelError("", "No restaurants found.");
+                }
+
+
+                return View(allRestaurants);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for troubleshooting
+                // You can use a logger service, for example: logger.LogError(ex, "Error in AllRestaurantsInACity action");
+
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+
+                // Get the previous URL from Referer header
+                string previousUrl = Request.Headers["Referer"].ToString();
+                return Redirect(previousUrl);
+            }
+        }
+
+
+
     }
 
     

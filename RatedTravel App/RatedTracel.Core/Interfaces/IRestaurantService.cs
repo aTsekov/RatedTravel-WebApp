@@ -1,4 +1,5 @@
-﻿using RatedTravel.Web.ViewModels.Restaurant
+﻿using RatedTravel.Web.ViewModels.City;
+using RatedTravel.Web.ViewModels.Restaurant
     ;
 
 namespace RatedTravel.Core.Interfaces
@@ -28,6 +29,8 @@ namespace RatedTravel.Core.Interfaces
         Task DeleteRestaurantByIdAsync(string restaurantId);
 
         Task EditRestaurantByIdAndFormModelAsync(int restaurantId, RestaurantFormModel restaurantFormModel);
+
+        Task<IEnumerable<RestaurantAllModel>> AllRestaurantsAsync();
 
 
     }
