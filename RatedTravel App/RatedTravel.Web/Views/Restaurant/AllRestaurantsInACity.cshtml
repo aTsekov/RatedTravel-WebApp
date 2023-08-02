@@ -86,8 +86,8 @@
                         @if (isEmployee)
                         {
 	                        <hr />
-	                        <form method="post" asp-controller="Restaurant" asp-action="EditRestaurant">
-		                        @*@Html.AntiForgeryToken()*@ <!-- Optionally add anti-forgery token for security -->
+	                        <form method="get" asp-controller="Restaurant" asp-action="EditRestaurant">
+		                        <input type="hidden" name="cityId" value="@restaurant.CityId" />
 		                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
 		                        <button type="submit" class="ml-2 btn btn-warning">Edit</button>
 	                        </form>

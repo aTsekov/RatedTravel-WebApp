@@ -301,41 +301,91 @@ namespace RatedTravel.App.Web.Controllers
                 return View(model);
             }
         }
-        [HttpGet]
 
-        public async Task<IActionResult> EditRestaurant(string restaurantId)
+        [HttpGet]
+        public async Task<IActionResult> EditRestaurant(string cityId, string restaurantId)
         {
-            if (string.IsNullOrEmpty(restaurantId))
+            ViewData["cityId"] = cityId;
+            bool cityExists = await cityService.DoesCityExistsByIdAsync(cityId);
+
+            if (!cityExists)
             {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Invalid restaurantId.";
-                string previousUrl = Request.Headers["Referer"].ToString();
-                return Redirect(previousUrl);
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exist!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool restaurantExists = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);
+
+            if (!restaurantExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This restaurant does not exist!";
+                return RedirectToAction("AllRestaurantsInACity", "Restaurant", new { cityId });
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isEmployee = await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+            if (!isEmployee)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must be part of our team in order to edit a restaurant!";
+                return this.RedirectToAction("JoinUs", "Employee");
             }
 
             try
             {
-                var restaurant = await restaurantService.GetRestaurantForEditAsync(restaurantId);
+                RestaurantFormModel formModel = await this.restaurantService.GetRestaurantForEditAsync(restaurantId);
 
-                if (restaurant == null)
-                {
-                    this.TempData[NotificationMessagesConstants.ErrorMessage] = "Restaurant not found.";
-                    string previousUrl = Request.Headers["Referer"].ToString();
-                    return Redirect(previousUrl);
-                }
-
-
-                return this.View(restaurant);
-
+                return this.View(formModel);
             }
-
-
             catch (Exception)
             {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :(";
-                string previousUrl = Request.Headers["Referer"].ToString();
-                return Redirect(previousUrl);
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+                return this.RedirectToAction("AllRestaurantsInACity", "Restaurant", new { cityId });
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRestaurant(string cityId, string restaurantId, RestaurantFormModel model)
+        {
+            bool cityExists = await cityService.DoesCityExistsByIdAsync(cityId);
+
+            if (!cityExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city does not exist!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool restaurantExists = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);
+
+            if (!restaurantExists)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "This restaurant does not exist!";
+                return RedirectToAction("AllRestaurantsInACity", "Restaurant", new { cityId });
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            bool isEmployee = await this.employeeService.EmployeeExistsByUserIdAsync(userId);
+
+            if (!isEmployee)
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must be part of our team in order to edit a restaurant!";
+                return this.RedirectToAction("JoinUs", "Employee");
+            }
+
+            try
+            {
+                await this.restaurantService.EditRestaurantByIdAndFormModelAsync(int.Parse(restaurantId), model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to update the Restaurant. Please try again later or contact the administrator!");
+                return View(model);
+            }
+
+            this.TempData[NotificationMessagesConstants.SuccessMessage] = "The restaurant was edited successfully!";
+            return RedirectToAction("AllRestaurantsInACity", "Restaurant", new { cityId });
+        }
+
     }
 
     

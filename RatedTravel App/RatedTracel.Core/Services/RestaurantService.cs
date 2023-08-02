@@ -230,30 +230,91 @@ namespace RatedTravel.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
+        
+
+
         public async Task<RestaurantFormModel> GetRestaurantForEditAsync(string restaurantId)
         {
-            Restaurant? restaurantToEdit = await dbContext.Restaurants
-                .Where( r=> r.IsActive).FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+            Restaurant? restaurantToEdit = await this.dbContext.Restaurants
+                .Where(r => r.IsActive == true && r.Id == int.Parse(restaurantId))
+                .FirstOrDefaultAsync();
 
             if (restaurantToEdit == null)
             {
-                throw new ArgumentException($"Restaurant with ID '{restaurantId}' not found.");
-
+                // Handle the case where the restaurant with the provided ID does not exist.
+                throw new ArgumentException("Invalid restaurant ID.");
             }
 
-            var model = new RestaurantFormModel
+            City? city = await this.dbContext.Cities
+                .Where(c => c.IsActive == true && c.Id == restaurantToEdit.CityId)
+                .FirstOrDefaultAsync();
+
+            if (city == null)
             {
+                throw new ArgumentException("Invalid city ID.");
+            }
+
+            return new RestaurantFormModel
+            {
+                Id = restaurantToEdit.Id,
                 Name = restaurantToEdit.Name,
-                CityId = restaurantToEdit.City.Id.ToString(),
+                CityName = city.Name,
                 Address = restaurantToEdit.Address,
                 Description = restaurantToEdit.Description,
-                OverallScore = restaurantToEdit.OverallScore
-                
+                OverallScore = restaurantToEdit.OverallScore,
+               
             };
-
-            return model;
-
         }
+
+        
+
+        public async Task EditRestaurantByIdAndFormModelAsync(int restaurantId, RestaurantFormModel restaurantFormModel)
+        {
+            Restaurant? restaurant = await this.dbContext.Restaurants
+                .Where(r => r.IsActive == true && r.Id == restaurantId)
+                .FirstOrDefaultAsync();
+
+            City? city = await this.dbContext.Cities
+                .Where(c => c.IsActive == true && c.Id.ToString() == restaurantFormModel.CityId)
+                .FirstOrDefaultAsync();
+
+            if (city == null)
+            {
+                throw new ArgumentException("Invalid city ID.");
+            }
+
+            if (restaurant == null)
+            {
+                throw new ArgumentException("Invalid restaurant ID.");
+            }
+
+            restaurant.Name = restaurantFormModel.Name;
+            restaurant.City.Name = city.Name;
+            restaurant.Address = restaurantFormModel.Address;
+            restaurant.Description = restaurantFormModel.Description;
+            restaurant.OverallScore = restaurantFormModel.OverallScore;
+
+            // Handle the uploaded image file
+            if (restaurantFormModel.ImageFile != null && restaurantFormModel.ImageFile.Length > 0)
+            {
+                // Generate the filename for the image using the restaurant name
+                var extension = Path.GetExtension(restaurantFormModel.ImageFile.FileName);
+                var fileName = restaurantFormModel.Name + extension;
+                var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                // Save the image file to the specified path
+                await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await restaurantFormModel.ImageFile.CopyToAsync(fileStream);
+                }
+
+                // Update the restaurant entity with the image path
+                restaurant.ImageUrl = fileName;
+            }
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
 
         public async Task<RestaurantDeleteModel> GetRestaurantForDeleteAsync(string restaurantId)
         {
