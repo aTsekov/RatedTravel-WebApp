@@ -29,7 +29,7 @@ namespace RatedTravel.Core.Services
         {
             this.dbContext = dbContext;
             this.cityService = cityService;
-			this.employeeService = employeeService;
+            this.employeeService = employeeService;
         }
 
 
@@ -86,31 +86,31 @@ namespace RatedTravel.Core.Services
             return await dbContext.Restaurants.Where(r => r.IsActive).AnyAsync(r => r.Name == restaurantName);
         }
 
-		public async Task<IEnumerable<RestaurantAllModel>> AllRestaurantsInACityAsync(string cityId)
-		{
-			List<RestaurantAllModel> restaurants = await dbContext.Restaurants
-				.Where(r => r.City.Id.ToString() == cityId && r.IsActive)
-				.Select(r => new RestaurantAllModel
-				{
-					Id = r.Id,
-					Name = r.Name,
-					CityName = r.City.Name,
-					Image = r.ImageUrl,
-					Description = r.Description,
-					Address = r.Address,
-					UserId = r.UserId.ToString(),
-					CityId = r.City.Id.ToString()
-				})
-				.ToListAsync();
+        public async Task<IEnumerable<RestaurantAllModel>> AllRestaurantsInACityAsync(string cityId)
+        {
+            List<RestaurantAllModel> restaurants = await dbContext.Restaurants
+                .Where(r => r.City.Id.ToString() == cityId && r.IsActive)
+                .Select(r => new RestaurantAllModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    CityName = r.City.Name,
+                    Image = r.ImageUrl,
+                    Description = r.Description,
+                    Address = r.Address,
+                    UserId = r.UserId.ToString(),
+                    CityId = r.City.Id.ToString()
+                })
+                .ToListAsync();
 
-			foreach (var resto in restaurants)
-			{
-				double totalScore = await GetOverallScoreOfRestaurant(resto.Id.ToString());
-				resto.OverallScore = totalScore;
-			}
+            foreach (var resto in restaurants)
+            {
+                double totalScore = await GetOverallScoreOfRestaurant(resto.Id.ToString());
+                resto.OverallScore = totalScore;
+            }
 
-			return restaurants;
-		}
+            return restaurants;
+        }
 
         public async Task<RestaurantDetailsView> DetailsAsync(string cityId, string restaurantId)
         {
@@ -169,42 +169,42 @@ namespace RatedTravel.Core.Services
 
 
         public async Task<double> GetOverallScoreOfRestaurant(string restaurantId)
-		{
-			List<int> foodRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
-				.Select(s => s.FoodRate)
-				.ToListAsync();
+        {
+            List<int> foodRates = await dbContext.RestaurantReviewsAndRates
+                .Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
+                .Select(s => s.FoodRate)
+                .ToListAsync();
 
-            
 
-			List<int> locationRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
-				.Select(s => s.LocationRate)
-				.ToListAsync();
 
-			List<int> priceRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
-				.Select(s => s.PriceRate)
-				.ToListAsync();
+            List<int> locationRates = await dbContext.RestaurantReviewsAndRates
+                .Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
+                .Select(s => s.LocationRate)
+                .ToListAsync();
 
-			List<int> serviceRates = await dbContext.RestaurantReviewsAndRates
-				.Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
-				.Select(s => s.ServiceRate)
-				.ToListAsync();
+            List<int> priceRates = await dbContext.RestaurantReviewsAndRates
+                .Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
+                .Select(s => s.PriceRate)
+                .ToListAsync();
 
-			// Check if any rates are available
-			if (foodRates.Count == 0 || locationRates.Count == 0 || priceRates.Count == 0 || serviceRates.Count == 0)
-			{
+            List<int> serviceRates = await dbContext.RestaurantReviewsAndRates
+                .Where(s => s.IsActive && s.RestaurantId.ToString() == restaurantId)
+                .Select(s => s.ServiceRate)
+                .ToListAsync();
 
-				return 0;
-			}
+            // Check if any rates are available
+            if (foodRates.Count == 0 || locationRates.Count == 0 || priceRates.Count == 0 || serviceRates.Count == 0)
+            {
 
-			double totalScore = (foodRates.Average() + locationRates.Average() + priceRates.Average() +
-			                     serviceRates.Average()) / 4.0; // Convert to double by adding ".0"
+                return 0;
+            }
+
+            double totalScore = (foodRates.Average() + locationRates.Average() + priceRates.Average() +
+                                 serviceRates.Average()) / 4.0; // Convert to double by adding ".0"
             double roundedScore = Math.Round(totalScore, 1);
 
             return roundedScore;
-		}
+        }
 
         public async Task SendReviewAsync(string restaurantId, RestaurantRateAndReviewModel model)
         {
@@ -230,7 +230,7 @@ namespace RatedTravel.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
-        
+
 
 
         public async Task<RestaurantFormModel> GetRestaurantForEditAsync(string restaurantId)
@@ -262,11 +262,11 @@ namespace RatedTravel.Core.Services
                 Address = restaurantToEdit.Address,
                 Description = restaurantToEdit.Description,
                 OverallScore = restaurantToEdit.OverallScore,
-               
+
             };
         }
 
-        
+
 
         public async Task EditRestaurantByIdAndFormModelAsync(int restaurantId, RestaurantFormModel restaurantFormModel)
         {
@@ -360,7 +360,7 @@ namespace RatedTravel.Core.Services
 
         public async Task DeleteReviewByIdAsync(string reviewId)
         {
-            var reviewToDelete = await dbContext.RestaurantReviewsAndRates.Where( r => r.IsActive)
+            var reviewToDelete = await dbContext.RestaurantReviewsAndRates.Where(r => r.IsActive)
                 .FirstOrDefaultAsync(r => r.Id.ToString() == reviewId);
 
             if (reviewToDelete == null)
@@ -373,7 +373,7 @@ namespace RatedTravel.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
-       
+
         public async Task DeleteRestaurantByIdAsync(string restaurantId)
         {
             Restaurant? restaurantToDelete = await dbContext.Restaurants

@@ -1,0 +1,68 @@
+﻿@model BarFormModel
+
+<<div class="container-fluid bg-lightblue-transparent text-white py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card darkblue text-white border-4">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">Edit Bar</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Bar" asp-action="EditBar" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="Name" class="text-black">Bar Name:</label>
+                            <input asp-for="Name" class="form-control bg-lightblue text-black" required>
+                            <span asp-validation-for="Name" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CityName" class="text-black">City Name:</label>
+                            <input asp-for="CityName" class="form-control bg-lightblue text-black" required>
+                            <span asp-validation-for="CityName" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ImageFile" class="text-black">Upload Image:</label>
+                            <div class="input-group">
+                                <input asp-for="ImageFile" class="form-control-file bg-lightblue text-black">
+                            </div>
+                            <span asp-validation-for="ImageFile" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="text-black">Address:</label>
+                            <textarea asp-for="Address" class="form-control bg-lightblue text-black" rows="3" required></textarea>
+                            <span asp-validation-for="Address" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="text-black">Description:</label>
+                            <textarea asp-for="Description" class="form-control bg-lightblue text-black" rows="3" required></textarea>
+                            <span asp-validation-for="Description" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Website" class="text-black">Website:</label>
+                            <textarea asp-for="Website" class="form-control bg-lightblue text-black" rows="3" required></textarea>
+                            <span asp-validation-for="Website" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="OverallScore" class="text-black">Overall Score (1-5):</label>
+                            <input asp-for="OverallScore" class="form-control bg-lightblue text-black" type="number" min="1" max="5" required>
+                            <span asp-validation-for="OverallScore" class="small text-danger"></span>
+                        </div>
+
+                        <!-- Hidden input fields for cityId and barId -->
+                        <input type="hidden" name="cityId" value="@ViewData["cityId"]" />
+                        <input type="hidden" name="barId" value="@Model.Id" />
+                        <hr />
+                        <button type="submit" class="ml-2 btn btn-warning">Edit Bar</button>
+
+                        <!-- Go back -->
+                        <hr>
+                        <a href="javascript:history.go(-1)" class="btn card-header bg-secondary text-white border">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

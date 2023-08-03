@@ -37,13 +37,15 @@
 </style>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="city-name-box">
-                <h3>Restaurants in @Model[0].CityName</h3>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="city-name-box d-flex align-items-center">
+				<h3 class="flex-grow-1">Restaurants in @Model[0].CityName</h3>
+				<a href="javascript:history.go(-1)" class="btn card-header bg-secondary text-white border">Back</a>
+			</div>
+			<hr>
+		</div>
+	</div>
     <div class="row">
         @foreach (var restaurant in Model)
         {

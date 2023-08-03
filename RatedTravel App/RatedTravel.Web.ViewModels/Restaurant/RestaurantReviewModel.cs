@@ -9,7 +9,7 @@ using static RaterTravel.Common.ModelsValidationConstants.RestaurantDetailsModel
 namespace RatedTravel.Web.ViewModels.Restaurant
 {
 	public class RestaurantReviewModel
-	{
+    {
 
 		public int ReviewId { get; set; }
 

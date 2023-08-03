@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RatedTravel.Core.Interfaces;
-using RatedTravel.Core.Services;
+using RatedTravel.Data.DataModels;
+using RatedTravel.Web.ViewModels.Restaurant;
 using RaterTravel.Common;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using RatedTravel.Web.ViewModels.Restaurant;
-using RatedTravel.Data.DataModels;
 
 namespace RatedTravel.App.Web.Controllers
 {

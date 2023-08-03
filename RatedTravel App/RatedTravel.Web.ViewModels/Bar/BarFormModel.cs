@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static RaterTravel.Common.ModelsValidationConstants.BarFormModel;
 using static RaterTravel.Common.ModelsValidationConstants.CityFormModel;
-using static RaterTravel.Common.ModelsValidationConstants.RestaurantFormModel;
 
-namespace RatedTravel.Web.ViewModels.Restaurant
+namespace RatedTravel.Web.ViewModels.Bar
 {
-    public class RestaurantFormModel
+    public class BarFormModel
     {
 
         public int Id { get; set; }
 
         [Required]
 
-        [StringLength(RestaurantNameMaxLength, MinimumLength = RestaurantNameMinLength)]
+        [StringLength(BarNameMaxLength, MinimumLength = BarNameMinLength)]
         public string Name { get; set; } = null!;
 
         [Required]
@@ -26,15 +26,20 @@ namespace RatedTravel.Web.ViewModels.Restaurant
         public IFormFile ImageFile { get; set; } = null!;
 
         [Required]
-        [StringLength(RestaurantAddressMaxLength, MinimumLength = RestaurantAddressMinLength)]
+        [StringLength(BarAddressMaxLength, MinimumLength = BarAddressMinLength)]
         public string Address { get; set; } = null!;
 
         [Required]
-        [StringLength(RestaurantDescriptionMaxLength, MinimumLength = RestaurantDescriptionMinLength)]
+        [StringLength(BarDescriptionMaxLength, MinimumLength = BarDescriptionMinLength)]
         public string Description { get; set; } = null!;
 
         [Required]
-        [Range(RestaurantOverallMaxLength, RestaurantOverallMinLength)]
+        [StringLength(BarWebSiteMaxLength, MinimumLength = BarWebSiteMinLength)]
+        public string Website { get; set; } = null!;
+
+
+        [Required]
+        [Range(BarOverallMaxLength, BarOverallMinLength)]
         public int OverallScore { get; set; }
 
         [Required]

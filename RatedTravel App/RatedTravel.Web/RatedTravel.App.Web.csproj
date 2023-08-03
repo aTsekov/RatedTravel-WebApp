@@ -27,8 +27,4 @@
     <ProjectReference Include="..\RaterTravel.Common\RaterTravel.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Bar\" />
-  </ItemGroup>
-
 </Project>

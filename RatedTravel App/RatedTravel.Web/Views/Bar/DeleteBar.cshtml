@@ -1,0 +1,56 @@
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RatedTravel.Core.Interfaces
+@model BarDeleteModel
+
+@inject IEmployeeService EmployeeService
+
+@{
+    string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool isEmployee = await EmployeeService.EmployeeExistsByUserIdAsync(userId);
+}
+
+@{
+    ViewData["Title"] = "Delete Bar";
+}
+
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card darkblue text-white border-4">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">Bar: @Model.Name</h3>
+                </div>
+                <div class="card-body text-black">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+                                <img class="card-img-top" style="max-height: 300px;" src="~/Images/@Model.ImageUrl" alt="Bar Image">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                <p>Located in: <b>@Model.City</b></p>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                @if (isEmployee)
+                                {
+                                    <form method="post" asp-controller="Bar" asp-action="DeleteBar">
+                                        <input type="hidden" asp-for="@Model.Id" />
+                                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
+                                    </form>
+                                    @* Go back*@
+                                    <hr>
+                                    <a href="javascript:history.go(-1)" class="btn card-header bg-secondary text-white border">Cancel</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

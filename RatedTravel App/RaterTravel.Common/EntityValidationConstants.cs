@@ -32,6 +32,7 @@ namespace RaterTravel.Common
             public const int ImageUrlMaxLength = 2048;
             public const int RestaurantSiteMaxLength = 100;
         }
+
         public static class Attraction
         {
             public const int AttractionNameMaxLength = 50;

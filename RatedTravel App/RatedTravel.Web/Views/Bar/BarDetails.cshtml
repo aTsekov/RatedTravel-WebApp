@@ -1,48 +1,47 @@
 ﻿@using System.Security.Claims
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using RatedTravel.Core.Interfaces
-@model RatedTravel.Web.ViewModels.Restaurant.RestaurantDetailsView
+@model RatedTravel.Web.ViewModels.Bar.BarDetailsView
 
 @inject IEmployeeService EmployeeService
 
 @{
-	string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-	bool isEmployee =
-		await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+    string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool isEmployee = await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
 }
 
 @{
-    ViewData["Title"] = "Restaurant Details";
+    ViewData["Title"] = "Bar Details";
 }
 
 <style>
-	.rating {
-		unicode-bidi: bidi-override;
-		direction: rtl;
-		text-align: left; 
-		display: flex;
-		justify-content: flex-start;
-	}
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        text-align: left;
+         display: flex;
+        justify-content: flex-start;
+    }
 
-	.rating input {
-		display: none;
-	}
+        .rating input {
+            display: none;
+        }
 
-	.rating label {
-		display: inline-block;
-		font-size: 24px;
-		padding: 3px;
-		cursor: pointer;
-		color: #ddd;
-	}
+        .rating label {
+            display: inline-block;
+            font-size: 24px;
+            padding: 3px;
+            cursor: pointer;
+            color: #ddd;
+        }
 
-	.rating label:before {
-		content: '\2605'; 
-	}
+            .rating label:before {
+                content: '\2605';
+            }
 
-	.rating input:checked ~ label {
-		color: #ffc107; 
-	}
+        .rating input:checked ~ label {
+            color: #ffc107;
+        }
 
 </style>
 
@@ -56,13 +55,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img class="card-img-top" src="~/Images/@Model.Image" alt="Restaurant Image">
+                            <img class="card-img-top" src="~/Images/@Model.Image" alt="Bar Image">
                         </div>
                         <div class="col-md-6">
                             <p><strong>Address:</strong> @Model.Address</p>
                             <p><strong>City:</strong> @Model.CityName</p>
                             <p><strong>Description:</strong> @Model.Description</p>
-                            <p><strong>Overall Score:</strong> @Model.OverallScore</p>
+                            <p><strong>Website:</strong> @Model.Website</p>
+	                        <p><strong>Overall Score:</strong> @Model.OverallScore</p>
                         </div>
                     </div>
                 </div>
@@ -72,11 +72,11 @@
                     <h4>Leave a Review</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-controller="Restaurant" asp-action="SubmitReview" method="post">
-	                    <div class="form-group">
-		                    <label for="reviewText">Review:</label>
-		                    <textarea class="form-control" id="reviewText" name="ReviewText" rows="3" required></textarea>
-	                    </div>
+                    <form asp-controller="Bar" asp-action="SubmitReview" method="post">
+                        <div class="form-group">
+                            <label for="reviewText">Review:</label>
+                            <textarea class="form-control" id="reviewText" name="ReviewText" rows="3" required></textarea>
+                        </div>
                         <div class="form-group">
                             <label>Location Rate:</label>
                             <div class="rating">
@@ -92,21 +92,21 @@
                                 <label for="locationRate5"></label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Food Rate:</label>
-                            <div class="rating">
-                                <input type="radio" name="foodRate" value="5" id="foodRate1" required />
-                                <label for="foodRate1"></label>
-                                <input type="radio" name="foodRate" value="4" id="foodRate2" required />
-                                <label for="foodRate2"></label>
-                                <input type="radio" name="foodRate" value="3" id="foodRate3" required />
-                                <label for="foodRate3"></label>
-                                <input type="radio" name="foodRate" value="2" id="foodRate4" required />
-                                <label for="foodRate4"></label>
-                                <input type="radio" name="foodRate" value="1" id="foodRate5" required />
-                                <label for="foodRate5"></label>
-                            </div>
-                        </div>
+	                    <div class="form-group">
+		                    <label>Music Rate:</label>
+		                    <div class="rating">
+			                    <input type="radio" name="musicRate" value="5" id="musicRate1" required />
+			                    <label for="musicRate1"></label>
+			                    <input type="radio" name="musicRate" value="4" id="musicRate2" required />
+			                    <label for="musicRate2"></label>
+			                    <input type="radio" name="musicRate" value="3" id="musicRate3" required />
+			                    <label for="musicRate3"></label>
+			                    <input type="radio" name="musicRate" value="2" id="musicRate4" required />
+			                    <label for="musicRate4"></label>
+			                    <input type="radio" name="musicRate" value="1" id="musicRate5" required />
+			                    <label for="musicRate5"></label>
+		                    </div>
+	                    </div>
                         <div class="form-group">
                             <label>Price Rate:</label>
                             <div class="rating">
@@ -137,9 +137,9 @@
                                 <label for="serviceRate5"></label>
                             </div>
                         </div>
-                        <input type="hidden" name="restaurantId" value="@Model.Id" />
+                        <input type="hidden" name="barId" value="@Model.Id" />
                         <button type="submit" class="btn btn-primary">Submit Review</button>
-                        <a class="btn card-header bg-secondary text-white border" asp-controller="Restaurant" asp-action="AllRestaurantsInACity" asp-route-cityId="@Model.CityId">Back</a>
+                        <a class="btn card-header bg-secondary text-white border" asp-controller="Bar" asp-action="AllBarsInACity" asp-route-cityId="@Model.CityId">Back</a>
 
                     </form>
 
@@ -156,27 +156,27 @@
                     {
                         foreach (var review in Model.Reviews)
                         {
-	                        <div class="card mt-3">
-		                        <div class="card-body">
-			                        <p><strong>Review:</strong> @review.ReviewText</p>
-			                        <hr />
-			                        <p><strong>Location Rate:</strong> @review.LocationRate</p>
-			                        <p><strong>Food Rate:</strong> @review.FoodRate</p>
-			                        <p><strong>Price Rate:</strong> @review.PriceRate</p>
-			                        <p><strong>Service Rate:</strong> @review.ServiceRate</p>
-		                        </div>
-	                        </div>
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <p><strong>Review:</strong> @review.ReviewText</p>
+                                    <hr />
+                                    <p><strong>Location Rate:</strong> @review.LocationRate</p>
+                                    <p><strong>Music Rate:</strong> @review.MusicRate</p>
+                                    <p><strong>Price Rate:</strong> @review.PriceRate</p>
+                                    <p><strong>Service Rate:</strong> @review.ServiceRate</p>
+                                </div>
+                            </div>
 
-	                        @if (isEmployee == true)
-	                        {
+                            @if (isEmployee == true)
+                            {
 
-		                        <form asp-controller="Restaurant" asp-action="DeleteReview" method="post">
-			                        @Html.AntiForgeryToken()
-			                        <input type="hidden" name="reviewId" value="@review.ReviewId" />
-			                        <button type="submit" class="ml-2 btn btn-danger">Delete</button>
-		                        </form>
-	                        }
-	                        
+                                <form asp-controller="Bar" asp-action="DeleteReview" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="reviewId" value="@review.ReviewId" />
+                                    <button type="submit" class="ml-2 btn btn-danger">Delete</button>
+                                </form>
+                            }
+
                         }
                     }
                     else

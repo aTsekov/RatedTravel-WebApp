@@ -82,5 +82,66 @@ namespace RaterTravel.Common
             public const int RestaurantServiceRateMinLength = 5;
 
         }
-	}
+        //---------
+
+        public static class BarFormModel
+        {
+            public const int BarNameMaxLength = 50;
+            public const int BarNameMinLength = 3;
+
+            public const int BarAddressMaxLength = 150;
+            public const int BarAddressMinLength = 10;
+
+
+            public const int BarDescriptionMaxLength = 3000;
+            public const int BarDescriptionMinLength = 10;
+
+            public const int BarWebSiteMaxLength = 150;
+            public const int BarWebSiteMinLength = 10;
+
+            public const int BarOverallMaxLength = 1;
+            public const int BarOverallMinLength = 5;
+
+        }
+
+        public static class BarDetailsModel
+        {
+
+            public const int BarReviewTextMinLength = 10;
+            public const int BarReviewTextMaxLength = 1000;
+
+            public const int BarLocationRateMaxLength = 1;
+            public const int BarLocationRateMinLength = 5;
+
+            public const int BarMusicRateMaxLength = 1;
+            public const int BarMusicRateMinLength = 5;
+
+            public const int BarPriceRateMaxLength = 1;
+            public const int BarPriceRateMinLength = 5;
+
+            public const int BarServiceRateMaxLength = 1;
+            public const int BarServiceRateMinLength = 5;
+
+        }
+
+        public static class BarReviewModel
+        {
+            public const int BarReviewTextMinLength = 10;
+            public const int BarReviewTextMaxLength = 1000;
+
+            public const int BarLocationRateMaxLength = 1;
+            public const int BarLocationRateMinLength = 5;
+
+            public const int BarMusicRateMaxLength = 1;
+            public const int BarMusicRateMinLength = 5;
+
+            public const int BarPriceRateMaxLength = 1;
+            public const int BarPriceRateMinLength = 5;
+
+            public const int BarServiceRateMaxLength = 1;
+            public const int BarServiceRateMinLength = 5;
+
+        }
+
+    }
 }
