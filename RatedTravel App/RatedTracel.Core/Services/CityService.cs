@@ -136,26 +136,40 @@ namespace RatedTravel.Core.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<CitySelectModel> SelectCityAsync(string cityId)
-        {
-            City? currentCity = await this.dbContext.Cities.Where(c => c.IsActive == true).FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
+		public async Task<CitySelectModel> SelectCityAsync(string cityId)
+		{
+			try
+			{
+				City? currentCity = await this.dbContext.Cities
+					.Where(c => c.IsActive == true)
+					.FirstOrDefaultAsync(c => c.Id.ToString() == cityId);
 
-            return new CitySelectModel
-            {
-                Id = currentCity.Id.ToString(),
-                Name = currentCity.Name,
-                Country = currentCity.Country,
-                Description = currentCity.Description,
-                ImageUrl = currentCity.ImageUrl,
-                NightlifeScore = currentCity.NightlifeScore,
-                TransportScore = currentCity.TransportScore,
-                EmployeeId = currentCity.EmployeeId.ToString(),
-            };
+				if (currentCity == null)
+				{
+					throw new Exception("City not found with the specified ID.");
+				}
+
+				return new CitySelectModel
+				{
+					Id = currentCity.Id.ToString(),
+					Name = currentCity.Name,
+					Country = currentCity.Country,
+					Description = currentCity.Description,
+					ImageUrl = currentCity.ImageUrl,
+					NightlifeScore = currentCity.NightlifeScore,
+					TransportScore = currentCity.TransportScore,
+					EmployeeId = currentCity.EmployeeId.ToString(),
+				};
+			}
+			catch (Exception ex)
+			{
+
+				throw new Exception("City not found with the specified ID.");
+			}
+		}
 
 
-        }
-
-        public async Task<CityDeleteModel> GetCityForDelete(string cityId)
+		public async Task<CityDeleteModel> GetCityForDelete(string cityId)
         {
             City cityToDelete = await this.dbContext.Cities.Where(c => c.IsActive == true)
                 .FirstAsync(c => c.Id.ToString() == cityId);

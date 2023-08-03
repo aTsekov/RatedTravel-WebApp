@@ -1,0 +1,30 @@
+﻿@{
+	ViewData["Title"] = "Error";
+	Layout = null; // Remove the layout to avoid conflicts with the error styling
+}
+
+<style>
+	.error-container {
+		max-width: 400px;
+		margin: 0 auto;
+		padding: 20px;
+		background-color: #f8f9fa;
+		border: 1px solid #dc3545;
+		border-radius: 5px;
+	}
+
+	.error-container h1, .error-container h2 {
+		margin-bottom: 20px;
+	}
+
+	.error-container a {
+		color: #dc3545;
+	}
+</style>
+
+<div class="error-container">
+	<h1 class="text-danger">Error</h1>
+	<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+	<p class="h4">Go back to <a asp-controller="Home" asp-action="Index">Home</a> Page</p>
+</div>

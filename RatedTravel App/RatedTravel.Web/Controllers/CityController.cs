@@ -22,43 +22,43 @@ namespace RatedTravel.App.Web.Controllers
 			this.cityService = cityService;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        
-        public async Task<IActionResult> SelectCity(string cityId)
-        {
-	        var currentCity = await cityService.SelectCityAsync(cityId);
-	        string cityName = currentCity.Name;
+		[HttpGet]
+		[AllowAnonymous]
+		public async Task<IActionResult> SelectCity(string cityId)
+		{
+			try
+			{
+				var currentCity = await cityService.SelectCityAsync(cityId);
 
+				if (currentCity == null)
+				{
+					ModelState.AddModelError(nameof(cityId), "This city doesn't exist! Try another one.");
+					this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city doesn't exist! Try another one.";
+					return RedirectToAction("SelectCity", "City");
+				}
 
-			bool doesCityExists = await this.cityService.DoesCityExistsAsync(cityName);
+				string cityName = currentCity.Name;
 
-            if (!doesCityExists)
-            {
-                //Automatically the model state becomes invalid.
-                ModelState.AddModelError(nameof(cityName), "This city doesn't exist! Try another one.");
-            }
-            if (!ModelState.IsValid)
-            {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] =
-                    "This city doesn't exist! Try another one.";
-                return RedirectToAction("SelectCity", "City");
-            }
+				bool doesCityExists = await this.cityService.DoesCityExistsAsync(cityName);
 
+				if (!doesCityExists)
+				{
+					ModelState.AddModelError(nameof(cityName), "This city doesn't exist! Try another one.");
+					this.TempData[NotificationMessagesConstants.ErrorMessage] = "This city doesn't exist! Try another one.";
+					return RedirectToAction("SelectCity", "City");
+				}
 
-            try
-            {
-                CitySelectModel model = await this.cityService.SelectCityAsync(cityId);
+				return View(currentCity);
+			}
+			catch (Exception)
+			{
+				
 
-                return View(model);
-            }
-            catch (Exception )
-            {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
-                return this.RedirectToAction("Index", "Home");
-            }
-
+				this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
+				return RedirectToAction("Error", "Home");
+			}
 		}
+
 
 		[HttpGet]
         //Checking if the user is allowed to add a city or not. 
