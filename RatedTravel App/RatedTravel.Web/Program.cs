@@ -37,6 +37,13 @@ namespace RatedTravel.Web
             builder.Services.AddScoped<IRestaurantService, RestaurantService>();
             builder.Services.AddScoped<IBarService, BarService>();
 
+            builder.Services.ConfigureApplicationCookie(options=>
+            {
+                options.LoginPath = "/User/Login";
+                options.LogoutPath = "/User/Logout";
+                
+            });
+
             //With this we are secured against CSRF attacks
             builder.Services.AddControllersWithViews(options =>
             {
