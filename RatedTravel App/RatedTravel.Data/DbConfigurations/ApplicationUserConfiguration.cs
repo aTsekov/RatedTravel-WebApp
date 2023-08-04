@@ -13,6 +13,9 @@ namespace RatedTravel.Data.DbConfigurations
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder) 
         {
+            builder.Property( u => u.FirstName).HasDefaultValue("Test");
+            builder.Property( u => u.LastName).HasDefaultValue("Testov");
+
             builder.HasData(
                 new ApplicationUser()
                 {

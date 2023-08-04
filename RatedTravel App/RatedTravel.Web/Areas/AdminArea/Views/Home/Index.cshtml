@@ -1,0 +1,36 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+<div class="mt-4 p-5 bg-light text-center">
+	<h2 class="display-4">Hello, Admin!</h2>
+	<p class="lead mb-1 mt-3">
+		This is your administrator area - you can <b>read</b>, <b>create</b>,
+		<b>delete</b> and <b>edit</b> Cities, Restaurants and Bars.
+		<br />You can <b>rent</b> and <b>leave</b> the free ones, too!
+	</p>
+	<p class="lead mt-1">
+		You can also see <b>all users and employees</b> and <b>all entities</b> in the
+		system.
+	</p>
+	<hr class="my-4">
+	<a asp-area="" asp-controller="City" asp-action="AllCities"
+	   class="btn btn-primary btn-lg">All Cities</a>
+	<a asp-area="" asp-controller="City" asp-action="AddCity"
+	   class="btn btn-primary btn-lg">Add City</a>
+	<a asp-area="" asp-controller="Restaurant" asp-action="AllRestaurants"
+	   class="btn btn-primary btn-lg">All Restaurant</a>
+	<a asp-area="" asp-controller="Restaurant" asp-action="AddRestaurant"
+	   class="btn btn-primary btn-lg">Add Restaurant</a>
+	<span> | </span>
+	<a asp-area="Admin" asp-controller="Bar" asp-action="AddBar"
+	   class="btn btn-primary btn-lg">All Bars</a>
+	<a asp-area="Admin" asp-controller="Bar" asp-action="AddBar"
+	   class="btn btn-primary btn-lg">Add Bar</a>
+	<span> | </span>
+	<a asp-area="Admin" asp-controller="House" asp-action="Mine"
+	   class="btn btn-primary btn-lg">My Houses</a>
+	<a asp-area="Admin" asp-controller="Rent" asp-action="All"
+	   class="btn btn-primary btn-lg">All Rents</a>
+	<a asp-area="Admin" asp-controller="User" asp-action="All"
+	   class="btn btn-primary btn-lg">All Users</a>
+</div>

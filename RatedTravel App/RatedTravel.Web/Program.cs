@@ -66,10 +66,18 @@ namespace RatedTravel.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
+            app.UseEndpoints(config =>
+            {
+	            config.MapControllerRoute(
+		            name: "areas",
+		            pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+	            );
+				config.MapControllerRoute(
+		            name: "default",
+		            pattern: "{controller=Home}/{action=Index}/{id?}");
+	            
+	            config.MapRazorPages();
+			});
 
             app.Run();
         }

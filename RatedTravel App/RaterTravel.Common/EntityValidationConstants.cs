@@ -53,5 +53,12 @@ namespace RaterTravel.Common
             public const int EmployeeNameMaxLength = 100;
             public const int EmployeePhoneMaxLength = 15;
         }
-    }
+        public static class User
+        {
+	        public const int FirstNameMaxLength = 12;
+	        public const int FirstNameMinLength = 3;
+	        public const int LastNameMaxLength = 12;
+	        public const int LastNameMinLength = 3;
+        }
+	}
 }

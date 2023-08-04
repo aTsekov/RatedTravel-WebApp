@@ -16,6 +16,10 @@ namespace RatedTravel.App.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+	        if (this.User.IsInRole("Administrator"))
+	        {
+				return this.RedirectToAction("Index", "Home", new { Area = "AdminArea" });
+			}
             IEnumerable<IndexViewModel> viewModel = await this.cityService.OurCitiesAsync();
             return View(viewModel);
         }

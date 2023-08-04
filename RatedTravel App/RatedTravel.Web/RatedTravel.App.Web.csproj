@@ -16,7 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 
@@ -25,6 +25,10 @@
     <ProjectReference Include="..\RatedTravel.Data\RatedTravel.Data.csproj" />
     <ProjectReference Include="..\RatedTravel.Web.ViewModels\RatedTravel.Web.ViewModels.csproj" />
     <ProjectReference Include="..\RaterTravel.Common\RaterTravel.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\AdminArea\ViewModels\" />
   </ItemGroup>
 
 </Project>
