@@ -1,0 +1,63 @@
+﻿@model RegisterFormModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+
+    .form-floating,
+    .form-heading {
+        color: #000;
+    }
+</style>
+
+<div class="container-fluid bg-lightblue-transparent text-white py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-4">
+            <div class="card darkblue text-white border-4">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="card-body">
+                    <form id="registerForm" method="post">
+                        <h2 class="form-heading">Create a new account.</h2>
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-floating">
+                            <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
+                            <label asp-for="Email"></label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating">
+                            <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                            <label asp-for="Password"></label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating">
+	                        <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+	                        <label asp-for="ConfirmPassword"></label>
+	                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating">
+	                        <input asp-for="FirstName" class="form-control" autocomplete="new-password" aria-required="true" />
+	                        <label asp-for="FirstName"></label>
+	                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating">
+	                        <input asp-for="LastName" class="form-control" autocomplete="new-password" aria-required="true" />
+	                        <label asp-for="LastName"></label>
+	                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button id="registerSubmit" type="submit" class="btn card-header bg-secondary text-white border">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
