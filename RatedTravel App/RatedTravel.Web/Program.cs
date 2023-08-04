@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Core.Services;
@@ -35,6 +36,12 @@ namespace RatedTravel.Web
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IRestaurantService, RestaurantService>();
             builder.Services.AddScoped<IBarService, BarService>();
+
+            //With this we are secured against CSRF attacks
+            builder.Services.AddControllersWithViews(options =>
+            {
+				options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+			});
 
             var app = builder.Build();
 
