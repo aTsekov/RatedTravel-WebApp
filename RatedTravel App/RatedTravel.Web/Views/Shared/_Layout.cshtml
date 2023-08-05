@@ -8,6 +8,7 @@
 	string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 	bool isEmployee =
 		await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+	bool isAdmin = User.IsInRole(AdminRoleName);
 }
 
 
@@ -75,55 +76,64 @@
 					<li class="nav-item">
 						<a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 					</li>
+				@if (!isAdmin)
+				{
 					@if (User.Identity?.IsAuthenticated ?? false)
 					{
-							<li class="nav-item dropdown">
-								<div class="dropdown">
-									<button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown">
-										Our Places
-									</button>
-									<ul class="dropdown-menu">
-										<li>
-											<a class="dropdown-item text-dark" asp-controller="City" asp-action="AllCities">All City</a>
-										</li>
-										<li>
-											<a class="dropdown-item text-dark" asp-controller="Attraction" asp-action="AllAttractions">All Attractions</a>
-										</li>
-										<li>
-											<a class="dropdown-item text-dark" asp-controller="Bar" asp-action="AllBars">All Bars</a>
-										</li>
-										<li>
-											<a class="dropdown-item text-dark" asp-controller="Restaurant" asp-action="AllRestaurants"> All Restaurants</a>
-										</li>
-									</ul>
-								</div>
-							</li>
 						<li class="nav-item dropdown">
 							<div class="dropdown">
 								<button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown">
-									Add a Place
+									Our Places
 								</button>
 								<ul class="dropdown-menu">
-									@if (isEmployee == true)
-									{
-											<li>
-												<a class="dropdown-item text-dark" asp-controller="City" asp-action="AddCity">City</a>
-											</li>
-									}
-									
 									<li>
-										<a class="dropdown-item text-dark" asp-controller="Attraction" asp-action="AddAttraction">Attraction</a>
+										<a class="dropdown-item text-dark" asp-controller="City" asp-action="AllCities">All City</a>
 									</li>
 									<li>
-										<a class="dropdown-item text-dark" asp-controller="Bar" asp-action="AddBar">Bar</a>
+										<a class="dropdown-item text-dark" asp-controller="Attraction" asp-action="AllAttractions">All Attractions</a>
 									</li>
 									<li>
-										<a class="dropdown-item text-dark" asp-controller="Restaurant" asp-action="AddRestaurant">Restaurant</a>
+										<a class="dropdown-item text-dark" asp-controller="Bar" asp-action="AllBars">All Bars</a>
+									</li>
+									<li>
+										<a class="dropdown-item text-dark" asp-controller="Restaurant" asp-action="AllRestaurants"> All Restaurants</a>
 									</li>
 								</ul>
 							</div>
 						</li>
+						@if (!isAdmin)
+						{
+							<li class="nav-item dropdown">
+								<div class="dropdown">
+									<button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown">
+										Add a Place
+									</button>
+
+									<ul class="dropdown-menu">
+										@if (isEmployee == true)
+										{
+											<li>
+												<a class="dropdown-item text-dark" asp-controller="City" asp-action="AddCity">City</a>
+											</li>
+										}
+
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="Attraction" asp-action="AddAttraction">Attraction</a>
+										</li>
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="Bar" asp-action="AddBar">Bar</a>
+										</li>
+										<li>
+											<a class="dropdown-item text-dark" asp-controller="Restaurant" asp-action="AddRestaurant">Restaurant</a>
+										</li>
+									</ul>
+
+
+								</div>
+							</li>
+						}
 					}
+				}
 				</ul>
 					<partial name="_NotificationsPartial" />
 				<partial name="_LoginPartial"/>
