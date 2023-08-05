@@ -21,6 +21,8 @@ namespace RatedTravel.Data.DbConfigurations
                 {
                     Id = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                     UserName = "pesho@abv.bg",
+                    FirstName = "Pesho",
+                    LastName = "Peshov",
                     NormalizedUserName = "PESHO@ABV.BG",
                     Email= "pesho@abv.bg",
                     NormalizedEmail = "PESHO@ABV.BG",
@@ -42,6 +44,8 @@ namespace RatedTravel.Data.DbConfigurations
                     UserName = "antk@abv.bg",
                     NormalizedUserName = "ANTK@ABV.BG",
                     Email = "antk@abv.bg",
+                    FirstName = "Antoni",
+                    LastName = "Tsekov",
                     NormalizedEmail = "ANTK@ABV.BG",
                     EmailConfirmed = false,
                     PasswordHash = "AQAAAAEAACcQAAAAEJYaHDKeWygEQcg2rAHKDlGZiPXR8dhgrXUME+kIp6xYI4DKTpSznlovkmsGo3yYeA==",
