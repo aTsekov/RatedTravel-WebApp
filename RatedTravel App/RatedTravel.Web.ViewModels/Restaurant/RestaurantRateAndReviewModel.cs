@@ -1,6 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-using static RaterTravel.Common.ModelsValidationConstants.RestaurantReviewModel;
+using static RatedTravel.Common.ModelsValidationConstants.RestaurantReviewModel;
 
 namespace RatedTravel.Web.ViewModels.Restaurant
 {

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RaterTravel.Common\RaterTravel.Common.csproj" />
+    <ProjectReference Include="..\RaterTravel.Common\RatedTravel.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

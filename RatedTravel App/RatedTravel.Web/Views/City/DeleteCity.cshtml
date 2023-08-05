@@ -6,9 +6,7 @@
 @inject IEmployeeService EmployeeService
 
 @{
-    string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    bool isEmployee =
-        await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+	bool isAdmin = User.IsInRole(AdminRoleName);
 }
 
 @{
@@ -37,7 +35,7 @@
 
 	                    <div class="row mt-3">
                             <div class="col text-center">
-                                @if (isEmployee == true)
+                                @if (isAdmin == true)
                                 {
 	                                <form method="post" asp-controller="City" asp-action="DeleteCity">
 		                                <input type="hidden" asp-for="Id" />

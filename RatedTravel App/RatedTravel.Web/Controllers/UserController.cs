@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using RatedTravel.Data.DataModels;
 using RatedTravel.Web.ViewModels.User;
-using RaterTravel.Common;
+using RatedTravel.Common;
 
 namespace RatedTravel.App.Web.Controllers
 {
@@ -41,32 +41,32 @@ namespace RatedTravel.App.Web.Controllers
                      return View(model);
                   }
 
-                 ApplicationUser user = new ApplicationUser()
-                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
-                 };
+                  ApplicationUser user = new ApplicationUser()
+                  {
+	                  FirstName = model.FirstName,
+	                  LastName = model.LastName
+                  };
 
-                await userManager.SetEmailAsync(user, model.Email);
-                await userManager.SetUserNameAsync(user, model.Email);
+                  await userManager.SetEmailAsync(user, model.Email);
+                  await userManager.SetUserNameAsync(user, model.Email);
 
-                IdentityResult result =
-                await userManager.CreateAsync(user, model.Password);
+                  IdentityResult result =
+	                  await userManager.CreateAsync(user, model.Password);
 
-                if (!result.Succeeded)
-                {
-                    foreach (IdentityError error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                  if (!result.Succeeded)
+                  {
+	                  foreach (IdentityError error in result.Errors)
+	                  {
+		                  ModelState.AddModelError(string.Empty, error.Description);
+	                  }
 
-                    return View(model);
-                }
+	                  return View(model);
+                  }
 
-                await signInManager.SignInAsync(user, false);
-                //this.memoryCache.Remove(UsersCacheKey);
+                  await signInManager.SignInAsync(user, false);
+                  //this.memoryCache.Remove(UsersCacheKey);
 
-                return RedirectToAction("Index", "Home");
+                  return RedirectToAction("Index", "Home");
              }
 
             [HttpGet]

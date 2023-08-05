@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaterTravel.Common
+namespace RatedTravel.Common
 {
 	public static class ModelsValidationConstants
 	{

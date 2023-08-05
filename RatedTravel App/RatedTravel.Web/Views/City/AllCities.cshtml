@@ -1,6 +1,7 @@
 ﻿@using RatedTravel.Core.Interfaces
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+
 @model List<CityAllModel>
 
 @inject IEmployeeService EmployeeService
@@ -9,6 +10,8 @@
     string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
     bool isEmployee = await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
     ViewData["Title"] = "Cities";
+
+    bool isAdmin = User.IsInRole(AdminRoleName);
 }
 
 <div class="container-fluid bg-lightblue-transparent text-white py-5">
@@ -52,8 +55,13 @@
                                     @if (isEmployee == true)
                                     {
                                         <a class="btn btn-warning" asp-controller="City" asp-action="EditCity" asp-route-id="@city.Id">Edit</a>
-                                        <a class="ml-2 btn btn-danger" asp-controller="City" asp-action="DeleteCity" asp-route-id="@city.Id">Delete</a>
+                                        
                                     }
+                                    @if (isAdmin == true)
+									{
+                                        <a class="ml-2 btn btn-danger" asp-controller="City" asp-action="DeleteCity" asp-route-id="@city.Id">Delete</a>
+									}
+
 
                                     <a class="btn card-header bg-secondary text-white border" asp-controller="Home" asp-action="Index">Back</a>
                                 </div>

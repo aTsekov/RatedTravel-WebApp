@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RaterTravel.Common.EntityValidationConstants.City;
+using static RatedTravel.Common.EntityValidationConstants.City;
 
 namespace RatedTravel.Data.DataModels
 {

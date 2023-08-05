@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Data;
-using RatedTravel.Data.DataModels;
-using RatedTravel.Web.ViewModels.City;
 using RatedTravel.Web.ViewModels.Restaurant;
-using static RaterTravel.Common.EntityValidationConstants;
 using City = RatedTravel.Data.DataModels.City;
 using Restaurant = RatedTravel.Data.DataModels.Restaurant;
 using RestaurantReviewAndRate = RatedTravel.Data.DataModels.RestaurantReviewAndRate;

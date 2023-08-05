@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using static RaterTravel.Common.GeneralApplicationConstants;
-using static RaterTravel.Common.ModelsValidationConstants.CityFormModel;
+using static RatedTravel.Common.GeneralApplicationConstants;
+using static RatedTravel.Common.ModelsValidationConstants.CityFormModel;
 
 namespace RatedTravel.Web.ViewModels.City
 {

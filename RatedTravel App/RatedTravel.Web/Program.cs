@@ -5,7 +5,7 @@ using RatedTravel.Core.Interfaces;
 using RatedTravel.Core.Services;
 using RatedTravel.Data;
 using RatedTravel.Data.DataModels;
-using static RaterTravel.Common.GeneralApplicationConstants;
+using static RatedTravel.Common.GeneralApplicationConstants;
 
 using RatedTravel.App.Web.Infrastructure;
 

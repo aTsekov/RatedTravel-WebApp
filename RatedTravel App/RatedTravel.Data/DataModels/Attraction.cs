@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RaterTravel.Common.EntityValidationConstants.Attraction;
+using static RatedTravel.Common.EntityValidationConstants.Attraction;
 
 namespace RatedTravel.Data.DataModels
 {

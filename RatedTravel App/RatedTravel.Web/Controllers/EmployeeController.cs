@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Web.ViewModels.Employee;
 //using static RaterTravel.Common.NotificationMessagesConstants;
-using RaterTravel.Common;
+using RatedTravel.Common;
 
 namespace RatedTravel.App.Web.Controllers
 {

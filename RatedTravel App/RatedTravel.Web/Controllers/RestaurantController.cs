@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Data.DataModels;
 using RatedTravel.Web.ViewModels.Restaurant;
-using RaterTravel.Common;
+using RatedTravel.Common;
 using System.Security.Claims;
 
 namespace RatedTravel.App.Web.Controllers

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RatedTravel.Web.ViewModels.User.UserViewModel>
+
+@{
+	ViewBag.Title = "All Users";
+}
+
+<style>
+    /* CSS for the table and its container */
+	.table-container {
+		background-color: white;
+		border-radius: 10px; /* Add rounded corners */
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a slight shadow effect */
+		padding: 20px;
+	}
+
+	/* CSS for the table */
+	.table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table th,
+	.table td {
+		padding: 10px;
+		text-align: left;
+	}
+
+/* Add more styles here if needed */
+</style>
+
+<div class="table-container">
+	<h2 class="text-center">@ViewBag.Title</h2>
+	<hr />
+
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th><label>Email</label></th>
+			<th><label>Full Name</label></th>
+			<th><label>Phone Number</label></th>
+			<th><label>User Is Employee</label></th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td><label>@user.Email</label></td>
+				<td><label>@user.FullName</label></td>
+				<td><label>@user.PhoneNumber</label></td>
+				<td>
+					@if (user.PhoneNumber != string.Empty)
+					{
+						<label>✔</label>
+					}
+					else
+					{
+						<label class="text-center">❌</label>
+					}
+				</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>

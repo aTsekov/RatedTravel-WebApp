@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Packaging;
+using RatedTravel.Common;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Web.ViewModels.City;
-using RaterTravel.Common;
+using static RatedTravel.Common.GeneralApplicationConstants;
+
 
  
 
@@ -240,11 +242,13 @@ namespace RatedTravel.App.Web.Controllers
             bool isEmployee =
                 await this.employeeService.EmployeeExistsByUserIdAsync(userId);
 
-            if (!isEmployee)
-            {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must part of our team in order to delete a city!";
+            
 
-                return this.RedirectToAction("JoinUs", "Employee");
+            if (!this.User.IsInRole(AdminRoleName))
+            {
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must be Admin in order to delete a city!";
+
+                return this.RedirectToAction("Login", "User");
             }
 
             try
@@ -279,11 +283,11 @@ namespace RatedTravel.App.Web.Controllers
             bool isEmployee =
                 await this.employeeService.EmployeeExistsByUserIdAsync(userId);
 
-            if (!isEmployee)
+            if (!this.User.IsInRole(AdminRoleName))
             {
-                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must part of our team in order to delete the city!";
+                this.TempData[NotificationMessagesConstants.ErrorMessage] = "You must be Admin in order to delete a city!";
 
-                return this.RedirectToAction("JoinUs", "Employee");
+                return this.RedirectToAction("Login", "User");
             }
 
             try

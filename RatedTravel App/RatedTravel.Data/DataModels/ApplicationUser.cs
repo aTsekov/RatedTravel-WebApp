@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RaterTravel.Common.EntityValidationConstants.User;
+using static RatedTravel.Common.EntityValidationConstants.User;
 
 namespace RatedTravel.Data.DataModels
 {

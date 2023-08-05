@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RaterTravel.Common.ModelsValidationConstants.BarDetailsModel;
+using static RatedTravel.Common.ModelsValidationConstants.BarDetailsModel;
 
 namespace RatedTravel.Web.ViewModels.Bar
 {

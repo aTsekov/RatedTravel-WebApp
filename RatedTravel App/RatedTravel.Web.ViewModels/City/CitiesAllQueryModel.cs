@@ -1,18 +1,11 @@
-﻿using RaterTravel.Common;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static RaterTravel.Common.GeneralApplicationConstants;
+﻿using System.ComponentModel.DataAnnotations;
+using static RatedTravel.Common.GeneralApplicationConstants;
 
 namespace RatedTravel.Web.ViewModels.City
 {
-   
 
-        public class CitiesAllQueryModel
+
+    public class CitiesAllQueryModel
         {
             public CitiesAllQueryModel()
             {

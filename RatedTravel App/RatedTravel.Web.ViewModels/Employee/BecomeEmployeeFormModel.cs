@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-using static RaterTravel.Common.ModelsValidationConstants.EmployeeModel;
+using static RatedTravel.Common.ModelsValidationConstants.EmployeeModel;
 
 
 namespace RatedTravel.Web.ViewModels.Employee

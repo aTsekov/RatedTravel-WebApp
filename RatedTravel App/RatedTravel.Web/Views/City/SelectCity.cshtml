@@ -9,6 +9,7 @@
 	string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 	bool isEmployee =
         await this.EmployeeService.EmployeeExistsByUserIdAsync(userId);
+	bool isAdmin = User.IsInRole(AdminRoleName);
 }
 
 @{
@@ -66,6 +67,9 @@
 								@if (isEmployee == true)
 								{
 									<a class="btn btn-warning" asp-controller="City" asp-action="EditCity" asp-route-id="@Model.Id">Edit</a>
+								}
+								@if (isAdmin == true)
+								{
 									<a class="ml-2 btn btn-danger" asp-controller="City" asp-action="DeleteCity" asp-route-id="@Model.Id">Delete</a>
 								}
 								<a class="btn card-header bg-secondary text-white border" asp-controller="Home" asp-action="Index">Back</a>

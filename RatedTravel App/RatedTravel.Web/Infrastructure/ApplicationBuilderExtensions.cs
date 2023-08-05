@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using RatedTravel.Data.DataModels;
-using static RaterTravel.Common.GeneralApplicationConstants;
+using static RatedTravel.Common.GeneralApplicationConstants;
 
 namespace RatedTravel.App.Web.Infrastructure
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using static RaterTravel.Common.ModelsValidationConstants.CityFormModel;
-using static RaterTravel.Common.ModelsValidationConstants.BarFormModel;
+using static RatedTravel.Common.ModelsValidationConstants.CityFormModel;
+using static RatedTravel.Common.ModelsValidationConstants.BarFormModel;
 
 namespace RatedTravel.Web.ViewModels.Bar
 {

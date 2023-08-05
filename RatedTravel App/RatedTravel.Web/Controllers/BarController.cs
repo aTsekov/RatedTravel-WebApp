@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RatedTravel.Core.Interfaces;
 using RatedTravel.Core.Services;
-using RaterTravel.Common;
+using RatedTravel.Common;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

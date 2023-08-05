@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RaterTravel.Common.ModelsValidationConstants.RestaurantDetailsModel;
+using static RatedTravel.Common.ModelsValidationConstants.RestaurantDetailsModel;
 
 namespace RatedTravel.Web.ViewModels.Restaurant
 {

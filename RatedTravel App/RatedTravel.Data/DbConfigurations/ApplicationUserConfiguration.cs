@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RatedTravel.Data.DataModels;
 using Microsoft.EntityFrameworkCore;
-using static RaterTravel.Common.GeneralApplicationConstants;
+using static RatedTravel.Common.GeneralApplicationConstants;
 
 namespace RatedTravel.Data.DbConfigurations
 {

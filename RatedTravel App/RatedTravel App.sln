@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatedTravel.App.Web", "RatedTravel.Web\RatedTravel.App.Web.csproj", "{DBFDCFC2-5692-47DE-BC34-75A6FC1161E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.App.Web", "RatedTravel.Web\RatedTravel.App.Web.csproj", "{DBFDCFC2-5692-47DE-BC34-75A6FC1161E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatedTravel.Core", "RatedTracel.Core\RatedTravel.Core.csproj", "{B7028289-D764-4569-B9A2-389A933600E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.Core", "RatedTracel.Core\RatedTravel.Core.csproj", "{B7028289-D764-4569-B9A2-389A933600E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatedTravel.Data", "RatedTravel.Data\RatedTravel.Data.csproj", "{45BB3109-0B35-4F9B-9E01-7F4567DFF933}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.Data", "RatedTravel.Data\RatedTravel.Data.csproj", "{45BB3109-0B35-4F9B-9E01-7F4567DFF933}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Web", "1.Web", "{A74B0E86-0B43-4722-8E24-4038C7F28E87}"
 EndProject
@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Core", "2.Core", "{CB2348
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Data", "3.Data", "{45E3FC1E-23E2-4587-84A8-4296E0418763}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatedTravel.Web.ViewModels", "RatedTravel.Web.ViewModels\RatedTravel.Web.ViewModels.csproj", "{9C8366EC-9B00-4FCA-B258-DBFBC1C60191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.Web.ViewModels", "RatedTravel.Web.ViewModels\RatedTravel.Web.ViewModels.csproj", "{9C8366EC-9B00-4FCA-B258-DBFBC1C60191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaterTravel.Common", "RaterTravel.Common\RaterTravel.Common.csproj", "{C89ABA08-153F-4CE2-868B-C0C7CC0AD40C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.Common", "RaterTravel.Common\RatedTravel.Common.csproj", "{C89ABA08-153F-4CE2-868B-C0C7CC0AD40C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static RaterTravel.Common.GeneralApplicationConstants;
+using static RatedTravel.Common.GeneralApplicationConstants;
 
 namespace RatedTravel.App.Web.Areas.AdminArea.Controllers
 {
-	[Area(AreaName)]
+	[Area(AdminAreaName)]
 	[Authorize(Roles = AdminRoleName)]
 	public class BaseAdminController : Controller
 	{
