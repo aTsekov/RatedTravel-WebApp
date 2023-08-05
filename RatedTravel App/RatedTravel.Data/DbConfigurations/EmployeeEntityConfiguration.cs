@@ -20,6 +20,13 @@ namespace RatedTravel.Data.DbConfigurations
                     FullName = "Antoni Tsekov",
                     PhoneNumber = "1234567890",
                     UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887")
+                },
+                new Employee
+                { //THIS IS THE ADMIN USER
+                    Id = Guid.Parse("148FD70C-8A0A-4C13-AF75-FFC5F204A0AC"),
+                    FullName = "Admin Adminov",
+                    PhoneNumber = "111222333",
+                    UserId = Guid.Parse("1CFE52CB-AFC4-4FFA-A1CC-236DC7AE148F")
                 }
             );
         }

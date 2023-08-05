@@ -36,8 +36,10 @@ namespace RatedTravel.Data
             modelBuilder.ApplyConfiguration(new AttractionEntityConfiguration());
             modelBuilder.ApplyConfiguration(new BarReviewAndRateConfiguration());
             modelBuilder.ApplyConfiguration(new RestaurantReviewAndRateConfiguration());
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasKey(ur => new { ur.UserId, ur.RoleId });
 
-            
         }
+
+       
     }
 }

@@ -5,10 +5,11 @@ using RatedTravel.Core.Interfaces;
 using RatedTravel.Core.Services;
 using RatedTravel.Data;
 using RatedTravel.Data.DataModels;
-using RaterTravel.Common;
+using static RaterTravel.Common.GeneralApplicationConstants;
 
+using RatedTravel.App.Web.Infrastructure;
 
-namespace RatedTravel.Web
+namespace RatedTravel.App.Web
 {
     public class Program
     {
@@ -24,12 +25,19 @@ namespace RatedTravel.Web
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequiredLength = GeneralApplicationConstants.MinPasswordLength;
-                }).AddEntityFrameworkStores<RatedTravelDbContext>();
+                    options.SignIn.RequireConfirmedAccount =
+                        builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                    options.Password.RequireLowercase =
+                        builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                    options.Password.RequireUppercase =
+                        builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                    options.Password.RequireNonAlphanumeric =
+                        builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                    options.Password.RequiredLength =
+                        builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+                })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<RatedTravelDbContext>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ICityService, CityService>();
@@ -37,6 +45,8 @@ namespace RatedTravel.Web
             builder.Services.AddScoped<IRestaurantService, RestaurantService>();
             builder.Services.AddScoped<IBarService, BarService>();
             builder.Services.AddScoped<IUserService, UserService>();
+
+            
 
             builder.Services.ConfigureApplicationCookie(options=>
             {
@@ -73,6 +83,11 @@ namespace RatedTravel.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(AdminEmail);
+            }
 
             app.UseEndpoints(config =>
             {
