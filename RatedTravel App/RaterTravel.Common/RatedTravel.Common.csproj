@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.7.0" />
+    <PackageReference Include="OpenCover" Version="4.7.1221" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>

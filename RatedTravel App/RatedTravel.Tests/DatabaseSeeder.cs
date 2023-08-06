@@ -10,21 +10,27 @@ namespace RatedTravel.Tests
 {
     public static class DatabaseSeeder
     {
-        public static ApplicationUser ToBecomeEmployee;
-        public static ApplicationUser NormalUser;
-        public static Employee MyEmployee;
-        public static Bar Bar1;
-        public static Bar Bar2;
-        public static Attraction Attraction1;
+        public static ApplicationUser ToBecomeEmployee = null!;
+        public static ApplicationUser NormalUser = null!;
+        public static Employee MyEmployee = null!;
+        public static Bar Bar1 = null!;
+        public static Bar Bar2 = null!;
+        public static Attraction Attraction1 = null!;
         public static Attraction Attraction2;
-        public static Restaurant Restaurant1;
-        public static Restaurant Restaurant2;
-        public static BarReviewAndRate BarReview1;
-        public static BarReviewAndRate BarReview2;
-        public static RestaurantReviewAndRate RestaurantReview1;
-        public static RestaurantReviewAndRate RestaurantReview2;
-        public static City City1;
-        public static City City2;
+        public static Restaurant Restaurant1 = null!;
+        public static Restaurant Restaurant2 = null!;
+        public static BarReviewAndRate BarReview1 = null!;
+        public static BarReviewAndRate BarReview2 = null!;
+        public static RestaurantReviewAndRate RestaurantReview1 = null!;
+        public static RestaurantReviewAndRate RestaurantReview2 = null!;
+        public static City City1 = null!;
+        public static City City2 = null!;
+
+        public static List<City> Cities = new List<City>()
+        {
+            City1,
+            City2
+        };
 
         public static void SeedDatabase(RatedTravelDbContext dbContext)
         {

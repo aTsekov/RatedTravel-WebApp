@@ -18,7 +18,7 @@ namespace RatedTravel.Tests
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<RatedTravelDbContext>()
-                .UseInMemoryDatabase("HouseRentingInMemory" + Guid.NewGuid().ToString())
+                .UseInMemoryDatabase("RatedTravelInMemoryDb" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new RatedTravelDbContext(this.dbOptions);
 
@@ -102,6 +102,7 @@ namespace RatedTravel.Tests
             Assert.IsFalse(result);
         }
 
+       
 
 
         [Test]
@@ -116,6 +117,8 @@ namespace RatedTravel.Tests
             // Assert
             Assert.IsFalse(result);
         }
+
+
 
     }
 }

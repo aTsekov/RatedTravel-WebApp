@@ -131,7 +131,7 @@ namespace RatedTravel.App.Web.Controllers
 
                 return View(allBarsInACity);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception for troubleshooting
                 // You can use a logger service, for example: logger.LogError(ex, "Error in AllBarsInACity action");
