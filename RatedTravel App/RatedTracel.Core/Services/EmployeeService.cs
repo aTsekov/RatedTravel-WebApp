@@ -84,5 +84,7 @@ namespace RatedTravel.Core.Services
 
             return result;
         }
+
+
     }
 }

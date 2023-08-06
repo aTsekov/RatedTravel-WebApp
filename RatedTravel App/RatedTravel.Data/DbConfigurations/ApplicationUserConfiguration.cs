@@ -19,7 +19,7 @@ namespace RatedTravel.Data.DbConfigurations
 
             builder.HasData(
                 new ApplicationUser()
-                {
+                { //Normal User
                     Id = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                     UserName = "pesho@abv.bg",
                     FirstName = "Pesho",
@@ -41,7 +41,7 @@ namespace RatedTravel.Data.DbConfigurations
 
                 },
                 new ApplicationUser()
-                {
+                {// Employee User
                     Id = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
                     UserName = "antk@abv.bg",
                     NormalizedUserName = "ANTK@ABV.BG",
