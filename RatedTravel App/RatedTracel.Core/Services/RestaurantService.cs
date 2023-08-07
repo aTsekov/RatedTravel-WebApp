@@ -374,6 +374,8 @@ namespace RatedTravel.Core.Services
             restaurantToDelete.IsActive = false;
             await dbContext.SaveChangesAsync();
         }
+
+
     }
 
 

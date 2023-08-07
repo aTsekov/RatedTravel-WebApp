@@ -8,7 +8,7 @@ using RatedTravel.Data.DataModels;
 
 namespace RatedTravel.Tests
 {
-    public static class DatabaseSeeder
+    public  static class DatabaseSeeder
     {
         public static ApplicationUser ToBecomeEmployee = null!;
         public static ApplicationUser NormalUser = null!;
@@ -25,11 +25,18 @@ namespace RatedTravel.Tests
         public static RestaurantReviewAndRate RestaurantReview2 = null!;
         public static City City1 = null!;
         public static City City2 = null!;
+        public static City CityInactive1 = null!;
+        public static City CityInactive2 = null!;
 
-        public static List<City> Cities = new List<City>()
+        public static List<City> ActiveCities = new List<City>()
         {
             City1,
             City2
+        };
+        public static List<City> InactiveCities = new List<City>()
+        {
+            CityInactive1,
+            CityInactive2
         };
 
         public static void SeedDatabase(RatedTravelDbContext dbContext)
@@ -107,7 +114,32 @@ namespace RatedTravel.Tests
                 IsActive = true,
                 EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
             };
-            
+
+            CityInactive1 = new City
+            {
+                Id = Guid.Parse("C1551B7B-D085-45E5-B26D-F62B7D6965EE"),
+                Name = "Lille",
+                Country = "France",
+                Description = "Paris, the capital of France, is a city renowned for its art, fashion, and cuisine. With its world-famous landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, Paris attracts millions of visitors each year. The city's charming streets, sidewalk cafes, and romantic atmosphere make it a favorite destination for couples and art enthusiasts.",
+                ImageUrl = "Paris.jpg",
+                NightlifeScore = 4,
+                TransportScore = 4,
+                IsActive = false,
+                EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
+            };
+            CityInactive2 = new City
+            {
+                Id = Guid.Parse("C2551B7B-D085-45E5-B26D-F62B7D6965EE"),
+                Name = "Paris",
+                Country = "Dijon",
+                Description = "Paris, the capital of France, is a city renowned for its art, fashion, and cuisine. With its world-famous landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, Paris attracts millions of visitors each year. The city's charming streets, sidewalk cafes, and romantic atmosphere make it a favorite destination for couples and art enthusiasts.",
+                ImageUrl = "Paris.jpg",
+                NightlifeScore = 4,
+                TransportScore = 4,
+                IsActive = false,
+                EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
+            };
+
 
             Bar1 = new Bar
             {
@@ -163,7 +195,7 @@ namespace RatedTravel.Tests
 
             Restaurant1 = new Restaurant
             {
-                Id = 5,
+                Id = 1,
                 Name = "The Bistro",
                 ImageUrl = "BistroLondon.jpg",
                 Address = "789 Oak Street",
@@ -175,7 +207,7 @@ namespace RatedTravel.Tests
             };
             Restaurant2 = new Restaurant
             {
-                Id = 6,
+                Id = 2,
                 Name = "La Trattoria",
                 ImageUrl = "LaTrattoria.jpg",
                 Address = "321 Pine Street",
@@ -189,7 +221,7 @@ namespace RatedTravel.Tests
 
             BarReview1 = new BarReviewAndRate
             {
-                Id = 7,
+                Id = 1,
                 ReviewText = "Great atmosphere and friendly staff!",
                 LocationRate = 4,
                 PriceRate = 3,
@@ -200,7 +232,7 @@ namespace RatedTravel.Tests
             };
             BarReview2 = new BarReviewAndRate
             {
-                Id = 1,
+                Id = 2,
                 ReviewText = "Lively place with good music, but drinks are a bit overpriced.",
                 LocationRate = 3,
                 PriceRate = 2,
@@ -213,31 +245,31 @@ namespace RatedTravel.Tests
 
             RestaurantReview1 = new RestaurantReviewAndRate
             {
-                Id = 2,
+                Id = 1,
                 ReviewText = "Great food and excellent service!",
                 LocationRate = 4,
                 FoodRate = 5,
                 PriceRate = 3,
                 ServiceRate = 4,
                 IsActive = true,
-                RestaurantId = 6
+                RestaurantId = 2
             };
             RestaurantReview2 = new RestaurantReviewAndRate
             {
-                Id = 5,
+                Id = 2,
                 ReviewText = "Average food quality but the ambiance is nice.",
                 LocationRate = 3,
                 FoodRate = 3,
                 PriceRate = 4,
                 ServiceRate = 4,
                 IsActive = true,
-                RestaurantId = 6
+                RestaurantId = 2
             };
 
             dbContext.Users.Add(ToBecomeEmployee);
             dbContext.Users.Add(NormalUser);
             dbContext.Employees.Add(MyEmployee);
-            dbContext.Cities.AddRange(City1, City2);
+            dbContext.Cities.AddRange(City1, City2, CityInactive1, CityInactive2);
             dbContext.Bars.AddRange(Bar1, Bar2);
             dbContext.Attractions.AddRange(Attraction1, Attraction2);
             dbContext.Restaurants.AddRange(Restaurant1, Restaurant2);
