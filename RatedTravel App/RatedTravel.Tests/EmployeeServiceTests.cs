@@ -119,6 +119,209 @@ namespace RatedTravel.Tests
         }
 
 
+        [Test]
+        public async Task EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync_ShouldReturnTrueWhenEligible()
+        {
+            // Arrange
+            string userId = ToBecomeEmployee.Id.ToString();
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync_ShouldReturnFalseWhenIneligible()
+        {
+            // Arrange
+            string userId = MyEmployee.UserId.ToString();
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeByUserIdAsync_ShouldReturnEmployeeWhenExists()
+        {
+            // Arrange
+            string userId = MyEmployee.UserId.ToString();
+
+            // Act
+            var employee = await employeeService.EmployeeByUserIdAsync(userId);
+
+            // Assert
+            Assert.NotNull(employee);
+            Assert.AreEqual(MyEmployee.FullName, employee.FullName);
+            Assert.AreEqual(MyEmployee.PhoneNumber, employee.PhoneNumber);
+        }
+
+        [Test]
+        public async Task EmployeeByUserIdAsync_ShouldReturnNullWhenEmployeeDoesNotExist()
+        {
+            // Arrange
+            string userId = Guid.NewGuid().ToString();
+
+            // Act
+            var employee = await employeeService.EmployeeByUserIdAsync(userId);
+
+            // Assert
+            Assert.Null(employee);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByPhoneNumberAsync_ShouldReturnTrueWhenPhoneNumberExists()
+        {
+            // Arrange
+            string existingPhoneNumber = MyEmployee.PhoneNumber;
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByPhoneNumberAsync(existingPhoneNumber);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+
+        [Test]
+        public async Task EmployeeExistsByPhoneNumberAsync_ShouldReturnFalseWhenPhoneNumberDoesNotExist()
+        {
+            // Arrange
+            string nonExistingPhoneNumber = "5555555555"; // A phone number that does not exist in the test data
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByPhoneNumberAsync(nonExistingPhoneNumber);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByNameAsync_ShouldReturnTrueWhenNameExists()
+        {
+            // Arrange
+            string existingName = MyEmployee.FullName;
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByNameAsync(existingName);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByNameAsync_ShouldReturnFalseWhenNameDoesNotExist()
+        {
+            // Arrange
+            string nonExistingName = "John Smith"; // A name that does not exist in the test data
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByNameAsync(nonExistingName);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByUserIdAsync_ShouldReturnTrueWhenEmployeeExists()
+        {
+            // Arrange
+            string existingUserId = MyEmployee.UserId.ToString();
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByUserIdAsync(existingUserId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByUserIdAsync_ShouldReturnFalseWhenEmployeeDoesNotExist()
+        {
+            // Arrange
+            string nonExistingUserId = Guid.NewGuid().ToString();
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByUserIdAsync(nonExistingUserId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync_ShouldReturnFalseWhenUserCreatedFewerThan3Items()
+        {
+            // Arrange
+            string userId = NonEligibleForEmployee.Id.ToString();
+            // Assuming the user created only 2 items
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync_ShouldReturnTrueWhenUserCreatedExactly3Items()
+        {
+            // Arrange
+            string userId = ToBecomeEmployee.Id.ToString();
+            // Assuming the user created exactly 3 items
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByIdAsync_ShouldReturnFalseWhenEmployeeDoesNotExist()
+        {
+            // Arrange
+            string nonExistingUserId = Guid.NewGuid().ToString();
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByIdAsync(nonExistingUserId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByPhoneNumberAsync_ShouldReturnFalseWithInvalidPhoneNumber()
+        {
+            // Arrange
+            string invalidPhoneNumber = null; // Invalid data, phone number cannot be null
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByPhoneNumberAsync(invalidPhoneNumber);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EmployeeExistsByNameAsync_ShouldReturnFalseWithInvalidName()
+        {
+            // Arrange
+            string invalidName = null; // Invalid data, name cannot be null
+
+            // Act
+            bool result = await employeeService.EmployeeExistsByNameAsync(invalidName);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+
+
+
 
     }
 }

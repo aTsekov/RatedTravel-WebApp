@@ -265,8 +265,97 @@ namespace RatedTravel.Tests
             }, $"Review with ID '{reviewId}' not found.");
         }
 
+     
+
+        [Test]
+        public async Task DetailsAsync_Should_ReturnCorrectRestaurantDetails()
+        {
+            // Arrange
+            var cityId = City1.Id.ToString();
+            var restaurantId = Restaurant1.Id.ToString();
+
+            // Act
+            var result = await restaurantService.DetailsAsync(cityId, restaurantId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(Restaurant1.Id, result.Id);
+            Assert.AreEqual(Restaurant1.Name, result.Name);
+            Assert.AreEqual(City1.Name, result.CityName);
+            Assert.AreEqual(Restaurant1.ImageUrl, result.Image);
+            Assert.AreEqual(Restaurant1.Description, result.Description);
+            Assert.AreEqual(Restaurant1.Address, result.Address);
+            Assert.AreEqual(Restaurant1.UserId.ToString(), result.UserId);
+            Assert.AreEqual(Restaurant1.City.Id.ToString(), result.CityId);
+            Assert.AreEqual(Restaurant1.Reviews.Count(r => r.IsActive), result.Reviews.Count());
+        }
 
 
+        [Test]
+        public async Task DeleteReviewByIdAsync_Should_ThrowException_WhenInvalidReviewId()
+        {
+            // Arrange
+            var reviewId = "999"; // Assuming this review ID does not exist in the seeded data
+
+            // Act & Assert
+            Assert.ThrowsAsync<ArgumentException>(async () =>
+            {
+                await restaurantService.DeleteReviewByIdAsync(reviewId);
+            }, $"Review with ID '{reviewId}' not found.");
+        }
+
+
+        [Test]
+        public async Task DoesRestaurantExistsByIdAsync_Should_ReturnTrueForExistingRestaurant()
+        {
+            // Arrange
+            var restaurantId = Restaurant1.Id.ToString();
+
+            // Act
+            var result = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task DoesRestaurantExistsByIdAsync_Should_ReturnFalseForNonExistingRestaurant()
+        {
+            // Arrange
+            var restaurantId = "999"; // Assuming this restaurant ID does not exist in the seeded data
+
+            // Act
+            var result = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task DoesRestaurantExistsByName_Should_ReturnTrueForExistingRestaurant()
+        {
+            // Arrange
+            var restaurantName = Restaurant1.Name;
+
+            // Act
+            var result = await restaurantService.DoesRestaurantExistsByName(restaurantName);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task DoesRestaurantExistsByName_Should_ReturnFalseForNonExistingRestaurant()
+        {
+            // Arrange
+            var restaurantName = "NonExistingRestaurant";
+
+            // Act
+            var result = await restaurantService.DoesRestaurantExistsByName(restaurantName);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
 
         [TearDown]
         public void TearDown()
@@ -276,3 +365,4 @@ namespace RatedTravel.Tests
         }
     }
 }
+

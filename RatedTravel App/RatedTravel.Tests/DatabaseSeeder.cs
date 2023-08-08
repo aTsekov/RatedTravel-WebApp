@@ -12,6 +12,7 @@ namespace RatedTravel.Tests
     {
         public static ApplicationUser ToBecomeEmployee = null!;
         public static ApplicationUser EmployeeUser = null!;
+        public static ApplicationUser NonEligibleForEmployee = null!;
         public static Employee MyEmployee = null!;
         public static Bar Bar1 = null!;
         public static Bar Bar2 = null!;
@@ -49,6 +50,27 @@ namespace RatedTravel.Tests
                         "AQAAAAEAACcQAAAAEDnxpjlTaYJ1vX4v7J12oUBUTycBNDLVyZWjWG2p6MzqoratcAY+bidSg8Rxt+glWg==",
                 SecurityStamp = "IO4GJSB3O2UU22LJ737SOGOVYZM3PM2Z",
                 ConcurrencyStamp = "0914fbf4-4cd3-4952-95d9-f724d0ccc986",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
+            };
+            NonEligibleForEmployee = new ApplicationUser()
+            {
+                Id = Guid.Parse("15339214-CFA7-4006-9696-10FBE87F3039"),
+                UserName = "non@abv.bg",
+                FirstName = "Non",
+                LastName = "Nonov",
+                NormalizedUserName = "NON@ABV.BG",
+                Email = "non@abv.bg",
+                NormalizedEmail = "non@ABV.BG",
+                EmailConfirmed = false,
+                PasswordHash =
+                    "BQAAAAEAACcQAAAAEDnxpjlTaYJ1vX4v7J12oUBUTycBNDLVyZWjWG2p6MzqoratcAY+bidSg8Rxt+glWg==",
+                SecurityStamp = "BO4GJSB3O2UU22LJ737SOGOVYZM3PM2Z",
+                ConcurrencyStamp = "1914fbf4-4cd3-4952-95d9-f724d0ccc986",
                 PhoneNumber = null,
                 PhoneNumberConfirmed = false,
                 TwoFactorEnabled = false,
@@ -234,7 +256,7 @@ namespace RatedTravel.Tests
                 IsActive = true,
                 RestaurantId = 2
             };
-
+             
             dbContext.Users.Add(ToBecomeEmployee);
             dbContext.Users.Add(EmployeeUser);
             dbContext.Employees.Add(MyEmployee);

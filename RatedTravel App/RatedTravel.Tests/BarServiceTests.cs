@@ -271,6 +271,24 @@ namespace RatedTravel.Tests
                                                     // Add more assertions for other properties as needed.
         }
 
+        
+
+        [Test]
+        public async Task AllBarsInACityAsync_Should_ReturnEmptyListForInvalidCity()
+        {
+            // Arrange
+            var cityId = "999"; // Assuming this city ID does not exist in the seeded data
+
+            // Act
+            var result = await barService.AllBarsInACityAsync(cityId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Count());
+        }
+
+
+
 
         [TearDown]
         public void TearDown()
