@@ -8,10 +8,10 @@ using RatedTravel.Data.DataModels;
 
 namespace RatedTravel.Tests
 {
-    public  static class DatabaseSeeder
+    public static class DatabaseSeeder
     {
         public static ApplicationUser ToBecomeEmployee = null!;
-        public static ApplicationUser NormalUser = null!;
+        public static ApplicationUser EmployeeUser = null!;
         public static Employee MyEmployee = null!;
         public static Bar Bar1 = null!;
         public static Bar Bar2 = null!;
@@ -25,44 +25,17 @@ namespace RatedTravel.Tests
         public static RestaurantReviewAndRate RestaurantReview2 = null!;
         public static City City1 = null!;
         public static City City2 = null!;
-        public static City CityInactive1 = null!;
-        public static City CityInactive2 = null!;
 
         public static List<City> ActiveCities = new List<City>()
         {
             City1,
             City2
         };
-        public static List<City> InactiveCities = new List<City>()
-        {
-            CityInactive1,
-            CityInactive2
-        };
+        public static List<Restaurant> Restaurants = new List<Restaurant>() { Restaurant1, Restaurant2 };
 
         public static void SeedDatabase(RatedTravelDbContext dbContext)
         {
             ToBecomeEmployee = new ApplicationUser()
-            {
-                Id = Guid.Parse("D1EB8C37-86BC-423A-AC69-B98D16B0A887"),
-                UserName = "antk@abv.bg",
-                NormalizedUserName = "ANTK@ABV.BG",
-                Email = "antk@abv.bg",
-                FirstName = "Olga",
-                LastName = "Tsekova",
-                NormalizedEmail = "ANTK@ABV.BG",
-                EmailConfirmed = false,
-                PasswordHash =
-                     "AQAAAAEAACcQAAAAEJYaHDKeWygEQcg2rAHKDlGZiPXR8dhgrXUME+kIp6xYI4DKTpSznlovkmsGo3yYeA==",
-                SecurityStamp = "WPQQQTDY45QTNVNFPBU7CTFVSD5A4T2V",
-                ConcurrencyStamp = "b7cf787d-bb27-4d2f-9c91-6b7fdb4c70ea",
-                PhoneNumber = null,
-                PhoneNumberConfirmed = false,
-                TwoFactorEnabled = false,
-                LockoutEnd = null,
-                LockoutEnabled = true,
-                AccessFailedCount = 0
-            };
-            NormalUser = new ApplicationUser()
             {
                 Id = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 UserName = "pesho@abv.bg",
@@ -73,9 +46,30 @@ namespace RatedTravel.Tests
                 NormalizedEmail = "PESHO@ABV.BG",
                 EmailConfirmed = false,
                 PasswordHash =
-                    "AQAAAAEAACcQAAAAEDnxpjlTaYJ1vX4v7J12oUBUTycBNDLVyZWjWG2p6MzqoratcAY+bidSg8Rxt+glWg==",
+                        "AQAAAAEAACcQAAAAEDnxpjlTaYJ1vX4v7J12oUBUTycBNDLVyZWjWG2p6MzqoratcAY+bidSg8Rxt+glWg==",
                 SecurityStamp = "IO4GJSB3O2UU22LJ737SOGOVYZM3PM2Z",
                 ConcurrencyStamp = "0914fbf4-4cd3-4952-95d9-f724d0ccc986",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
+            };
+            EmployeeUser = new ApplicationUser()
+            {
+                Id = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserName = "antk@abv.bg",
+                NormalizedUserName = "ANTK@ABV.BG",
+                Email = "antk@abv.bg",
+                FirstName = "Antoni",
+                LastName = "Tsekov",
+                NormalizedEmail = "ANTK@ABV.BG",
+                EmailConfirmed = false,
+                PasswordHash =
+                        "AQAAAAEAACcQAAAAEJYaHDKeWygEQcg2rAHKDlGZiPXR8dhgrXUME+kIp6xYI4DKTpSznlovkmsGo3yYeA==",
+                SecurityStamp = "WPQQQTDY45QTNVNFPBU7CTFVSD5A4T2V",
+                ConcurrencyStamp = "b7cf787d-bb27-4d2f-9c91-6b7fdb4c70ea",
                 PhoneNumber = null,
                 PhoneNumberConfirmed = false,
                 TwoFactorEnabled = false,
@@ -115,31 +109,6 @@ namespace RatedTravel.Tests
                 EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
             };
 
-            CityInactive1 = new City
-            {
-                Id = Guid.Parse("C1551B7B-D085-45E5-B26D-F62B7D6965EE"),
-                Name = "Lille",
-                Country = "France",
-                Description = "Paris, the capital of France, is a city renowned for its art, fashion, and cuisine. With its world-famous landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, Paris attracts millions of visitors each year. The city's charming streets, sidewalk cafes, and romantic atmosphere make it a favorite destination for couples and art enthusiasts.",
-                ImageUrl = "Paris.jpg",
-                NightlifeScore = 4,
-                TransportScore = 4,
-                IsActive = false,
-                EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
-            };
-            CityInactive2 = new City
-            {
-                Id = Guid.Parse("C2551B7B-D085-45E5-B26D-F62B7D6965EE"),
-                Name = "Paris",
-                Country = "Dijon",
-                Description = "Paris, the capital of France, is a city renowned for its art, fashion, and cuisine. With its world-famous landmarks like the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, Paris attracts millions of visitors each year. The city's charming streets, sidewalk cafes, and romantic atmosphere make it a favorite destination for couples and art enthusiasts.",
-                ImageUrl = "Paris.jpg",
-                NightlifeScore = 4,
-                TransportScore = 4,
-                IsActive = false,
-                EmployeeId = Guid.Parse("2D2EE1B2-D178-42B7-AEBE-25F85F15902C")
-            };
-
 
             Bar1 = new Bar
             {
@@ -151,7 +120,7 @@ namespace RatedTravel.Tests
                 OverallScore = 4,
                 Website = "https://www.londonpub.imperialhotels.co.uk",
                 IsActive = true,
-                UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 CityId = Guid.Parse("7E980128-41F1-4351-B11F-2E9AC6D0CADE")
             };
             Bar2 = new Bar
@@ -164,34 +133,34 @@ namespace RatedTravel.Tests
                 OverallScore = 4,
                 Website = "https://lecalbarcocktail.com/",
                 IsActive = true,
-                UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 CityId = Guid.Parse("CA551B7B-D085-45E5-B26D-F62B7D6965EE")
             };
-            
+
 
             Attraction1 = new Attraction
             {
-                Id = 3,
+                Id = 1,
                 Name = "Historical Museum",
                 Description = "Explore the rich history of our city at the Historical Museum.",
                 ImageUrl = "HistoricalMuseumLondon.jpg",
                 WorthVisitingScore = 5,
                 IsActive = true,
-                UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 CityId = Guid.Parse("7E980128-41F1-4351-B11F-2E9AC6D0CADE")
             };
             Attraction2 = new Attraction
             {
-                Id = 4,
+                Id = 2,
                 Name = "Botanical Garden",
                 Description = "Immerse yourself in the beauty of nature at our Botanical Garden.",
                 ImageUrl = "BotanicalGardenParis.jpg",
                 WorthVisitingScore = 4,
                 IsActive = true,
-                UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 CityId = Guid.Parse("CA551B7B-D085-45E5-B26D-F62B7D6965EE")
             };
-           
+
 
             Restaurant1 = new Restaurant
             {
@@ -202,7 +171,7 @@ namespace RatedTravel.Tests
                 Description = "A charming bistro offering delicious cuisine.",
                 OverallScore = 4,
                 IsActive = true,
-                UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 CityId = Guid.Parse("7E980128-41F1-4351-B11F-2E9AC6D0CADE")
             };
             Restaurant2 = new Restaurant
@@ -214,10 +183,10 @@ namespace RatedTravel.Tests
                 Description = "An Italian restaurant known for its authentic dishes.",
                 OverallScore = 4,
                 IsActive = true,
-                UserId = Guid.Parse("D6EB8C37-86BC-423A-AC69-B98D16B0A887"),
+                UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                 CityId = Guid.Parse("CA551B7B-D085-45E5-B26D-F62B7D6965EE")
             };
-           
+
 
             BarReview1 = new BarReviewAndRate
             {
@@ -228,7 +197,7 @@ namespace RatedTravel.Tests
                 ServiceRate = 5,
                 MusicRate = 4,
                 IsActive = true,
-                BarId = 2
+                BarId = 1
             };
             BarReview2 = new BarReviewAndRate
             {
@@ -241,7 +210,7 @@ namespace RatedTravel.Tests
                 IsActive = true,
                 BarId = 2
             };
-           
+
 
             RestaurantReview1 = new RestaurantReviewAndRate
             {
@@ -252,7 +221,7 @@ namespace RatedTravel.Tests
                 PriceRate = 3,
                 ServiceRate = 4,
                 IsActive = true,
-                RestaurantId = 2
+                RestaurantId = 1
             };
             RestaurantReview2 = new RestaurantReviewAndRate
             {
@@ -267,14 +236,14 @@ namespace RatedTravel.Tests
             };
 
             dbContext.Users.Add(ToBecomeEmployee);
-            dbContext.Users.Add(NormalUser);
+            dbContext.Users.Add(EmployeeUser);
             dbContext.Employees.Add(MyEmployee);
-            dbContext.Cities.AddRange(City1, City2, CityInactive1, CityInactive2);
+            dbContext.Cities.AddRange(City1, City2);
             dbContext.Bars.AddRange(Bar1, Bar2);
             dbContext.Attractions.AddRange(Attraction1, Attraction2);
             dbContext.Restaurants.AddRange(Restaurant1, Restaurant2);
             dbContext.BarReviewsAndRates.AddRange(BarReview1, BarReview2);
-            
+
 
         }
     }

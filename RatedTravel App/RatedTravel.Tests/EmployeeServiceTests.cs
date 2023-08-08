@@ -7,7 +7,6 @@ using static RatedTravel.Tests.DatabaseSeeder;
 
 namespace RatedTravel.Tests
 {
-    [TestFixture]
     public class EmployeeServiceTests
     {
         private DbContextOptions<RatedTravelDbContext> dbOptions;
@@ -18,33 +17,15 @@ namespace RatedTravel.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-
             this.dbOptions = new DbContextOptionsBuilder<RatedTravelDbContext>()
                 .UseInMemoryDatabase("RatedTravelInMemoryDb" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new RatedTravelDbContext(this.dbOptions);
 
             this.dbContext.Database.EnsureCreated();
-
             SeedDatabase(this.dbContext);
 
             this.employeeService = new EmployeeService(this.dbContext);
-
-
-        }
-        [SetUp]
-        public void SetUp()
-        {
-             //Create a new instance of the context for each test method
-            this.dbContext = new RatedTravelDbContext(this.dbOptions);
-
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-             //Dispose of the context after each test method
-            this.dbContext.Dispose();
         }
 
 

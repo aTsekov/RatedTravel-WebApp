@@ -23,13 +23,13 @@ namespace RatedTravel.Tests
                 .UseInMemoryDatabase("RatedTravelInMemoryDb" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new RatedTravelDbContext(this.dbOptions);
-            
+
 
             this.dbContext.Database.EnsureCreated();
             SeedDatabase(this.dbContext);
 
             this.userService = new UserService(this.dbContext);
-           
+
         }
 
         [Test]
@@ -81,10 +81,10 @@ namespace RatedTravel.Tests
             // Assert
             Assert.IsNotNull(users);
             Assert.IsNotEmpty(users);
-            Assert.AreEqual(3, users.Count()); 
+            Assert.AreEqual(3, users.Count());
         }
 
-       
+
 
 
         [TearDown]
@@ -97,4 +97,3 @@ namespace RatedTravel.Tests
 
 
 }
-

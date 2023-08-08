@@ -39,7 +39,7 @@ namespace RatedTravel.Tests
         public async Task GetOverallScoreOfBar_Should_CalculateAverageScoreCorrectly()
         {
             // Arrange
-            var barId = "1"; 
+            var barId = "1";
 
             // Act
             var overallScore = await barService.GetOverallScoreOfBar(barId);
@@ -79,7 +79,7 @@ namespace RatedTravel.Tests
         public async Task DoesBarExistsByName_Should_ReturnTrueForExistingBarName()
         {
             // Arrange
-            var barName = "The Pub"; 
+            var barName = "The Pub";
 
             // Act
             var result = await barService.DoesBarExistsByName(barName);
@@ -109,7 +109,7 @@ namespace RatedTravel.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count()); 
+            Assert.AreEqual(2, result.Count());
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace RatedTravel.Tests
         public async Task AllBarsInACityAsync_Should_ReturnBarsInSpecifiedCity()
         {
             // Arrange
-            var cityId = "7e980128-41f1-4351-b11f-2e9ac6d0cade"; 
+            var cityId = "7e980128-41f1-4351-b11f-2e9ac6d0cade";
 
             // Act
             var result = await barService.AllBarsInACityAsync(cityId);
@@ -142,7 +142,7 @@ namespace RatedTravel.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
 
-          
+
         }
 
         [Test]
@@ -191,8 +191,8 @@ namespace RatedTravel.Tests
 
 
 
-      
-      
+
+
 
         [Test]
         public async Task EditBarByIdAndFormModelAsync_Should_ThrowExceptionForInvalidCityId()
@@ -241,7 +241,7 @@ namespace RatedTravel.Tests
         public async Task DeleteReviewByIdAsync_Should_ThrowExceptionForInvalidReviewId()
         {
             // Arrange
-            var reviewId = "999"; 
+            var reviewId = "999";
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentException>(async () =>
@@ -250,9 +250,9 @@ namespace RatedTravel.Tests
             }, "Review not found");
         }
 
-       
 
-      
+
+
 
         [Test]
         public async Task GetBarForDeleteAsync_Should_ReturnCorrectBarForDelete()
