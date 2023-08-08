@@ -29,6 +29,11 @@ namespace RatedTravel.Core.Services
 
             var cityIdOfBar = await cityService.GetCityIdByName(formModel.CityName);
 
+            if (cityIdOfBar == null)
+            {
+                throw new ArgumentException("Invalid city Id");
+            }
+
 
             Bar newBar = new Bar
             {
@@ -373,12 +378,21 @@ namespace RatedTravel.Core.Services
 
         public async Task DeleteBarByIdAsync(string barId)
         {
-            Bar? barToDelete = await dbContext.Bars
+            try
+            {
+                Bar? barToDelete = await dbContext.Bars
                 .Where(r => r.IsActive)
                 .FirstOrDefaultAsync(r => r.Id.ToString() == barId);
 
-            barToDelete.IsActive = false;
-            await dbContext.SaveChangesAsync();
+                barToDelete.IsActive = false;
+                await dbContext.SaveChangesAsync();
+            }
+            catch (ArgumentException)
+            {
+
+                throw new ArgumentException("Bar not found");
+            }
+            
         }
     }
 

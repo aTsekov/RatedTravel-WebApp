@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.Common", "Rater
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Tests", "4.Tests", "{790269D6-7D7E-4FF7-AA92-7C3C0BA221B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatedTravel.Tests", "RatedTravel.Tests\RatedTravel.Tests.csproj", "{587667B7-674C-4DB8-B007-0DCAFDCA35B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RatedTravel.Tests", "RatedTravel.Tests\RatedTravel.Tests.csproj", "{587667B7-674C-4DB8-B007-0DCAFDCA35B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

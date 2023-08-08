@@ -31,8 +31,7 @@ namespace RatedTravel.Data.DbConfigurations
                   Address = "789 Oak Street",
                   Description = "A charming bistro offering delicious cuisine.",
                   OverallScore = 4,
-                  IsActive = true,
-                  
+                  IsActive = true,                  
                   UserId = Guid.Parse("75339214-CFA7-4006-9696-10FBE87F3039"),
                   CityId = Guid.Parse("7E980128-41F1-4351-B11F-2E9AC6D0CADE")
               },

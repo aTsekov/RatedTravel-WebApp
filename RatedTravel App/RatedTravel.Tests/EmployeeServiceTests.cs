@@ -43,7 +43,7 @@ namespace RatedTravel.Tests
         [Test]
         public async Task EmployeeExistsByIdAsyncShouldReturnFalseWhenEmlpDoesNotExists()
         {
-            string existingEmployee = NormalUser.Id.ToString();
+            string existingEmployee = EmployeeUser.Id.ToString();
 
             bool result = await this.employeeService.EmployeeExistsByIdAsync(existingEmployee);
 

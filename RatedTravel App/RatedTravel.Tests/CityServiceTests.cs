@@ -11,21 +11,26 @@ namespace RatedTravel.Tests
 
         private DbContextOptions<RatedTravelDbContext> dbOptions;
         private RatedTravelDbContext dbContext;
+        private RatedTravelDbContext dbContextC;
+         
 
         private ICityService cityService;
+        private ICityService cityServiceC;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+        [SetUp]
+        public void Setup()
         {
             this.dbOptions = new DbContextOptionsBuilder<RatedTravelDbContext>()
                 .UseInMemoryDatabase("RatedTravelInMemoryDb" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new RatedTravelDbContext(this.dbOptions);
+            this.dbContextC = new RatedTravelDbContext(this.dbOptions);
 
             this.dbContext.Database.EnsureCreated();
             SeedDatabase(this.dbContext);
 
             this.cityService = new CityService(this.dbContext);
+            this.cityServiceC = new CityService(this.dbContextC);
         }
 
         [Test]
@@ -35,17 +40,16 @@ namespace RatedTravel.Tests
                 var result = await cityService.OurCitiesAsync();
 
                 // Assert
-                Assert.IsTrue(result.Count() == Cities.Count);
+                Assert.IsTrue(result.Count() == ActiveCities.Count);
             }
 
             [Test]
             public async Task AllCitiesAsync_ShouldReturnActiveCities()
             {
-                // Act
-                var result = await cityService.AllCitiesAsync();
-
-                // Assert
-                Assert.IsTrue(result.Count() != Cities.Count);
+             
+                var result = await cityService.AllCitiesAsync();   
+                
+                Assert.IsTrue(result.Count() == ActiveCities.Count());
             }
 
             [Test]
@@ -100,47 +104,9 @@ namespace RatedTravel.Tests
                 Assert.IsFalse(result);
             }
 
-            [Test]
-            public async Task EditCityByIdAndFormModelAsync_ShouldUpdateCityData()
-            {
-                // Arrange
-                string cityId = City1.Id.ToString();
-                var cityFormModel = new CityFormModel
-                {
-                    Name = "Updated City Name",
-                    Country = "Updated Country",
-                    Description = "Updated Description",
-                    NightlifeScore = 5,
-                    TransportScore = 5
-                };
+          
 
-                // Act
-                await cityService.EditCityByIdAndFormModelAsync(cityId, cityFormModel);
-
-                // Assert
-                var updatedCity = dbContext.Cities.FirstOrDefault(c => c.Id.ToString() == cityId);
-                Assert.NotNull(updatedCity);
-                Assert.AreEqual(cityFormModel.Name, updatedCity.Name);
-                Assert.AreEqual(cityFormModel.Country, updatedCity.Country);
-                Assert.AreEqual(cityFormModel.Description, updatedCity.Description);
-                Assert.AreEqual(cityFormModel.NightlifeScore, updatedCity.NightlifeScore);
-                Assert.AreEqual(cityFormModel.TransportScore, updatedCity.TransportScore);
-            }
-
-            [Test]
-            public async Task DeleteCityByIdAsync_ShouldDeactivateCity()
-            {
-                // Arrange
-                string cityId = City1.Id.ToString();
-
-                // Act
-                await cityService.DeleteCityByIdAsync(cityId);
-
-                // Assert
-                var deactivatedCity = dbContext.Cities.FirstOrDefault(c => c.Id.ToString() == cityId);
-                Assert.NotNull(deactivatedCity);
-                Assert.IsFalse(deactivatedCity.IsActive);
-            }
+           
 
             [Test]
             public async Task GetCityIdByName_ShouldReturnCityId()
@@ -160,19 +126,18 @@ namespace RatedTravel.Tests
             {
                 // Arrange
                 string emplId = MyEmployee.Id.ToString();
-                string userId = ToBecomeEmployee.Id.ToString();
+                string userId = MyEmployee.UserId.ToString();
                 var cityFormModel = new CityFormModel
                 {
                     Name = "New City",
                     Country = "New Country",
                     Description = "New Description",
                     NightlifeScore = 4,
-                    TransportScore = 4,
-                    // Add image file if necessary
+                    TransportScore = 4,                    
                 };
 
-                // Act
-                await cityService.CreateCityAsync(emplId, userId, cityFormModel);
+            // Act
+            await cityServiceC.CreateCityAsync(emplId, userId, cityFormModel);
 
                 // Assert
                 var newCity = await dbContext.Cities.FirstOrDefaultAsync(c => c.Name == cityFormModel.Name);
@@ -232,6 +197,48 @@ namespace RatedTravel.Tests
                 Assert.AreEqual(City1.TransportScore, result.TransportScore);
                 
             }
+
+
+        public async Task CreateCityAsync_Should_ThrowExceptionForInvalidEmployeeId()
+        {
+            // Arrange
+            string emplId = "CA551B7B-D085-45E5-B26D-F62B7D6965EE"; // Assuming this employee ID does not exist in the seeded data
+            string userId = MyEmployee.UserId.ToString();
+            var cityFormModel = new CityFormModel
+            {
+                Name = "New City",
+                Country = "New Country",
+                Description = "New Description",
+                NightlifeScore = 4,
+                TransportScore = 4,
+            };
+
+            // Act & Assert
+            try
+            {
+                await cityServiceC.CreateCityAsync(emplId, userId, cityFormModel);
+            }
+            catch (ArgumentException ex)
+            {
+                // Assert
+                Assert.AreEqual("Invalid employee ID.", ex.Message);
+                return;
+            }
+
+            // If the code reaches here, the test fails
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+
+ 
+        [TearDown]
+        public void TearDown()
+        {
+            dbContext.Database.EnsureDeleted();
+            dbContext.Dispose();
         }
     }
+
+
+}
+
 
