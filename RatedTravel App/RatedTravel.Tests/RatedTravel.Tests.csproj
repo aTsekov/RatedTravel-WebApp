@@ -25,6 +25,7 @@
     <ProjectReference Include="..\RatedTracel.Core\RatedTravel.Core.csproj" />
     <ProjectReference Include="..\RatedTravel.Data\RatedTravel.Data.csproj" />
     <ProjectReference Include="..\RatedTravel.Web.ViewModels\RatedTravel.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\RatedTravel.Web\RatedTravel.App.Web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -88,11 +88,20 @@ namespace RatedTravel.Core.Services
 
         public async Task<string> GetCityIdByName(string cityName)
         {
-            var city = await dbContext.Cities.Where(c => c.IsActive).FirstAsync(c => c.Name == cityName);
+            try
+            {
+                var city = await dbContext.Cities.Where(c => c.IsActive).FirstAsync(c => c.Name == cityName);
 
-            string result = city.Id.ToString();
+                string result = city.Id.ToString();
 
-            return result;
+                return result;
+            }
+            catch (ArgumentException)
+            {
+
+                throw new ArgumentException("Invalid city name.");
+            }
+            
         }
 
 
@@ -129,7 +138,7 @@ namespace RatedTravel.Core.Services
             else
             {
                 // If the image file is not uploaded, set the image URL to null
-                newCity.ImageUrl = null;
+                newCity.ImageUrl = "Unknown.jpg";
             }
 
             await this.dbContext.Cities.AddAsync(newCity);
