@@ -66,7 +66,7 @@ namespace RatedTravel.Core.Services
             else
             {
                 // If the image file is not uploaded, set the image URL to null
-                newBar.ImageUrl = null;
+                newBar.ImageUrl = "Unknown.jpg";
             }
 
             await this.dbContext.Bars.AddAsync(newBar);

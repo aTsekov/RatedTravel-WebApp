@@ -82,8 +82,7 @@ namespace RatedTravel.Common
             public const int RestaurantServiceRateMinLength = 5;
 
         }
-        //---------
-
+    
         public static class BarFormModel
         {
             public const int BarNameMaxLength = 50;

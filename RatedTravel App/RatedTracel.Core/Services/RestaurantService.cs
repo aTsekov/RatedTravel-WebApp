@@ -60,7 +60,7 @@ namespace RatedTravel.Core.Services
             else
             {
                 // If the image file is not uploaded, set the image URL to null
-                newResto.ImageUrl = null;
+                newResto.ImageUrl = "Unknown.jpg";
             }
 
             await this.dbContext.Restaurants.AddAsync(newResto);

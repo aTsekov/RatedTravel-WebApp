@@ -18,7 +18,6 @@
 <div class="container-fluid bg-lightblue-transparent text-white py-5">
 	<div class="row justify-content-center align-items-center">
 		<div class="col-md-8">
-			<!-- Increased the size of the City card to col-md-8 -->
 			<div class="card darkblue text-white border-4">
 				<div class="card-header bg-secondary text-white">
 					<h3 class="mb-0">@Model.Name</h3>
@@ -50,9 +49,8 @@
 								</p>
 							</div>
 						</div>
-						<hr> <!-- Added a line below the scores -->
+						<hr> 
 						<div class="row mt-3 justify-content-center">
-							<!-- Centered the buttons -->
 							<div class="col text-center">
 								<a class="btn card-header bg-secondary text-white border" asp-controller="Restaurant" asp-action="AllRestaurantsInACity" asp-route-cityId="@Model.Id">View all restaurants in @Model.Name</a>
 
@@ -61,7 +59,7 @@
 								<a class="btn card-header bg-secondary text-white border" asp-controller="Bar" asp-action="AllBarsInACity" asp-route-cityId="@Model.Id">View all bars in @Model.Name</a>
 							</div>
 						</div>
-						<hr> <!-- Added a line below the buttons -->
+						<hr> 
 						<div class="row mt-3">
 							<div class="col text-center">
 								@if (isEmployee == true)

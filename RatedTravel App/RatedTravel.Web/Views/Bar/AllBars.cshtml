@@ -95,8 +95,7 @@
                             </form>
                             <hr />
                             <form method="get" asp-controller="Bar" asp-action="DeleteBar">
-                                @* Add anti-forgery token for security *@
-                                @Html.AntiForgeryToken()
+                               @Html.AntiForgeryToken()
                                 <input type="hidden" name="barId" value="@bar.Id" />
                                 <button type="submit" class="ml-2 btn btn-danger">Delete</button>
                             </form>

@@ -141,9 +141,6 @@ namespace RatedTravel.App.Web.Controllers
 		        return this.RedirectToAction("Index", "Home");
 	        }
 
-			
-
-			//TODO: to return to a specific city once I create that action and view. 
 			return RedirectToAction("Index", "Home");
 
         }

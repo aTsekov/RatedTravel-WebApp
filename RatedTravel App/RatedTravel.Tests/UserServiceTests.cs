@@ -36,7 +36,7 @@ namespace RatedTravel.Tests
         public async Task GetFullNameByEmailAsync_Should_ReturnFullNameForExistingEmail()
         {
             // Arrange
-            var userEmail = "antk@abv.bg"; // Assuming this email exists in the seeded data
+            var userEmail = "antk@abv.bg"; 
 
             // Act
             var fullName = await userService.GetFullNameByEmailAsync(userEmail);
@@ -49,7 +49,7 @@ namespace RatedTravel.Tests
         public async Task GetFullNameByEmailAsync_Should_ReturnEmptyStringForNonExistingEmail()
         {
             // Arrange
-            var userEmail = "nonexisting@example.com"; // Assuming this email does not exist in the seeded data
+            var userEmail = "nonexisting@example.com"; 
 
             // Act
             var fullName = await userService.GetFullNameByEmailAsync(userEmail);
@@ -63,7 +63,7 @@ namespace RatedTravel.Tests
         public async Task GetFullNameByIdAsync_Should_ReturnEmptyStringForNonExistingUserId()
         {
             // Arrange
-            var userId = "nonexistinguserid"; // Assuming this user ID does not exist in the seeded data
+            var userId = "nonexistinguserid"; 
 
             // Act
             var fullName = await userService.GetFullNameByIdAsync(userId);

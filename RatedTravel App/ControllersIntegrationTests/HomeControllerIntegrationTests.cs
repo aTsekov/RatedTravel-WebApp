@@ -58,13 +58,13 @@ namespace RatedTravel.Tests.Integration
         public async Task Error_ReturnsDefaultErrorView_WhenStatusCodeIsNot404()
         {
             // Arrange
-            const int statusCode = 500; // Any status code that's not 404
+            const int statusCode = 500; 
 
             // Act
             var result = _controller.Error(statusCode) as ViewResult;
 
             // Assert
-            Assert.IsNull(result.ViewName); // Default view
+            Assert.IsNull(result.ViewName); 
         }
 
     }

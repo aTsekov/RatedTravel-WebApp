@@ -40,22 +40,20 @@ namespace RatedTravel.Tests
         public async Task GetOverallScoreOfRestaurant_Should_CalculateAverageScoreCorrectly()
         {
             // Arrange
-            var restaurantId = "1"; // Assuming this ID exists in the seeded data
-            // You may need to adjust the ID based on your seeded data
+            var restaurantId = "1";
 
             // Act
             var overallScore = await restaurantService.GetOverallScoreOfRestaurant(restaurantId);
 
             // Assert
             Assert.AreEqual(4.0, overallScore);
-            // Add more assertions as needed to validate the data
         }
 
         [Test]
         public async Task DoesRestaurantExistsByIdAsync_Should_ReturnTrueForExistingRestaurantId()
         {
             // Arrange
-            var restaurantId = "1"; // Assuming this ID exists in the seeded data
+            var restaurantId = "1"; 
 
             // Act
             var result = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);
@@ -68,7 +66,7 @@ namespace RatedTravel.Tests
         public async Task DoesRestaurantExistsByIdAsync_Should_ReturnFalseForNonExistingRestaurantId()
         {
             // Arrange
-            var restaurantId = "999"; // Assuming this ID does not exist in the seeded data
+            var restaurantId = "999"; 
 
             // Act
             var result = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);
@@ -81,7 +79,7 @@ namespace RatedTravel.Tests
         public async Task DoesRestaurantExistsByName_Should_ReturnTrueForExistingRestaurantName()
         {
             // Arrange
-            var restaurantName = "The Bistro"; // Assuming this restaurant name exists in the seeded data
+            var restaurantName = "The Bistro"; 
 
             // Act
             var result = await restaurantService.DoesRestaurantExistsByName(restaurantName);
@@ -94,7 +92,7 @@ namespace RatedTravel.Tests
         public async Task DoesRestaurantExistsByName_Should_ReturnFalseForNonExistingRestaurantName()
         {
             // Arrange
-            var restaurantName = "NonExistingRestaurant"; // Assuming this restaurant name does not exist in the seeded data
+            var restaurantName = "NonExistingRestaurant"; 
 
             // Act
             var result = await restaurantService.DoesRestaurantExistsByName(restaurantName);
@@ -112,14 +110,14 @@ namespace RatedTravel.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count()); // Assuming there are two active restaurants in the seeded data
+            Assert.AreEqual(2, result.Count()); 
         }
 
         [Test]
         public async Task GetRestaurantForEditAsync_Should_ReturnCorrectRestaurantForEdit()
         {
             // Arrange
-            var restaurantId = "1"; // Assuming this restaurant ID exists in the seeded data
+            var restaurantId = "1"; 
 
             // Act
             var result = await restaurantService.GetRestaurantForEditAsync(restaurantId);
@@ -138,8 +136,8 @@ namespace RatedTravel.Tests
         public async Task DetailsAsync_Should_ThrowExceptionForInvalidCityId()
         {
             // Arrange
-            var cityId = "999"; // Assuming this city ID does not exist in the seeded data
-            var restaurantId = "1"; // Assuming this restaurant ID exists in the seeded data
+            var cityId = "999"; 
+            var restaurantId = "1"; 
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentException>(async () =>
@@ -152,8 +150,8 @@ namespace RatedTravel.Tests
         public async Task DetailsAsync_Should_ThrowExceptionForInvalidRestaurantId()
         {
             // Arrange
-            var cityId = "1"; // Assuming this city ID exists in the seeded data
-            var restaurantId = "999"; // Assuming this restaurant ID does not exist in the seeded data
+            var cityId = "1"; 
+            var restaurantId = "999"; 
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentException>(async () =>
@@ -168,7 +166,7 @@ namespace RatedTravel.Tests
         public async Task SendReviewAsync_Should_ThrowExceptionForNonExistingRestaurant()
         {
             // Arrange
-            var restaurantId = "999"; // Assuming this restaurant ID does not exist in the seeded data
+            var restaurantId = "999"; 
             var model = new RestaurantRateAndReviewModel
             {
                 ReviewText = "Test review",
@@ -189,7 +187,7 @@ namespace RatedTravel.Tests
         public async Task GetRestaurantForEditAsync_Should_ThrowExceptionForNonExistingRestaurant()
         {
             // Arrange
-            var restaurantId = "999"; // Assuming this restaurant ID does not exist in the seeded data
+            var restaurantId = "999"; 
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentException>(async () =>
@@ -204,12 +202,12 @@ namespace RatedTravel.Tests
         public async Task EditRestaurantByIdAndFormModelAsync_Should_ThrowExceptionForInvalidRestaurantId()
         {
             // Arrange
-            var restaurantId = 999; // Assuming this restaurant ID does not exist in the seeded data
+            var restaurantId = 999; 
             var restaurantFormModel = new RestaurantFormModel
             {
                 Id = 1,
                 Name = "Updated Restaurant",
-                CityName = "City 2", // Assuming this city name exists in the seeded data
+                CityName = "City 2", 
                 Address = "Updated Address",
                 Description = "Updated Description",
                 OverallScore = 4
@@ -226,21 +224,21 @@ namespace RatedTravel.Tests
         public async Task AllRestaurantsInACityAsync_Should_ReturnAllActiveRestaurantsInCity()
         {
             // Arrange
-            var cityId = "7e980128-41f1-4351-b11f-2e9ac6d0cade"; // Assuming this city ID exists in the seeded data
+            var cityId = "7e980128-41f1-4351-b11f-2e9ac6d0cade"; 
 
             // Act
             var result = await restaurantService.AllRestaurantsInACityAsync(cityId);
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count()); // Assuming there are two active restaurants in the seeded data for the given city
+            Assert.AreEqual(1, result.Count()); 
         }
 
         [Test]
         public async Task AllRestaurantsInACityAsync_Should_ReturnEmptyListForNonExistingCity()
         {
             // Arrange
-            var cityId = "999"; // Assuming this city ID does not exist in the seeded data
+            var cityId = "999"; 
 
             // Act
             var result = await restaurantService.AllRestaurantsInACityAsync(cityId);
@@ -256,7 +254,7 @@ namespace RatedTravel.Tests
         public async Task DeleteReviewByIdAsync_Should_ThrowExceptionForInvalidReviewId()
         {
             // Arrange
-            var reviewId = "999"; // Assuming this review ID does not exist in the seeded data
+            var reviewId = "999"; 
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentException>(async () =>
@@ -295,7 +293,7 @@ namespace RatedTravel.Tests
         public async Task DeleteReviewByIdAsync_Should_ThrowException_WhenInvalidReviewId()
         {
             // Arrange
-            var reviewId = "999"; // Assuming this review ID does not exist in the seeded data
+            var reviewId = "999"; 
 
             // Act & Assert
             Assert.ThrowsAsync<ArgumentException>(async () =>
@@ -322,7 +320,7 @@ namespace RatedTravel.Tests
         public async Task DoesRestaurantExistsByIdAsync_Should_ReturnFalseForNonExistingRestaurant()
         {
             // Arrange
-            var restaurantId = "999"; // Assuming this restaurant ID does not exist in the seeded data
+            var restaurantId = "999"; 
 
             // Act
             var result = await restaurantService.DoesRestaurantExistsByIdAsync(restaurantId);

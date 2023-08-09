@@ -67,7 +67,7 @@ namespace RatedTravel.Tests
         public async Task EmployeeExistsByPhoneNumberAsync_ShouldReturnFalse_WhenPhoneNumberDoesNotExist()
         {
             // Arrange
-            string phoneNumber = "9999999999"; // A phone number that is not in the test data
+            string phoneNumber = "9999999999"; 
 
             // Act
             bool result = await employeeService.EmployeeExistsByPhoneNumberAsync(phoneNumber);
@@ -93,7 +93,7 @@ namespace RatedTravel.Tests
         public async Task EmployeeExistsByNameAsync_ShouldReturnFalse_WhenNameDoesNotExist()
         {
             // Arrange
-            string name = "John Wick"; // A name that is not in the test data
+            string name = "John Wick"; 
 
             // Act
             bool result = await employeeService.EmployeeExistsByNameAsync(name);
@@ -191,7 +191,7 @@ namespace RatedTravel.Tests
         public async Task EmployeeExistsByPhoneNumberAsync_ShouldReturnFalseWhenPhoneNumberDoesNotExist()
         {
             // Arrange
-            string nonExistingPhoneNumber = "5555555555"; // A phone number that does not exist in the test data
+            string nonExistingPhoneNumber = "5555555555"; 
 
             // Act
             bool result = await employeeService.EmployeeExistsByPhoneNumberAsync(nonExistingPhoneNumber);
@@ -217,7 +217,7 @@ namespace RatedTravel.Tests
         public async Task EmployeeExistsByNameAsync_ShouldReturnFalseWhenNameDoesNotExist()
         {
             // Arrange
-            string nonExistingName = "John Smith"; // A name that does not exist in the test data
+            string nonExistingName = "John Smith"; 
 
             // Act
             bool result = await employeeService.EmployeeExistsByNameAsync(nonExistingName);
@@ -257,8 +257,7 @@ namespace RatedTravel.Tests
         {
             // Arrange
             string userId = NonEligibleForEmployee.Id.ToString();
-            // Assuming the user created only 2 items
-
+            
             // Act
             bool result = await employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
 
@@ -271,8 +270,7 @@ namespace RatedTravel.Tests
         {
             // Arrange
             string userId = ToBecomeEmployee.Id.ToString();
-            // Assuming the user created exactly 3 items
-
+           
             // Act
             bool result = await employeeService.EmployeeExistsByIdAndHasMoreThanThreeCreatedItemsAsync(userId);
 
@@ -297,7 +295,7 @@ namespace RatedTravel.Tests
         public async Task EmployeeExistsByPhoneNumberAsync_ShouldReturnFalseWithInvalidPhoneNumber()
         {
             // Arrange
-            string invalidPhoneNumber = null; // Invalid data, phone number cannot be null
+            string invalidPhoneNumber = null; 
 
             // Act
             bool result = await employeeService.EmployeeExistsByPhoneNumberAsync(invalidPhoneNumber);
@@ -310,7 +308,7 @@ namespace RatedTravel.Tests
         public async Task EmployeeExistsByNameAsync_ShouldReturnFalseWithInvalidName()
         {
             // Arrange
-            string invalidName = null; // Invalid data, name cannot be null
+            string invalidName = null; 
 
             // Act
             bool result = await employeeService.EmployeeExistsByNameAsync(invalidName);

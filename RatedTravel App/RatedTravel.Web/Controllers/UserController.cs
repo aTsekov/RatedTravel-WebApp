@@ -32,9 +32,7 @@ namespace RatedTravel.App.Web.Controllers
             }
 
             [HttpPost]
-            //[ValidateRecaptcha(Action = nameof(Register),
-            // ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
-             public async Task<IActionResult> Register(RegisterFormModel model)
+            public async Task<IActionResult> Register(RegisterFormModel model)
              {
                   if (!ModelState.IsValid)
                   {
@@ -64,9 +62,8 @@ namespace RatedTravel.App.Web.Controllers
                   }
 
                   await signInManager.SignInAsync(user, false);
-                  //this.memoryCache.Remove(UsersCacheKey);
 
-                  return RedirectToAction("Index", "Home");
+                 return RedirectToAction("Index", "Home");
              }
 
             [HttpGet]

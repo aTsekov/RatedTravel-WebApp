@@ -135,9 +135,6 @@ namespace RatedTravel.App.Web.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception for troubleshooting
-                // You can use a logger service, for example: logger.LogError(ex, "Error in AllRestaurantsInACity action");
-
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
 
                 // Get the previous URL from Referer header
@@ -168,9 +165,6 @@ namespace RatedTravel.App.Web.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception for troubleshooting
-                // You can use a logger service, for example: logger.LogError(ex, "Error in RestaurantDetails action");
-
                 ModelState.AddModelError("", "Oops, something went wrong :( Please try again later or contact us");
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
                 return this.RedirectToAction("Index", "Home");
@@ -405,9 +399,6 @@ namespace RatedTravel.App.Web.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception for troubleshooting
-                // You can use a logger service, for example: logger.LogError(ex, "Error in AllRestaurantsInACity action");
-
                 this.TempData[NotificationMessagesConstants.ErrorMessage] = "Oops, something went wrong :( Please try again later or contact us";
 
                 // Get the previous URL from Referer header

@@ -202,7 +202,7 @@ namespace RatedTravel.Tests
         public async Task CreateCityAsync_Should_ThrowExceptionForInvalidEmployeeId()
         {
             // Arrange
-            string emplId = "CA551B7B-D085-45E5-B26D-F62B7D6965EE"; // Assuming this employee ID does not exist in the seeded data
+            string emplId = "CA551B7B-D085-45E5-B26D-F62B7D6965EE";
             string userId = MyEmployee.UserId.ToString();
             var cityFormModel = new CityFormModel
             {
@@ -224,8 +224,7 @@ namespace RatedTravel.Tests
                 Assert.AreEqual("Invalid employee ID.", ex.Message);
                 return;
             }
-
-            // If the code reaches here, the test fails
+            
             Assert.Fail("Expected ArgumentException was not thrown.");
         }
 
