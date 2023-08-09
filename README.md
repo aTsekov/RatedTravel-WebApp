@@ -9,6 +9,7 @@ In essence, "Rated Travel" simplifies travel planning by offering insights into 
 
 - [About](#beginner-about)
 - [Installation](#electric_plug-installation)
+- [Credentials](#key-credentials)
 - [Build With](#hammer-build-with)
 - [Gallery](#camera-gallery)
 
@@ -32,6 +33,26 @@ You can use the following commands:
 **Add-Migration initial**
 
 **Update-Database**
+
+##  :key: Credentials
+Those users are seeded into the DB once the initial migration is applied. 
+ - Admin User:
+
+   -- UserName: admin@abv.bg
+   
+   -- Password: 123456
+   
+- Employee User:
+
+   -- UserName: antk@abv.bg
+  
+   -- Password: 123456
+  
+- Admin User:
+
+   -- UserName: pesho@abv.bg
+  
+   -- Password: 123456
 
 ## :hammer: Build With
 - ASP.NET Core 6
