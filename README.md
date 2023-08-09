@@ -48,7 +48,7 @@ Those users are seeded into the DB once the initial migration is applied.
   
    -- Password: 123456
   
-- Admin User:
+- Normal User:
 
    -- UserName: pesho@abv.bg
   
