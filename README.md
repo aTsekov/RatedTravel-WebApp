@@ -26,7 +26,12 @@ In essence, "Rated Travel" simplifies travel planning by offering insights into 
     - Unregistered users can view cities, restaurants, and bars. They can also leave reviews.
 
 ##  :electric_plug: Installation
-To access the project, download the project's zip file and open it with Visual Studio or another IDE. Ensure you have SQL Server Management Studio (SMSS) installed. Add a connection string to the "Manage Secrets JSON". This step will change once the application is deployed.
+To access the project, download the project's zip file and open it with Visual Studio or another IDE. Ensure you have SQL Server Management Studio (SMSS) installed. Add a connection string to the "Manage Secrets JSON". This step will change once the application is deployed. Create initial migration via the "package manager Control" to see the test data. 
+You can use the following commands:
+
+**Add-Migration initial**
+
+**Update-Database**
 
 ## :hammer: Build With
 - ASP.NET Core 6
